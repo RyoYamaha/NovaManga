@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { isAxiosError } from 'axios'
 import { RouterProvider } from 'react-router'
 import { router } from '@/routes/router'
-import { authService } from '@/services/auth.service'
+import { authService } from '@/features/auth/api/auth.service'
 import { REFRESH_TOKEN_KEY, useAuthStore } from '@/stores/auth-store'
 import { Button } from '@/components/ui/button'
 

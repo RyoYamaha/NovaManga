@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
-import { publisherService } from '@/services/publisher.service'
+import { publisherService } from '@/features/creator/api/publisher.service'
 
 
 export function PublisherRoute() {

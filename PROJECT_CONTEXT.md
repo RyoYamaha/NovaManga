@@ -26,46 +26,41 @@ SourceCode/
 │   ├── common/
 │   │   ├── constants/             # Role, content type/status
 │   │   ├── decorators/            # CurrentUser, Roles
-│   │   ├── filter/                # HTTP exception filter
 │   │   ├── guards/                # JWT guard và role guard
-│   │   └── cloudinary/             # Upload ảnh lên Cloudinary
-│   ├── core/
-│   │   ├── content/               # Content listing, detail, moderation
-│   │   └── chapter/               # Tạo chapter, kiểm tra ownership, moderation
-│   ├── user/auth/                 # Register, login, refresh, logout, JWT strategy
-│   ├── publisher/                 # Publisher profile và licensed content
-│   ├── author/                    # Fan translation và author dashboard
-│   ├── manga/                     # Tạo chapter và upload page ảnh
-│   ├── novel/                     # Tạo chapter, text/PDF, lấy nội dung
-│   ├── admin/                     # Hiện mới có thư mục, chưa thấy implementation
-│   ├── ai_assistant/              # Hiện mới có thư mục, chưa thấy implementation
-│   ├── recommendation/           # Hiện mới có thư mục, chưa thấy implementation
-│   ├── report/                    # Hiện mới có thư mục, chưa thấy implementation
-│   ├── search/                    # Hiện mới có thư mục, chưa thấy implementation
-│   ├── jobs/                      # Hiện mới có thư mục, chưa thấy implementation
+│   │   └── cloudinary/            # Upload ảnh lên Cloudinary
+│   ├── modules/
+│   │   ├── identity/auth/         # Đăng ký, đăng nhập, JWT, refresh token
+│   │   ├── content/               # Content, chapter, Manga, Novel, author, publisher
+│   │   ├── reading/               # Bookmark, favorite, rating, progress, unlock
+│   │   ├── commerce/              # Wallet, payment, payout, revenue
+│   │   ├── community/             # Comment, notification, report, ticket
+│   │   ├── admin/                 # Chức năng quản trị
+│   │   ├── ai/                    # AI chat và quản trị AI
+│   │   └── health/                # Health check
+│   ├── scripts/                   # Script kiểm tra DB và seed genre
 │   ├── prisma/
 │   │   ├── schema.prisma          # Mô hình dữ liệu chính
-│   │   ├── prisma.service.ts      # Prisma 7 + SQL Server adapter
-│   │   └── migrations/            # Migration database hiện có
+│   │   ├── prisma.service.ts      # Prisma 7 + PostgreSQL adapter
+│   │   └── migrations-postgresql/ # Migration PostgreSQL
 │   └── generated/prisma/          # Code Prisma generated, không sửa thủ công
-└── Frontend/                      # Hiện chưa có file code được phát hiện
+└── Frontend/                      # React + TypeScript + Vite
 ```
 
 ## 3. Công nghệ và cách chạy dự kiến
 
 - Backend: NestJS 12, TypeScript, Prisma 7.
-- Database: Microsoft SQL Server thông qua `@prisma/adapter-mssql`.
+- Database: PostgreSQL thông qua `@prisma/adapter-pg`.
 - Authentication: JWT access token, refresh token lưu dưới dạng SHA-256 hash, bcrypt password.
 - File/image: Cloudinary module; Manga upload nhiều ảnh.
 - PDF: `pdf-to-png-converter` và code đang gọi `pdf-parse`.
 - Biến môi trường quan trọng: `DATABASE_URL`, `JWT_ACCESS_SECRET`, `JWT_ACCESS_EXPIRES` và cấu hình Cloudinary.
-- `Backend/package.json` hiện chỉ có script test giả lập; chưa có script start/build rõ ràng.
+- Backend có script build/start; test tự động còn hạn chế.
 
 ## 4. Những phần đã có code xử lý
 
 ### Authentication
 
-File chính: `Backend/user/auth/`
+File chính: `Backend/modules/identity/auth/`
 
 - `POST /auth/register`: tạo User mới, luôn gán role `Reader`.
 - `POST /auth/login`: đăng nhập bằng username hoặc email.
@@ -73,11 +68,11 @@ File chính: `Backend/user/auth/`
 - `POST /auth/logout`: revoke refresh token.
 - Có `JwtStrategy`, `JwtAuthGuard`, `RolesGuard`, `@CurrentUser()` và `@Roles()`.
 
-Lưu ý: `AuthModule` đã tồn tại nhưng hiện chưa được import vào `Backend/app.module.ts`, nên auth chưa chắc đã được expose khi khởi động app.
+`AuthModule` được import trong `Backend/app.module.ts`.
 
 ### Content
 
-File chính: `Backend/core/content/`
+File chính: `Backend/modules/content/content/`
 
 - `GET /content`: danh sách có phân trang, tìm theo title, lọc theo type, ownership tier, publication status, genre.
 - `GET /content/:id`: lấy chi tiết content, genre, tag, chapter, uploader, publisher và parent content.
@@ -91,7 +86,7 @@ File chính: `Backend/core/content/`
 
 ### Publisher
 
-File chính: `Backend/publisher/`
+File chính: `Backend/modules/content/publisher/`
 
 - `POST /publisher/register`: đăng ký publisher profile.
 - `GET /publisher/me`: lấy publisher profile hiện tại.
@@ -102,7 +97,7 @@ File chính: `Backend/publisher/`
 
 ### Author và fan translation
 
-File chính: `Backend/author/`
+File chính: `Backend/modules/content/author/`
 
 - `GET /author/browse-licensed`: tìm content licensed để dịch.
 - `POST /author/translations`: tạo fan translation.
@@ -113,7 +108,7 @@ File chính: `Backend/author/`
 
 ### Chapter và Manga
 
-File chính: `Backend/core/chapter/` và `Backend/manga/`
+File chính: `Backend/modules/content/chapter/` và `Backend/modules/content/manga/`
 
 - Author/Publisher có thể tạo chapter cho content của chính mình.
 - Không cho phép trùng số chapter trong cùng một content.
@@ -124,7 +119,7 @@ File chính: `Backend/core/chapter/` và `Backend/manga/`
 
 ### Novel
 
-File chính: `Backend/novel/`
+File chính: `Backend/modules/content/novel/`
 
 - `POST /novel/content/:contentId/chapters`: tạo chapter.
 - `POST /novel/chapters/:chapterId/text`: tạo hoặc cập nhật text chapter.
@@ -144,28 +139,24 @@ Các nhóm model chính trong `Backend/prisma/schema.prisma`:
 - Kiểm duyệt: `Report`.
 - AI/recommendation: `ContentKnowledgeBase`, `AIConversation`, `RecommendationCache`.
 
-Các enum nghiệp vụ hiện đang lưu bằng `String` vì SQL Server không dùng Prisma enum trong thiết kế này. Giá trị hợp lệ được ghi chú trong schema và một phần được kiểm tra ở DTO/service.
+Một số giá trị nghiệp vụ đang lưu bằng `String`; các giá trị hợp lệ được ghi chú trong schema và một phần được kiểm tra ở DTO/service.
 
 ## 6. Trạng thái hiện tại và phần còn thiếu
 
 ### Đã có nền tảng
 
-- Schema database và một migration init.
-- Prisma service kết nối SQL Server bằng adapter.
+- Schema database PostgreSQL và baseline migration.
+- Prisma service kết nối PostgreSQL bằng adapter.
 - Content, Publisher, Author, Manga, Novel có module/controller/service cơ bản.
 - Có phân quyền JWT/role và kiểm tra ownership ở các luồng upload/chapter.
 - Có upload Cloudinary và xử lý PDF cho Novel.
+- Các feature module đã được nhóm theo domain trong `Backend/modules/`.
 
 ### Chưa hoàn thiện hoặc cần kiểm tra
 
-- `Frontend/` chưa có source code; cần xây dựng giao diện và gọi API.
-- `AuthModule`, `MangaModule`, `NovelModule` chưa thấy được import vào `AppModule`.
-- Các thư mục `admin`, `ai_assistant`, `recommendation`, `report`, `search`, `jobs` chưa có implementation được phát hiện.
-- Chưa thấy `main.ts`, bootstrap NestJS, global `ValidationPipe`, CORS hoặc HTTP exception filter được đăng ký.
-- `package.json` đang thiếu script build/start/test thực tế.
-- Code Novel đang `require('pdf-parse')` nhưng dependency này chưa xuất hiện trong `package.json`; cần bổ sung hoặc thay thế trước khi build.
-- Chưa có test tự động cho auth, moderation, ownership, upload ảnh và PDF.
-- Cần xác minh các module đã được nối đầy đủ trước khi gọi API từ frontend.
+- Frontend đã có source React/Vite; cần tiếp tục kiểm tra tích hợp các luồng giao diện với API.
+- Chưa có test tự động đầy đủ cho auth, moderation, ownership, upload ảnh và PDF.
+- Cần tiếp tục xác minh các luồng end-to-end quan trọng và tăng coverage test.
 
 ## 7. Thứ tự ưu tiên đề xuất cho AI tiếp tục phát triển
 
@@ -180,4 +171,4 @@ Các enum nghiệp vụ hiện đang lưu bằng `String` vì SQL Server không 
 
 ## 8. Prompt ngữ cảnh gợi ý cho AI
 
-> Đây là dự án NovaManga trong thư mục `SourceCode`. Backend dùng NestJS + TypeScript + Prisma 7 + SQL Server. Schema nằm ở `Backend/prisma/schema.prisma`. Các luồng đã có code gồm auth cơ bản, content listing/detail/moderation, publisher, author fan translation, Manga image upload và Novel text/PDF. Frontend hiện chưa triển khai. Trước khi sửa code, hãy đọc `PROJECT_CONTEXT.md`, kiểm tra module đã được import vào `AppModule`, giữ đúng role/ownership/status hiện có và không giả định những thư mục rỗng là tính năng đã hoàn thành. Khi thêm tính năng, cập nhật cả controller, service, DTO, module, schema/migration nếu cần và viết test cho workflow đó.
+> Đây là dự án NovaManga trong thư mục `SourceCode`. Backend dùng NestJS + TypeScript + Prisma 7 + PostgreSQL. Schema nằm ở `Backend/prisma/schema.prisma`; feature module được nhóm theo domain trong `Backend/modules/`. Trước khi sửa code, hãy đọc `PROJECT_CONTEXT.md`, kiểm tra luồng hiện có trong `AppModule`, giữ đúng role/ownership/status và không giả định tính năng nào chỉ từ tên thư mục. Khi thêm tính năng, cập nhật controller, service, DTO, module, schema/migration nếu cần và viết test cho workflow đó.

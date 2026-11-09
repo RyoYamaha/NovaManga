@@ -1,9 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Bell, Bookmark, Heart, LogOut, Search, Coins } from 'lucide-react'
-import { authService } from '@/services/auth.service'
-import { notificationService } from '@/services/notification.service'
+import { Bell, LogOut, Search, Coins } from 'lucide-react'
+import { authService } from '@/features/auth/api/auth.service'
+import { notificationService } from '@/features/notifications/api/notification.service'
+import { getNotificationDisplayMessage } from '@/features/notifications/types/notification'
 import { financeService } from '@/services/finance.service'
 import { REFRESH_TOKEN_KEY, useAuthStore } from '@/stores/auth-store'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -23,7 +24,8 @@ export function Navbar() {
   const queryClient = useQueryClient()
   
   const isNovel = location.pathname.includes('/novel')
-  const isManga = !isNovel
+  const isManga = location.pathname.includes('/manga')
+  const isAllContent = location.pathname === '/'
   const user = useAuthStore((s) => s.user)
   const clearAuth = useAuthStore((s) => s.clearAuth)
   const [query, setQuery] = useState('')
@@ -72,15 +74,26 @@ export function Navbar() {
   const unreadCount = unread.data ?? 0
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
-      <div className="flex h-14 items-center gap-2 px-3 sm:gap-4 sm:px-5">
+    <header className="sticky top-0 z-40 border-b border-border bg-[#1a2533]">
+      <div className="flex h-12 items-center gap-2 px-3 sm:gap-4 sm:px-5">
         <div className="flex shrink-0 items-center gap-3 sm:gap-6">
           <Link to="/" className="text-lg font-extrabold tracking-tight sm:text-xl">
             <span className="text-primary">Nova</span>Manga
           </Link>
 
-          {/* Selector Manga / Novel */}
+          {/* Selector all content, Manga, or Novel */}
           <div className="hidden md:flex items-center rounded-xl border border-border/70 bg-card p-1">
+            <Link
+              to="/"
+              className={`flex items-center gap-1.5 rounded-md border px-4 py-1.5 text-sm transition-all ${
+                isAllContent
+                  ? 'border-transparent bg-primary font-semibold text-primary-foreground shadow-sm'
+                  : 'border-transparent font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+              }`}
+            >
+              Chung
+            </Link>
+
             <Link 
               to="/manga" 
               className={`flex items-center gap-1.5 px-4 py-1.5 text-sm rounded-md outline-none focus-visible:ring-1 transition-all ${
@@ -146,7 +159,7 @@ export function Navbar() {
                   {notificationsQuery.data && notificationsQuery.data.slice(0, 5).map((notification) => (
                     <DropdownMenuItem key={notification.id} onClick={() => navigate('/inbox')} className="flex flex-col items-start gap-1 p-3 cursor-pointer">
                       <span className={`text-sm ${notification.isRead ? 'text-muted-foreground' : 'font-medium'}`}>
-                        {notification.message}
+                        {getNotificationDisplayMessage(notification.message)}
                       </span>
                       <span className="text-xs text-muted-foreground">
                         {new Date(notification.createdAt).toLocaleString('vi-VN')}
@@ -173,17 +186,6 @@ export function Navbar() {
                   </Link>
                 </Button>
 
-                <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
-                  <Link to="/library?tab=favourite">
-                    <Heart className="mr-1.5 h-4 w-4" /> Yêu thích
-                  </Link>
-                </Button>
-
-                <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
-                  <Link to="/library?tab=bookmark">
-                    <Bookmark className="mr-1.5 h-4 w-4" /> Bookmark
-                  </Link>
-                </Button>
               </>
             )}
 

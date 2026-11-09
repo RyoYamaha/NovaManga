@@ -542,6 +542,7 @@ export type ReadingProgressCreateOrConnectWithoutContentInput = {
 
 export type ReadingProgressCreateManyContentInputEnvelope = {
   data: Prisma.ReadingProgressCreateManyContentInput | Prisma.ReadingProgressCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReadingProgressUpsertWithWhereUniqueWithoutContentInput = {
@@ -595,6 +596,7 @@ export type ReadingProgressCreateOrConnectWithoutLastChapterInput = {
 
 export type ReadingProgressCreateManyLastChapterInputEnvelope = {
   data: Prisma.ReadingProgressCreateManyLastChapterInput | Prisma.ReadingProgressCreateManyLastChapterInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReadingProgressUpsertWithWhereUniqueWithoutLastChapterInput = {
@@ -636,6 +638,7 @@ export type ReadingProgressCreateOrConnectWithoutUserInput = {
 
 export type ReadingProgressCreateManyUserInputEnvelope = {
   data: Prisma.ReadingProgressCreateManyUserInput | Prisma.ReadingProgressCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReadingProgressUpsertWithWhereUniqueWithoutUserInput = {
@@ -764,7 +767,29 @@ export type ReadingProgressSelect<ExtArgs extends runtime.Types.Extensions.Inter
   lastChapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["readingProgress"]>
 
+export type ReadingProgressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  lastChapterId?: boolean
+  lastPageNumber?: boolean
+  lastReadAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  lastChapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["readingProgress"]>
 
+export type ReadingProgressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  lastChapterId?: boolean
+  lastPageNumber?: boolean
+  lastReadAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  lastChapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["readingProgress"]>
 
 export type ReadingProgressSelectScalar = {
   id?: boolean
@@ -777,6 +802,16 @@ export type ReadingProgressSelectScalar = {
 
 export type ReadingProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "contentId" | "lastChapterId" | "lastPageNumber" | "lastReadAt", ExtArgs["result"]["readingProgress"]>
 export type ReadingProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  lastChapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}
+export type ReadingProgressIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  lastChapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}
+export type ReadingProgressIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
   lastChapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
@@ -914,6 +949,30 @@ export interface ReadingProgressDelegate<ExtArgs extends runtime.Types.Extension
   createMany<T extends ReadingProgressCreateManyArgs>(args?: Prisma.SelectSubset<T, ReadingProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ReadingProgresses and returns the data saved in the database.
+   * @param {ReadingProgressCreateManyAndReturnArgs} args - Arguments to create many ReadingProgresses.
+   * @example
+   * // Create many ReadingProgresses
+   * const readingProgress = await prisma.readingProgress.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ReadingProgresses and only return the `id`
+   * const readingProgressWithIdOnly = await prisma.readingProgress.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ReadingProgressCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ReadingProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReadingProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ReadingProgress.
    * @param {ReadingProgressDeleteArgs} args - Arguments to delete one ReadingProgress.
    * @example
@@ -976,6 +1035,36 @@ export interface ReadingProgressDelegate<ExtArgs extends runtime.Types.Extension
    * 
    */
   updateMany<T extends ReadingProgressUpdateManyArgs>(args: Prisma.SelectSubset<T, ReadingProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ReadingProgresses and returns the data updated in the database.
+   * @param {ReadingProgressUpdateManyAndReturnArgs} args - Arguments to update many ReadingProgresses.
+   * @example
+   * // Update many ReadingProgresses
+   * const readingProgress = await prisma.readingProgress.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ReadingProgresses and only return the `id`
+   * const readingProgressWithIdOnly = await prisma.readingProgress.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ReadingProgressUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ReadingProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReadingProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ReadingProgress.
@@ -1408,6 +1497,30 @@ export type ReadingProgressCreateManyArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many ReadingProgresses.
    */
   data: Prisma.ReadingProgressCreateManyInput | Prisma.ReadingProgressCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ReadingProgress createManyAndReturn
+ */
+export type ReadingProgressCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReadingProgress
+   */
+  select?: Prisma.ReadingProgressSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReadingProgress
+   */
+  omit?: Prisma.ReadingProgressOmit<ExtArgs> | null
+  /**
+   * The data used to create many ReadingProgresses.
+   */
+  data: Prisma.ReadingProgressCreateManyInput | Prisma.ReadingProgressCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReadingProgressIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1452,6 +1565,36 @@ export type ReadingProgressUpdateManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many ReadingProgresses to update.
    */
   limit?: number
+}
+
+/**
+ * ReadingProgress updateManyAndReturn
+ */
+export type ReadingProgressUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReadingProgress
+   */
+  select?: Prisma.ReadingProgressSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReadingProgress
+   */
+  omit?: Prisma.ReadingProgressOmit<ExtArgs> | null
+  /**
+   * The data used to update ReadingProgresses.
+   */
+  data: Prisma.XOR<Prisma.ReadingProgressUpdateManyMutationInput, Prisma.ReadingProgressUncheckedUpdateManyInput>
+  /**
+   * Filter which ReadingProgresses to update
+   */
+  where?: Prisma.ReadingProgressWhereInput
+  /**
+   * Limit how many ReadingProgresses to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReadingProgressIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

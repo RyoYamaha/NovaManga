@@ -1,5 +1,5 @@
 import { api } from '@/lib/api'
-import type { MyRating, RatingSummary } from '@/types/library'
+import type { MyRating, RatingSummary } from '@/features/library/types/library'
 
 export const ratingService = {
   getSummary: (contentId: string) => api.get<RatingSummary>(`/rating/${contentId}/summary`),

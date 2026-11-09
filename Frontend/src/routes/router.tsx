@@ -1,9 +1,9 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router'
+import { createBrowserRouter, Navigate } from 'react-router' //
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublisherRoute } from './PublisherRoute'
-import { useAuthStore } from '@/stores/auth-store'
+import { ReaderAccessRoute, SupportAccessRoute } from './AccessRoutes'
 import RouteError from '@/components/common/RouteError'
-import NotFound from '@/pages/NotFound'
+import NotFound from '@/app/NotFound'
 
 
 // ===== Layouts =====
@@ -15,9 +15,11 @@ import { BareLayout } from '@/components/layout/BareLayout'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 
 // ===== Trang Auth =====
-import { Login } from '@/pages/auth/Login'
-import { Register } from '@/pages/auth/Register'
+import { Login } from '@/features/auth/pages/Login'
+import { Register } from '@/features/auth/pages/Register'
 
+
+//======= HÀM TẢI TRANG THEO NHU CẦU =============
 const lazyPage = <T extends Record<string, unknown>>(
   loader: () => Promise<T>,
   name: keyof T,
@@ -25,51 +27,32 @@ const lazyPage = <T extends Record<string, unknown>>(
   lazy: async () => ({ Component: (await loader())[name] as React.ComponentType }),
 })
 
-function SupportAccessRoute() {
-  const role = useAuthStore((state) => state.user?.role)
 
-  if (role === 'Publisher') {
-    return <Navigate to="/" replace />
-  }
-
-  return <Outlet />
-}
-
-function ReaderAccessRoute() {
-  const role = useAuthStore((state) => state.user?.role)
-
-  if (role !== 'Reader') {
-    return <Navigate to="/" replace />
-  }
-
-  return <Outlet />
-}
-
+// ============ NƠI KHÁI BÁO TOÀN BỘ URL CỦA NOVA MANGA============
 export const router = createBrowserRouter([
-  // Auth pages use a standalone layout without role navigation.
+
+  // nhóm trang đăng nhập và đăng ký.
   {
-    element: <AuthLayout />,
+    element: <AuthLayout />, //layout hiển thị 
     errorElement: <RouteError />,
-    children: [
+    children: [ //chứa các trang con
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
     ],
   },
 
+
+//================ khu vực Onboarding dành cho người dùng đã đăng nhập và thỏa mãn điều kiện Reader=========
   {
     path: 'onboarding',
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute />, // kiểm tra đăng nhập 
     errorElement: <RouteError />,
     children: [
       {
-        element: <ReaderAccessRoute />,
+        element: <ReaderAccessRoute />, //kiểm tra quyền reader
         children: [
-          {
-            element: <BareLayout />,
-            children: [
-              { index: true, ...lazyPage(() => import('@/pages/user/Onboarding'), 'Onboarding') },
-            ],
-          },
+          //trang chọn sở thích ban đầu 
+          { index: true, ...lazyPage(() => import('@/features/catalog/pages/Onboarding'), 'Onboarding') },
         ],
       },
     ],
@@ -80,36 +63,42 @@ export const router = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     errorElement: <RouteError />,
-    children: [
-      { index: true, ...lazyPage(() => import('@/pages/user/Home'), 'Home') },
-      { path: 'manga', ...lazyPage(() => import('@/pages/user/Home'), 'Home') },
-      { path: 'novel', ...lazyPage(() => import('@/pages/user/Home'), 'Home') },
-      { path: 'content/:id', ...lazyPage(() => import('@/pages/user/ContentDetail'), 'ContentDetail') },
-      { path: 'content/:id/read-manga/:chapterId', ...lazyPage(() => import('@/pages/user/ReadManga'), 'ReadManga') },
-      { path: 'content/:id/read-novel/:chapterId', ...lazyPage(() => import('@/pages/user/ReadNovel'), 'ReadNovel') },
+    children: [ //tất cả các trang con dùng main layout
+      //các trang công khai 
+      { index: true, ...lazyPage(() => import('@/features/catalog/pages/Home'), 'Home') },
+      { path: 'manga', ...lazyPage(() => import('@/features/catalog/pages/Home'), 'Home') },
+      { path: 'novel', ...lazyPage(() => import('@/features/catalog/pages/Home'), 'Home') },
+      { path: 'content/:id', ...lazyPage(() => import('@/features/content/pages/ContentDetail'), 'ContentDetail') },
+      { path: 'profile/:id', ...lazyPage(() => import('@/features/profile/pages/Profile'), 'Profile') },
+      { path: 'content/:id/read-manga/:chapterId', ...lazyPage(() => import('@/features/reader/pages/ReadManga'), 'ReadManga') },
+      { path: 'content/:id/read-novel/:chapterId', ...lazyPage(() => import('@/features/reader/pages/ReadNovel'), 'ReadNovel') },
       {
         element: <ProtectedRoute />,
+        //toàn bộ các routecon phải đi qua protected route để kiểm tra đăng nhập 
         children: [
-          { path: 'library', ...lazyPage(() => import('@/pages/user/Library'), 'Library') },
-          { path: 'history', ...lazyPage(() => import('@/pages/user/History'), 'History') },
-          { path: 'settings/preferences', ...lazyPage(() => import('@/pages/user/GenrePreferences'), 'GenrePreferences') },
-          { path: 'inbox', ...lazyPage(() => import('@/pages/user/Inbox'), 'Inbox') },
-          { path: 'my-reports', ...lazyPage(() => import('@/pages/user/MyReports'), 'MyReports') },
-          { path: 'earnings', ...lazyPage(() => import('@/pages/author/Earnings'), 'Earnings') },
+          { path: 'library', ...lazyPage(() => import('@/features/library/pages/Library'), 'Library') },
+          { path: 'history', ...lazyPage(() => import('@/features/reading-history/pages/History'), 'History') },
+          { path: 'settings/preferences', ...lazyPage(() => import('@/features/catalog/pages/GenrePreferences'), 'GenrePreferences') },
+          { path: 'inbox', ...lazyPage(() => import('@/features/notifications/pages/Inbox'), 'Inbox') },  
+          { path: 'my-reports', ...lazyPage(() => import('@/features/reports/pages/MyReports'), 'MyReports') },
+          { path: 'earnings', ...lazyPage(() => import('@/features/creator/pages/shared/Earnings'), 'Earnings') },
           {
             element: <ReaderAccessRoute />,
+            //kiểm tra quyển reader. đăng nhập xong mới kiểm tra quyền 
             children: [
-              { path: 'wallet', ...lazyPage(() => import('@/pages/user/Wallet'), 'Wallet') },
+              { path: 'wallet', ...lazyPage(() => import('@/features/wallet/pages/Wallet'), 'Wallet') },
             ],
           },
           {
             element: <SupportAccessRoute />,
+            //kiểm tra quyền suppport 
             children: [
-              { path: 'support', ...lazyPage(() => import('@/pages/user/SupportTickets'), 'SupportTickets') },
-              { path: 'support/:id', ...lazyPage(() => import('@/pages/user/SupportDetail'), 'SupportDetail') },
+              { path: 'support', ...lazyPage(() => import('@/features/support/pages/SupportTickets'), 'SupportTickets') },
+              { path: 'support/:id', ...lazyPage(() => import('@/features/support/pages/SupportDetail'), 'SupportDetail') },
             ],
           },
-          { path: 'assistant/:contentId', ...lazyPage(() => import('@/pages/user/AiAssistant'), 'AiAssistant') },
+          { path: 'assistant', ...lazyPage(() => import('@/features/ai/pages/AiAssistant'), 'AiAssistant') },
+          { path: 'assistant/:contentId', ...lazyPage(() => import('@/features/ai/pages/AiAssistant'), 'AiAssistant') },
         ],
       },
     ],
@@ -125,14 +114,15 @@ export const router = createBrowserRouter([
         element: <AuthorLayout />,
         children: [
           { index: true, element: <Navigate to="dashboard" replace /> },
-          { path: 'dashboard', ...lazyPage(() => import('@/pages/author/Dashboard'), 'AuthorDashboard') },
-          { path: 'create', ...lazyPage(() => import('@/pages/shared/CreateStory'), 'CreateStory') },
-          { path: 'upload/manga', ...lazyPage(() => import('@/pages/author/UploadManga'), 'UploadManga') },
-          { path: 'upload/novel', ...lazyPage(() => import('@/pages/author/UploadNovel'), 'UploadNovel') },
-          { path: 'upload/translation', ...lazyPage(() => import('@/pages/author/UploadTranslation'), 'UploadTranslation') },
-          { path: 'content/:id/chapters/new', ...lazyPage(() => import('@/pages/author/UploadChapter'), 'UploadChapter') },
-          { path: 'content/:id/chapters/:chapterId/edit', ...lazyPage(() => import('@/pages/author/EditChapter'), 'EditChapter') },
-          { path: 'content/:id/edit', ...lazyPage(() => import('@/pages/author/EditManga'), 'EditManga') },
+          { path: 'dashboard', ...lazyPage(() => import('@/features/creator/pages/author/Dashboard'), 'AuthorDashboard') },
+          { path: 'create', ...lazyPage(() => import('@/features/creator/pages/shared/CreateStory'), 'CreateStory') },
+          { path: 'upload/manga', ...lazyPage(() => import('@/features/creator/pages/author/UploadManga'), 'UploadManga') },
+          { path: 'upload/novel', ...lazyPage(() => import('@/features/creator/pages/author/UploadNovel'), 'UploadNovel') },
+          { path: 'upload/translation', ...lazyPage(() => import('@/features/creator/pages/author/UploadTranslation'), 'UploadTranslation') },
+          // Shared Chapter & Content Management
+          { path: 'content/:id/chapters/new', ...lazyPage(() => import('@/features/creator/pages/shared/UploadChapter'), 'SharedUploadChapter') },
+          { path: 'content/:id/chapters/:chapterId/edit', ...lazyPage(() => import('@/features/creator/pages/shared/EditChapter'), 'SharedEditChapter') },
+          { path: 'content/:id/edit', ...lazyPage(() => import('@/features/creator/pages/shared/EditStory'), 'SharedEditStory') },
         ],
       },
     ],
@@ -151,8 +141,8 @@ export const router = createBrowserRouter([
           {
             element: <BareLayout />,
             children: [
-              { path: 'register', ...lazyPage(() => import('@/pages/publisher/Register'), 'PublisherRegister') },
-              { path: 'status', ...lazyPage(() => import('@/pages/publisher/Status'), 'PublisherStatus') },
+              { path: 'register', ...lazyPage(() => import('@/features/creator/pages/publisher/Register'), 'PublisherRegister') },
+              { path: 'status', ...lazyPage(() => import('@/features/creator/pages/publisher/Status'), 'PublisherStatus') },
             ],
           },
           // Cần Approved: có sidebar
@@ -162,16 +152,17 @@ export const router = createBrowserRouter([
               {
                 element: <PublisherLayout />,
                 children: [
-                  { path: 'dashboard', ...lazyPage(() => import('@/pages/publisher/Dashboard'), 'PublisherDashboard') },
-                  { path: 'create', ...lazyPage(() => import('@/pages/shared/CreateStory'), 'CreateStory') },
-                  { path: 'catalog', ...lazyPage(() => import('@/pages/publisher/SeriesCatalog'), 'SeriesCatalog') },
-                  { path: 'catalog/:id/resubmit', ...lazyPage(() => import('@/pages/publisher/ResubmitSeries'), 'ResubmitSeries') },
-                  { path: 'compliance', ...lazyPage(() => import('@/pages/publisher/Compliance'), 'Compliance') },
-                  { path: 'upload/manga', ...lazyPage(() => import('@/pages/publisher/UploadManga'), 'PublisherUploadManga') },
-                  { path: 'upload/novel', ...lazyPage(() => import('@/pages/publisher/UploadNovel'), 'PublisherUploadNovel') },
-                  { path: 'content/:id/chapters/new', ...lazyPage(() => import('@/pages/publisher/UploadChapter'), 'PublisherUploadChapter') },
-                  { path: 'content/:id/chapters/:chapterId/edit', ...lazyPage(() => import('@/pages/publisher/EditChapter'), 'PublisherEditChapter') },
-                  { path: 'content/:id/edit', ...lazyPage(() => import('@/pages/publisher/EditContent'), 'PublisherEditContent') },
+                  { path: 'dashboard', ...lazyPage(() => import('@/features/creator/pages/publisher/Dashboard'), 'PublisherDashboard') },
+                  { path: 'create', ...lazyPage(() => import('@/features/creator/pages/shared/CreateStory'), 'CreateStory') },
+                  { path: 'catalog', ...lazyPage(() => import('@/features/creator/pages/publisher/SeriesCatalog'), 'SeriesCatalog') },
+                  { path: 'catalog/:id/resubmit', ...lazyPage(() => import('@/features/creator/pages/publisher/ResubmitSeries'), 'ResubmitSeries') },
+                  { path: 'compliance', ...lazyPage(() => import('@/features/creator/pages/publisher/Compliance'), 'Compliance') },
+                  { path: 'upload/manga', ...lazyPage(() => import('@/features/creator/pages/publisher/UploadManga'), 'PublisherUploadManga') },
+                  { path: 'upload/novel', ...lazyPage(() => import('@/features/creator/pages/publisher/UploadNovel'), 'PublisherUploadNovel') },
+                  // Shared Chapter & Content Management
+                  { path: 'content/:id/chapters/new', ...lazyPage(() => import('@/features/creator/pages/shared/UploadChapter'), 'SharedUploadChapter') },
+                  { path: 'content/:id/chapters/:chapterId/edit', ...lazyPage(() => import('@/features/creator/pages/shared/EditChapter'), 'SharedEditChapter') },
+                  { path: 'content/:id/edit', ...lazyPage(() => import('@/features/creator/pages/shared/EditStory'), 'SharedEditStory') },
                 ],
               },
             ],
@@ -191,18 +182,20 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           { index: true, element: <Navigate to="dashboard" replace /> },
-          { path: 'dashboard', ...lazyPage(() => import('@/pages/admin/Dashboard'), 'AdminDashboard') },
+          { path: 'dashboard', ...lazyPage(() => import('@/features/admin/pages/Dashboard'), 'AdminDashboard') },
           { path: 'review-queue', element: <Navigate to="/admin/content/unpublished" replace /> },
-          { path: 'content/published', ...lazyPage(() => import('@/pages/admin/ContentManagement'), 'ContentManagement') },
-          { path: 'content/unpublished', ...lazyPage(() => import('@/pages/admin/ReviewQueue'), 'ReviewQueue') },
-          { path: 'chapters/:id', ...lazyPage(() => import('@/pages/admin/ChapterReview'), 'ChapterReview') },
-          { path: 'content/:id', ...lazyPage(() => import('@/pages/admin/ContentDetail'), 'ContentDetail') },
-          { path: 'reports', ...lazyPage(() => import('@/pages/admin/Reports'), 'Reports') },
-          { path: 'novel-moderation', ...lazyPage(() => import('@/pages/admin/NovelModeration'), 'NovelModeration') },
-          { path: 'users', ...lazyPage(() => import('@/pages/admin/Users'), 'Users') },
-          { path: 'tickets', ...lazyPage(() => import('@/pages/admin/AdminTickets'), 'AdminTickets') },
-          { path: 'payments', ...lazyPage(() => import('@/pages/admin/Payments'), 'Payments') },
-          { path: 'payouts', ...lazyPage(() => import('@/pages/admin/Payouts'), 'Payouts') },
+          { path: 'content/published', ...lazyPage(() => import('@/features/admin/pages/ContentManagement'), 'ContentManagement') },
+          { path: 'content/unpublished', ...lazyPage(() => import('@/features/admin/pages/ReviewQueue'), 'ReviewQueue') },
+          { path: 'chapters/pending', ...lazyPage(() => import('@/features/admin/pages/ChapterReviewQueue'), 'ChapterReviewQueue') },
+          { path: 'chapters/:id', ...lazyPage(() => import('@/features/admin/pages/ChapterReview'), 'ChapterReview') },
+          { path: 'content/:id', ...lazyPage(() => import('@/features/admin/pages/ContentDetail'), 'ContentDetail') },
+          { path: 'reports', ...lazyPage(() => import('@/features/admin/pages/Reports'), 'Reports') },
+          { path: 'novel-moderation', element: <Navigate to="/admin/content/unpublished" replace /> },
+          { path: 'users', ...lazyPage(() => import('@/features/admin/pages/Users'), 'Users') },
+          { path: 'tickets', ...lazyPage(() => import('@/features/admin/pages/AdminTickets'), 'AdminTickets') },
+          { path: 'payments', ...lazyPage(() => import('@/features/admin/pages/Payments'), 'Payments') },
+          { path: 'payouts', ...lazyPage(() => import('@/features/admin/pages/Payouts'), 'Payouts') },
+          { path: 'ai', ...lazyPage(() => import('@/features/admin/pages/AiSettings'), 'AiSettings') },
         ],
       },
     ],

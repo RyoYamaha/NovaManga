@@ -600,6 +600,7 @@ export type WalletLedgerCreateOrConnectWithoutUserInput = {
 
 export type WalletLedgerCreateManyUserInputEnvelope = {
   data: Prisma.WalletLedgerCreateManyUserInput | Prisma.WalletLedgerCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type WalletLedgerUpsertWithWhereUniqueWithoutUserInput = {
@@ -665,6 +666,7 @@ export type WalletLedgerCreateOrConnectWithoutWalletInput = {
 
 export type WalletLedgerCreateManyWalletInputEnvelope = {
   data: Prisma.WalletLedgerCreateManyWalletInput | Prisma.WalletLedgerCreateManyWalletInput[]
+  skipDuplicates?: boolean
 }
 
 export type WalletLedgerUpsertWithWhereUniqueWithoutWalletInput = {
@@ -796,7 +798,35 @@ export type WalletLedgerSelect<ExtArgs extends runtime.Types.Extensions.Internal
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["walletLedger"]>
 
+export type WalletLedgerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  walletId?: boolean
+  userId?: boolean
+  amountCoins?: boolean
+  balanceAfter?: boolean
+  transactionType?: boolean
+  sourceType?: boolean
+  sourceReference?: boolean
+  description?: boolean
+  createdAt?: boolean
+  wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["walletLedger"]>
 
+export type WalletLedgerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  walletId?: boolean
+  userId?: boolean
+  amountCoins?: boolean
+  balanceAfter?: boolean
+  transactionType?: boolean
+  sourceType?: boolean
+  sourceReference?: boolean
+  description?: boolean
+  createdAt?: boolean
+  wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["walletLedger"]>
 
 export type WalletLedgerSelectScalar = {
   id?: boolean
@@ -813,6 +843,14 @@ export type WalletLedgerSelectScalar = {
 
 export type WalletLedgerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "walletId" | "userId" | "amountCoins" | "balanceAfter" | "transactionType" | "sourceType" | "sourceReference" | "description" | "createdAt", ExtArgs["result"]["walletLedger"]>
 export type WalletLedgerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type WalletLedgerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type WalletLedgerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -952,6 +990,30 @@ export interface WalletLedgerDelegate<ExtArgs extends runtime.Types.Extensions.I
   createMany<T extends WalletLedgerCreateManyArgs>(args?: Prisma.SelectSubset<T, WalletLedgerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many WalletLedgers and returns the data saved in the database.
+   * @param {WalletLedgerCreateManyAndReturnArgs} args - Arguments to create many WalletLedgers.
+   * @example
+   * // Create many WalletLedgers
+   * const walletLedger = await prisma.walletLedger.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many WalletLedgers and only return the `id`
+   * const walletLedgerWithIdOnly = await prisma.walletLedger.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends WalletLedgerCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, WalletLedgerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletLedgerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a WalletLedger.
    * @param {WalletLedgerDeleteArgs} args - Arguments to delete one WalletLedger.
    * @example
@@ -1014,6 +1076,36 @@ export interface WalletLedgerDelegate<ExtArgs extends runtime.Types.Extensions.I
    * 
    */
   updateMany<T extends WalletLedgerUpdateManyArgs>(args: Prisma.SelectSubset<T, WalletLedgerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more WalletLedgers and returns the data updated in the database.
+   * @param {WalletLedgerUpdateManyAndReturnArgs} args - Arguments to update many WalletLedgers.
+   * @example
+   * // Update many WalletLedgers
+   * const walletLedger = await prisma.walletLedger.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more WalletLedgers and only return the `id`
+   * const walletLedgerWithIdOnly = await prisma.walletLedger.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends WalletLedgerUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, WalletLedgerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletLedgerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one WalletLedger.
@@ -1449,6 +1541,30 @@ export type WalletLedgerCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many WalletLedgers.
    */
   data: Prisma.WalletLedgerCreateManyInput | Prisma.WalletLedgerCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * WalletLedger createManyAndReturn
+ */
+export type WalletLedgerCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WalletLedger
+   */
+  select?: Prisma.WalletLedgerSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the WalletLedger
+   */
+  omit?: Prisma.WalletLedgerOmit<ExtArgs> | null
+  /**
+   * The data used to create many WalletLedgers.
+   */
+  data: Prisma.WalletLedgerCreateManyInput | Prisma.WalletLedgerCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WalletLedgerIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1493,6 +1609,36 @@ export type WalletLedgerUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many WalletLedgers to update.
    */
   limit?: number
+}
+
+/**
+ * WalletLedger updateManyAndReturn
+ */
+export type WalletLedgerUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WalletLedger
+   */
+  select?: Prisma.WalletLedgerSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the WalletLedger
+   */
+  omit?: Prisma.WalletLedgerOmit<ExtArgs> | null
+  /**
+   * The data used to update WalletLedgers.
+   */
+  data: Prisma.XOR<Prisma.WalletLedgerUpdateManyMutationInput, Prisma.WalletLedgerUncheckedUpdateManyInput>
+  /**
+   * Filter which WalletLedgers to update
+   */
+  where?: Prisma.WalletLedgerWhereInput
+  /**
+   * Limit how many WalletLedgers to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WalletLedgerIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

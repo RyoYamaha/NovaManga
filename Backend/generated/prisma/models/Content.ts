@@ -44,6 +44,9 @@ export type ContentMinAggregateOutputType = {
   ownershipTier: string | null
   publicationStatus: string | null
   reviewFeedback: string | null
+  aiModerationStatus: string | null
+  aiModerationReason: string | null
+  aiModeratedAt: Date | null
   storyStatus: string | null
   coverImageUrl: string | null
   pricingType: string | null
@@ -66,6 +69,9 @@ export type ContentMaxAggregateOutputType = {
   ownershipTier: string | null
   publicationStatus: string | null
   reviewFeedback: string | null
+  aiModerationStatus: string | null
+  aiModerationReason: string | null
+  aiModeratedAt: Date | null
   storyStatus: string | null
   coverImageUrl: string | null
   pricingType: string | null
@@ -88,6 +94,9 @@ export type ContentCountAggregateOutputType = {
   ownershipTier: number
   publicationStatus: number
   reviewFeedback: number
+  aiModerationStatus: number
+  aiModerationReason: number
+  aiModeratedAt: number
   storyStatus: number
   coverImageUrl: number
   pricingType: number
@@ -122,6 +131,9 @@ export type ContentMinAggregateInputType = {
   ownershipTier?: true
   publicationStatus?: true
   reviewFeedback?: true
+  aiModerationStatus?: true
+  aiModerationReason?: true
+  aiModeratedAt?: true
   storyStatus?: true
   coverImageUrl?: true
   pricingType?: true
@@ -144,6 +156,9 @@ export type ContentMaxAggregateInputType = {
   ownershipTier?: true
   publicationStatus?: true
   reviewFeedback?: true
+  aiModerationStatus?: true
+  aiModerationReason?: true
+  aiModeratedAt?: true
   storyStatus?: true
   coverImageUrl?: true
   pricingType?: true
@@ -166,6 +181,9 @@ export type ContentCountAggregateInputType = {
   ownershipTier?: true
   publicationStatus?: true
   reviewFeedback?: true
+  aiModerationStatus?: true
+  aiModerationReason?: true
+  aiModeratedAt?: true
   storyStatus?: true
   coverImageUrl?: true
   pricingType?: true
@@ -275,6 +293,9 @@ export type ContentGroupByOutputType = {
   ownershipTier: string
   publicationStatus: string
   reviewFeedback: string | null
+  aiModerationStatus: string | null
+  aiModerationReason: string | null
+  aiModeratedAt: Date | null
   storyStatus: string
   coverImageUrl: string | null
   pricingType: string
@@ -320,6 +341,9 @@ export type ContentWhereInput = {
   ownershipTier?: Prisma.StringFilter<"Content"> | string
   publicationStatus?: Prisma.StringFilter<"Content"> | string
   reviewFeedback?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModerationStatus?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModerationReason?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableFilter<"Content"> | Date | string | null
   storyStatus?: Prisma.StringFilter<"Content"> | string
   coverImageUrl?: Prisma.StringNullableFilter<"Content"> | string | null
   pricingType?: Prisma.StringFilter<"Content"> | string
@@ -350,6 +374,7 @@ export type ContentWhereInput = {
   creatorRevenues?: Prisma.CreatorRevenueListRelationFilter
   knowledgeBase?: Prisma.XOR<Prisma.ContentKnowledgeBaseNullableScalarRelationFilter, Prisma.ContentKnowledgeBaseWhereInput> | null
   aiConversations?: Prisma.AIConversationListRelationFilter
+  aiChatSessions?: Prisma.AiChatSessionListRelationFilter
   recommendedIn?: Prisma.RecommendationCacheListRelationFilter
 }
 
@@ -361,6 +386,9 @@ export type ContentOrderByWithRelationInput = {
   ownershipTier?: Prisma.SortOrder
   publicationStatus?: Prisma.SortOrder
   reviewFeedback?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   storyStatus?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   pricingType?: Prisma.SortOrder
@@ -391,6 +419,7 @@ export type ContentOrderByWithRelationInput = {
   creatorRevenues?: Prisma.CreatorRevenueOrderByRelationAggregateInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseOrderByWithRelationInput
   aiConversations?: Prisma.AIConversationOrderByRelationAggregateInput
+  aiChatSessions?: Prisma.AiChatSessionOrderByRelationAggregateInput
   recommendedIn?: Prisma.RecommendationCacheOrderByRelationAggregateInput
 }
 
@@ -405,6 +434,9 @@ export type ContentWhereUniqueInput = Prisma.AtLeast<{
   ownershipTier?: Prisma.StringFilter<"Content"> | string
   publicationStatus?: Prisma.StringFilter<"Content"> | string
   reviewFeedback?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModerationStatus?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModerationReason?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableFilter<"Content"> | Date | string | null
   storyStatus?: Prisma.StringFilter<"Content"> | string
   coverImageUrl?: Prisma.StringNullableFilter<"Content"> | string | null
   pricingType?: Prisma.StringFilter<"Content"> | string
@@ -435,6 +467,7 @@ export type ContentWhereUniqueInput = Prisma.AtLeast<{
   creatorRevenues?: Prisma.CreatorRevenueListRelationFilter
   knowledgeBase?: Prisma.XOR<Prisma.ContentKnowledgeBaseNullableScalarRelationFilter, Prisma.ContentKnowledgeBaseWhereInput> | null
   aiConversations?: Prisma.AIConversationListRelationFilter
+  aiChatSessions?: Prisma.AiChatSessionListRelationFilter
   recommendedIn?: Prisma.RecommendationCacheListRelationFilter
 }, "id">
 
@@ -446,6 +479,9 @@ export type ContentOrderByWithAggregationInput = {
   ownershipTier?: Prisma.SortOrder
   publicationStatus?: Prisma.SortOrder
   reviewFeedback?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   storyStatus?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   pricingType?: Prisma.SortOrder
@@ -476,6 +512,9 @@ export type ContentScalarWhereWithAggregatesInput = {
   ownershipTier?: Prisma.StringWithAggregatesFilter<"Content"> | string
   publicationStatus?: Prisma.StringWithAggregatesFilter<"Content"> | string
   reviewFeedback?: Prisma.StringNullableWithAggregatesFilter<"Content"> | string | null
+  aiModerationStatus?: Prisma.StringNullableWithAggregatesFilter<"Content"> | string | null
+  aiModerationReason?: Prisma.StringNullableWithAggregatesFilter<"Content"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Content"> | Date | string | null
   storyStatus?: Prisma.StringWithAggregatesFilter<"Content"> | string
   coverImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Content"> | string | null
   pricingType?: Prisma.StringWithAggregatesFilter<"Content"> | string
@@ -498,6 +537,9 @@ export type ContentCreateInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -525,6 +567,7 @@ export type ContentCreateInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -536,6 +579,9 @@ export type ContentUncheckedCreateInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -563,6 +609,7 @@ export type ContentUncheckedCreateInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -574,6 +621,9 @@ export type ContentUpdateInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -601,6 +651,7 @@ export type ContentUpdateInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -612,6 +663,9 @@ export type ContentUncheckedUpdateInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -639,6 +693,7 @@ export type ContentUncheckedUpdateInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -650,6 +705,9 @@ export type ContentCreateManyInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -672,6 +730,9 @@ export type ContentUpdateManyMutationInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -691,6 +752,9 @@ export type ContentUncheckedUpdateManyInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -728,6 +792,9 @@ export type ContentCountOrderByAggregateInput = {
   ownershipTier?: Prisma.SortOrder
   publicationStatus?: Prisma.SortOrder
   reviewFeedback?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrder
   storyStatus?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrder
   pricingType?: Prisma.SortOrder
@@ -755,6 +822,9 @@ export type ContentMaxOrderByAggregateInput = {
   ownershipTier?: Prisma.SortOrder
   publicationStatus?: Prisma.SortOrder
   reviewFeedback?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrder
   storyStatus?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrder
   pricingType?: Prisma.SortOrder
@@ -777,6 +847,9 @@ export type ContentMinOrderByAggregateInput = {
   ownershipTier?: Prisma.SortOrder
   publicationStatus?: Prisma.SortOrder
   reviewFeedback?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrder
   storyStatus?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrder
   pricingType?: Prisma.SortOrder
@@ -829,6 +902,10 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -839,10 +916,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -1167,6 +1240,22 @@ export type ContentUpdateOneRequiredWithoutAiConversationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ContentUpdateToOneWithWhereWithoutAiConversationsInput, Prisma.ContentUpdateWithoutAiConversationsInput>, Prisma.ContentUncheckedUpdateWithoutAiConversationsInput>
 }
 
+export type ContentCreateNestedOneWithoutAiChatSessionsInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutAiChatSessionsInput, Prisma.ContentUncheckedCreateWithoutAiChatSessionsInput>
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutAiChatSessionsInput
+  connect?: Prisma.ContentWhereUniqueInput
+}
+
+export type ContentUpdateOneWithoutAiChatSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutAiChatSessionsInput, Prisma.ContentUncheckedCreateWithoutAiChatSessionsInput>
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutAiChatSessionsInput
+  upsert?: Prisma.ContentUpsertWithoutAiChatSessionsInput
+  disconnect?: Prisma.ContentWhereInput | boolean
+  delete?: Prisma.ContentWhereInput | boolean
+  connect?: Prisma.ContentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ContentUpdateToOneWithWhereWithoutAiChatSessionsInput, Prisma.ContentUpdateWithoutAiChatSessionsInput>, Prisma.ContentUncheckedUpdateWithoutAiChatSessionsInput>
+}
+
 export type ContentCreateNestedOneWithoutRecommendedInInput = {
   create?: Prisma.XOR<Prisma.ContentCreateWithoutRecommendedInInput, Prisma.ContentUncheckedCreateWithoutRecommendedInInput>
   connectOrCreate?: Prisma.ContentCreateOrConnectWithoutRecommendedInInput
@@ -1189,6 +1278,9 @@ export type ContentCreateWithoutFanTranslationsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1215,6 +1307,7 @@ export type ContentCreateWithoutFanTranslationsInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -1226,6 +1319,9 @@ export type ContentUncheckedCreateWithoutFanTranslationsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1252,6 +1348,7 @@ export type ContentUncheckedCreateWithoutFanTranslationsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -1268,6 +1365,9 @@ export type ContentCreateWithoutParentContentInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1294,6 +1394,7 @@ export type ContentCreateWithoutParentContentInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -1305,6 +1406,9 @@ export type ContentUncheckedCreateWithoutParentContentInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1331,6 +1435,7 @@ export type ContentUncheckedCreateWithoutParentContentInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -1341,6 +1446,7 @@ export type ContentCreateOrConnectWithoutParentContentInput = {
 
 export type ContentCreateManyParentContentInputEnvelope = {
   data: Prisma.ContentCreateManyParentContentInput | Prisma.ContentCreateManyParentContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentUpsertWithoutFanTranslationsInput = {
@@ -1362,6 +1468,9 @@ export type ContentUpdateWithoutFanTranslationsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1388,6 +1497,7 @@ export type ContentUpdateWithoutFanTranslationsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -1399,6 +1509,9 @@ export type ContentUncheckedUpdateWithoutFanTranslationsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1425,6 +1538,7 @@ export type ContentUncheckedUpdateWithoutFanTranslationsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -1455,6 +1569,9 @@ export type ContentScalarWhereInput = {
   ownershipTier?: Prisma.StringFilter<"Content"> | string
   publicationStatus?: Prisma.StringFilter<"Content"> | string
   reviewFeedback?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModerationStatus?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModerationReason?: Prisma.StringNullableFilter<"Content"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableFilter<"Content"> | Date | string | null
   storyStatus?: Prisma.StringFilter<"Content"> | string
   coverImageUrl?: Prisma.StringNullableFilter<"Content"> | string | null
   pricingType?: Prisma.StringFilter<"Content"> | string
@@ -1477,6 +1594,9 @@ export type ContentCreateWithoutMangaDetailInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1503,6 +1623,7 @@ export type ContentCreateWithoutMangaDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -1514,6 +1635,9 @@ export type ContentUncheckedCreateWithoutMangaDetailInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1540,6 +1664,7 @@ export type ContentUncheckedCreateWithoutMangaDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -1567,6 +1692,9 @@ export type ContentUpdateWithoutMangaDetailInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1593,6 +1721,7 @@ export type ContentUpdateWithoutMangaDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -1604,6 +1733,9 @@ export type ContentUncheckedUpdateWithoutMangaDetailInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1630,6 +1762,7 @@ export type ContentUncheckedUpdateWithoutMangaDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -1641,6 +1774,9 @@ export type ContentCreateWithoutNovelDetailInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1667,6 +1803,7 @@ export type ContentCreateWithoutNovelDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -1678,6 +1815,9 @@ export type ContentUncheckedCreateWithoutNovelDetailInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1704,6 +1844,7 @@ export type ContentUncheckedCreateWithoutNovelDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -1731,6 +1872,9 @@ export type ContentUpdateWithoutNovelDetailInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1757,6 +1901,7 @@ export type ContentUpdateWithoutNovelDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -1768,6 +1913,9 @@ export type ContentUncheckedUpdateWithoutNovelDetailInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1794,6 +1942,7 @@ export type ContentUncheckedUpdateWithoutNovelDetailInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -1805,6 +1954,9 @@ export type ContentCreateWithoutChaptersInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1831,6 +1983,7 @@ export type ContentCreateWithoutChaptersInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -1842,6 +1995,9 @@ export type ContentUncheckedCreateWithoutChaptersInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1868,6 +2024,7 @@ export type ContentUncheckedCreateWithoutChaptersInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -1895,6 +2052,9 @@ export type ContentUpdateWithoutChaptersInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1921,6 +2081,7 @@ export type ContentUpdateWithoutChaptersInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -1932,6 +2093,9 @@ export type ContentUncheckedUpdateWithoutChaptersInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1958,6 +2122,7 @@ export type ContentUncheckedUpdateWithoutChaptersInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -1969,6 +2134,9 @@ export type ContentCreateWithoutGenresInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -1995,6 +2163,7 @@ export type ContentCreateWithoutGenresInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2006,6 +2175,9 @@ export type ContentUncheckedCreateWithoutGenresInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2032,6 +2204,7 @@ export type ContentUncheckedCreateWithoutGenresInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2059,6 +2232,9 @@ export type ContentUpdateWithoutGenresInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2085,6 +2261,7 @@ export type ContentUpdateWithoutGenresInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -2096,6 +2273,9 @@ export type ContentUncheckedUpdateWithoutGenresInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2122,6 +2302,7 @@ export type ContentUncheckedUpdateWithoutGenresInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -2133,6 +2314,9 @@ export type ContentCreateWithoutTagsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2159,6 +2343,7 @@ export type ContentCreateWithoutTagsInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2170,6 +2355,9 @@ export type ContentUncheckedCreateWithoutTagsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2196,6 +2384,7 @@ export type ContentUncheckedCreateWithoutTagsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2223,6 +2412,9 @@ export type ContentUpdateWithoutTagsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2249,6 +2441,7 @@ export type ContentUpdateWithoutTagsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -2260,6 +2453,9 @@ export type ContentUncheckedUpdateWithoutTagsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2286,6 +2482,7 @@ export type ContentUncheckedUpdateWithoutTagsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -2297,6 +2494,9 @@ export type ContentCreateWithoutPublisherInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2323,6 +2523,7 @@ export type ContentCreateWithoutPublisherInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2334,6 +2535,9 @@ export type ContentUncheckedCreateWithoutPublisherInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2360,6 +2564,7 @@ export type ContentUncheckedCreateWithoutPublisherInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2370,6 +2575,7 @@ export type ContentCreateOrConnectWithoutPublisherInput = {
 
 export type ContentCreateManyPublisherInputEnvelope = {
   data: Prisma.ContentCreateManyPublisherInput | Prisma.ContentCreateManyPublisherInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentUpsertWithWhereUniqueWithoutPublisherInput = {
@@ -2396,6 +2602,9 @@ export type ContentCreateWithoutUploaderInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2422,6 +2631,7 @@ export type ContentCreateWithoutUploaderInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2433,6 +2643,9 @@ export type ContentUncheckedCreateWithoutUploaderInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2459,6 +2672,7 @@ export type ContentUncheckedCreateWithoutUploaderInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2469,6 +2683,7 @@ export type ContentCreateOrConnectWithoutUploaderInput = {
 
 export type ContentCreateManyUploaderInputEnvelope = {
   data: Prisma.ContentCreateManyUploaderInput | Prisma.ContentCreateManyUploaderInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentUpsertWithWhereUniqueWithoutUploaderInput = {
@@ -2495,6 +2710,9 @@ export type ContentCreateWithoutPurchasesInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2521,6 +2739,7 @@ export type ContentCreateWithoutPurchasesInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2532,6 +2751,9 @@ export type ContentUncheckedCreateWithoutPurchasesInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2558,6 +2780,7 @@ export type ContentUncheckedCreateWithoutPurchasesInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2585,6 +2808,9 @@ export type ContentUpdateWithoutPurchasesInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2611,6 +2837,7 @@ export type ContentUpdateWithoutPurchasesInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -2622,6 +2849,9 @@ export type ContentUncheckedUpdateWithoutPurchasesInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2648,6 +2878,7 @@ export type ContentUncheckedUpdateWithoutPurchasesInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -2659,6 +2890,9 @@ export type ContentCreateWithoutCreatorRevenuesInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2685,6 +2919,7 @@ export type ContentCreateWithoutCreatorRevenuesInput = {
   purchases?: Prisma.ContentPurchaseCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2696,6 +2931,9 @@ export type ContentUncheckedCreateWithoutCreatorRevenuesInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2722,6 +2960,7 @@ export type ContentUncheckedCreateWithoutCreatorRevenuesInput = {
   purchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2749,6 +2988,9 @@ export type ContentUpdateWithoutCreatorRevenuesInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2775,6 +3017,7 @@ export type ContentUpdateWithoutCreatorRevenuesInput = {
   purchases?: Prisma.ContentPurchaseUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -2786,6 +3029,9 @@ export type ContentUncheckedUpdateWithoutCreatorRevenuesInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2812,6 +3058,7 @@ export type ContentUncheckedUpdateWithoutCreatorRevenuesInput = {
   purchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -2823,6 +3070,9 @@ export type ContentCreateWithoutBookmarksInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2849,6 +3099,7 @@ export type ContentCreateWithoutBookmarksInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -2860,6 +3111,9 @@ export type ContentUncheckedCreateWithoutBookmarksInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -2886,6 +3140,7 @@ export type ContentUncheckedCreateWithoutBookmarksInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -2913,6 +3168,9 @@ export type ContentUpdateWithoutBookmarksInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2939,6 +3197,7 @@ export type ContentUpdateWithoutBookmarksInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -2950,6 +3209,9 @@ export type ContentUncheckedUpdateWithoutBookmarksInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2976,6 +3238,7 @@ export type ContentUncheckedUpdateWithoutBookmarksInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -2987,6 +3250,9 @@ export type ContentCreateWithoutFavoritesInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3013,6 +3279,7 @@ export type ContentCreateWithoutFavoritesInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -3024,6 +3291,9 @@ export type ContentUncheckedCreateWithoutFavoritesInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3050,6 +3320,7 @@ export type ContentUncheckedCreateWithoutFavoritesInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -3077,6 +3348,9 @@ export type ContentUpdateWithoutFavoritesInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3103,6 +3377,7 @@ export type ContentUpdateWithoutFavoritesInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -3114,6 +3389,9 @@ export type ContentUncheckedUpdateWithoutFavoritesInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3140,6 +3418,7 @@ export type ContentUncheckedUpdateWithoutFavoritesInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -3151,6 +3430,9 @@ export type ContentCreateWithoutRatingsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3177,6 +3459,7 @@ export type ContentCreateWithoutRatingsInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -3188,6 +3471,9 @@ export type ContentUncheckedCreateWithoutRatingsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3214,6 +3500,7 @@ export type ContentUncheckedCreateWithoutRatingsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -3241,6 +3528,9 @@ export type ContentUpdateWithoutRatingsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3267,6 +3557,7 @@ export type ContentUpdateWithoutRatingsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -3278,6 +3569,9 @@ export type ContentUncheckedUpdateWithoutRatingsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3304,6 +3598,7 @@ export type ContentUncheckedUpdateWithoutRatingsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -3315,6 +3610,9 @@ export type ContentCreateWithoutCommentsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3341,6 +3639,7 @@ export type ContentCreateWithoutCommentsInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -3352,6 +3651,9 @@ export type ContentUncheckedCreateWithoutCommentsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3378,6 +3680,7 @@ export type ContentUncheckedCreateWithoutCommentsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -3405,6 +3708,9 @@ export type ContentUpdateWithoutCommentsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3431,6 +3737,7 @@ export type ContentUpdateWithoutCommentsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -3442,6 +3749,9 @@ export type ContentUncheckedUpdateWithoutCommentsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3468,6 +3778,7 @@ export type ContentUncheckedUpdateWithoutCommentsInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -3479,6 +3790,9 @@ export type ContentCreateWithoutReadingProgressInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3505,6 +3819,7 @@ export type ContentCreateWithoutReadingProgressInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -3516,6 +3831,9 @@ export type ContentUncheckedCreateWithoutReadingProgressInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3542,6 +3860,7 @@ export type ContentUncheckedCreateWithoutReadingProgressInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -3569,6 +3888,9 @@ export type ContentUpdateWithoutReadingProgressInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3595,6 +3917,7 @@ export type ContentUpdateWithoutReadingProgressInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -3606,6 +3929,9 @@ export type ContentUncheckedUpdateWithoutReadingProgressInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3632,6 +3958,7 @@ export type ContentUncheckedUpdateWithoutReadingProgressInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -3643,6 +3970,9 @@ export type ContentCreateWithoutKnowledgeBaseInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3669,6 +3999,7 @@ export type ContentCreateWithoutKnowledgeBaseInput = {
   purchases?: Prisma.ContentPurchaseCreateNestedManyWithoutContentInput
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -3680,6 +4011,9 @@ export type ContentUncheckedCreateWithoutKnowledgeBaseInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3706,6 +4040,7 @@ export type ContentUncheckedCreateWithoutKnowledgeBaseInput = {
   purchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutContentInput
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -3733,6 +4068,9 @@ export type ContentUpdateWithoutKnowledgeBaseInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3759,6 +4097,7 @@ export type ContentUpdateWithoutKnowledgeBaseInput = {
   purchases?: Prisma.ContentPurchaseUpdateManyWithoutContentNestedInput
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -3770,6 +4109,9 @@ export type ContentUncheckedUpdateWithoutKnowledgeBaseInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3796,6 +4138,7 @@ export type ContentUncheckedUpdateWithoutKnowledgeBaseInput = {
   purchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutContentNestedInput
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -3807,6 +4150,9 @@ export type ContentCreateWithoutAiConversationsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3833,6 +4179,7 @@ export type ContentCreateWithoutAiConversationsInput = {
   purchases?: Prisma.ContentPurchaseCreateNestedManyWithoutContentInput
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
@@ -3844,6 +4191,9 @@ export type ContentUncheckedCreateWithoutAiConversationsInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3870,6 +4220,7 @@ export type ContentUncheckedCreateWithoutAiConversationsInput = {
   purchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutContentInput
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
 }
 
@@ -3897,6 +4248,9 @@ export type ContentUpdateWithoutAiConversationsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3923,6 +4277,7 @@ export type ContentUpdateWithoutAiConversationsInput = {
   purchases?: Prisma.ContentPurchaseUpdateManyWithoutContentNestedInput
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -3934,6 +4289,9 @@ export type ContentUncheckedUpdateWithoutAiConversationsInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3960,10 +4318,11 @@ export type ContentUncheckedUpdateWithoutAiConversationsInput = {
   purchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutContentNestedInput
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
-export type ContentCreateWithoutRecommendedInInput = {
+export type ContentCreateWithoutAiChatSessionsInput = {
   id?: string
   title: string
   synopsis?: string | null
@@ -3971,6 +4330,9 @@ export type ContentCreateWithoutRecommendedInInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -3998,9 +4360,10 @@ export type ContentCreateWithoutRecommendedInInput = {
   creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  recommendedIn?: Prisma.RecommendationCacheCreateNestedManyWithoutContentInput
 }
 
-export type ContentUncheckedCreateWithoutRecommendedInInput = {
+export type ContentUncheckedCreateWithoutAiChatSessionsInput = {
   id?: string
   title: string
   synopsis?: string | null
@@ -4008,6 +4371,9 @@ export type ContentUncheckedCreateWithoutRecommendedInInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -4035,6 +4401,187 @@ export type ContentUncheckedCreateWithoutRecommendedInInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  recommendedIn?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutContentInput
+}
+
+export type ContentCreateOrConnectWithoutAiChatSessionsInput = {
+  where: Prisma.ContentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ContentCreateWithoutAiChatSessionsInput, Prisma.ContentUncheckedCreateWithoutAiChatSessionsInput>
+}
+
+export type ContentUpsertWithoutAiChatSessionsInput = {
+  update: Prisma.XOR<Prisma.ContentUpdateWithoutAiChatSessionsInput, Prisma.ContentUncheckedUpdateWithoutAiChatSessionsInput>
+  create: Prisma.XOR<Prisma.ContentCreateWithoutAiChatSessionsInput, Prisma.ContentUncheckedCreateWithoutAiChatSessionsInput>
+  where?: Prisma.ContentWhereInput
+}
+
+export type ContentUpdateToOneWithWhereWithoutAiChatSessionsInput = {
+  where?: Prisma.ContentWhereInput
+  data: Prisma.XOR<Prisma.ContentUpdateWithoutAiChatSessionsInput, Prisma.ContentUncheckedUpdateWithoutAiChatSessionsInput>
+}
+
+export type ContentUpdateWithoutAiChatSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  synopsis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
+  publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricingType?: Prisma.StringFieldUpdateOperationsInput | string
+  priceCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  freeChapters?: Prisma.IntFieldUpdateOperationsInput | number
+  allowCommunityTranslation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pricingChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uploader?: Prisma.UserUpdateOneRequiredWithoutUploadedContentsNestedInput
+  publisher?: Prisma.PublisherUpdateOneWithoutContentsNestedInput
+  parentContent?: Prisma.ContentUpdateOneWithoutFanTranslationsNestedInput
+  fanTranslations?: Prisma.ContentUpdateManyWithoutParentContentNestedInput
+  mangaDetail?: Prisma.MangaDetailUpdateOneWithoutContentNestedInput
+  novelDetail?: Prisma.NovelDetailUpdateOneWithoutContentNestedInput
+  chapters?: Prisma.ChapterUpdateManyWithoutContentNestedInput
+  genres?: Prisma.ContentGenreUpdateManyWithoutContentNestedInput
+  tags?: Prisma.ContentTagUpdateManyWithoutContentNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutContentNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutContentNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutContentNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutContentNestedInput
+  readingProgress?: Prisma.ReadingProgressUpdateManyWithoutContentNestedInput
+  purchases?: Prisma.ContentPurchaseUpdateManyWithoutContentNestedInput
+  creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
+  knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
+  aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
+}
+
+export type ContentUncheckedUpdateWithoutAiChatSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  synopsis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
+  publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricingType?: Prisma.StringFieldUpdateOperationsInput | string
+  priceCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  freeChapters?: Prisma.IntFieldUpdateOperationsInput | number
+  allowCommunityTranslation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pricingChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploaderId?: Prisma.StringFieldUpdateOperationsInput | string
+  publisherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentContentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fanTranslations?: Prisma.ContentUncheckedUpdateManyWithoutParentContentNestedInput
+  mangaDetail?: Prisma.MangaDetailUncheckedUpdateOneWithoutContentNestedInput
+  novelDetail?: Prisma.NovelDetailUncheckedUpdateOneWithoutContentNestedInput
+  chapters?: Prisma.ChapterUncheckedUpdateManyWithoutContentNestedInput
+  genres?: Prisma.ContentGenreUncheckedUpdateManyWithoutContentNestedInput
+  tags?: Prisma.ContentTagUncheckedUpdateManyWithoutContentNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutContentNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutContentNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutContentNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutContentNestedInput
+  readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutContentNestedInput
+  purchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutContentNestedInput
+  creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
+  knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
+  aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
+}
+
+export type ContentCreateWithoutRecommendedInInput = {
+  id?: string
+  title: string
+  synopsis?: string | null
+  type: string
+  ownershipTier: string
+  publicationStatus?: string
+  reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
+  storyStatus?: string
+  coverImageUrl?: string | null
+  pricingType?: string
+  priceCoins?: number
+  freeChapters?: number
+  allowCommunityTranslation?: boolean
+  pricingChangedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  uploader: Prisma.UserCreateNestedOneWithoutUploadedContentsInput
+  publisher?: Prisma.PublisherCreateNestedOneWithoutContentsInput
+  parentContent?: Prisma.ContentCreateNestedOneWithoutFanTranslationsInput
+  fanTranslations?: Prisma.ContentCreateNestedManyWithoutParentContentInput
+  mangaDetail?: Prisma.MangaDetailCreateNestedOneWithoutContentInput
+  novelDetail?: Prisma.NovelDetailCreateNestedOneWithoutContentInput
+  chapters?: Prisma.ChapterCreateNestedManyWithoutContentInput
+  genres?: Prisma.ContentGenreCreateNestedManyWithoutContentInput
+  tags?: Prisma.ContentTagCreateNestedManyWithoutContentInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutContentInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutContentInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutContentInput
+  comments?: Prisma.CommentCreateNestedManyWithoutContentInput
+  readingProgress?: Prisma.ReadingProgressCreateNestedManyWithoutContentInput
+  purchases?: Prisma.ContentPurchaseCreateNestedManyWithoutContentInput
+  creatorRevenues?: Prisma.CreatorRevenueCreateNestedManyWithoutContentInput
+  knowledgeBase?: Prisma.ContentKnowledgeBaseCreateNestedOneWithoutContentInput
+  aiConversations?: Prisma.AIConversationCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutNovelInput
+}
+
+export type ContentUncheckedCreateWithoutRecommendedInInput = {
+  id?: string
+  title: string
+  synopsis?: string | null
+  type: string
+  ownershipTier: string
+  publicationStatus?: string
+  reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
+  storyStatus?: string
+  coverImageUrl?: string | null
+  pricingType?: string
+  priceCoins?: number
+  freeChapters?: number
+  allowCommunityTranslation?: boolean
+  pricingChangedAt?: Date | string | null
+  uploaderId: string
+  publisherId?: string | null
+  parentContentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fanTranslations?: Prisma.ContentUncheckedCreateNestedManyWithoutParentContentInput
+  mangaDetail?: Prisma.MangaDetailUncheckedCreateNestedOneWithoutContentInput
+  novelDetail?: Prisma.NovelDetailUncheckedCreateNestedOneWithoutContentInput
+  chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutContentInput
+  genres?: Prisma.ContentGenreUncheckedCreateNestedManyWithoutContentInput
+  tags?: Prisma.ContentTagUncheckedCreateNestedManyWithoutContentInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutContentInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutContentInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutContentInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutContentInput
+  readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutContentInput
+  purchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutContentInput
+  creatorRevenues?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutContentInput
+  knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedCreateNestedOneWithoutContentInput
+  aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutContentInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutNovelInput
 }
 
 export type ContentCreateOrConnectWithoutRecommendedInInput = {
@@ -4061,6 +4608,9 @@ export type ContentUpdateWithoutRecommendedInInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4088,6 +4638,7 @@ export type ContentUpdateWithoutRecommendedInInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
 }
 
 export type ContentUncheckedUpdateWithoutRecommendedInInput = {
@@ -4098,6 +4649,9 @@ export type ContentUncheckedUpdateWithoutRecommendedInInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4125,6 +4679,7 @@ export type ContentUncheckedUpdateWithoutRecommendedInInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
 }
 
 export type ContentCreateManyParentContentInput = {
@@ -4135,6 +4690,9 @@ export type ContentCreateManyParentContentInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -4156,6 +4714,9 @@ export type ContentUpdateWithoutParentContentInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4182,6 +4743,7 @@ export type ContentUpdateWithoutParentContentInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -4193,6 +4755,9 @@ export type ContentUncheckedUpdateWithoutParentContentInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4219,6 +4784,7 @@ export type ContentUncheckedUpdateWithoutParentContentInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -4230,6 +4796,9 @@ export type ContentUncheckedUpdateManyWithoutParentContentInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4251,6 +4820,9 @@ export type ContentCreateManyPublisherInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -4272,6 +4844,9 @@ export type ContentUpdateWithoutPublisherInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4298,6 +4873,7 @@ export type ContentUpdateWithoutPublisherInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -4309,6 +4885,9 @@ export type ContentUncheckedUpdateWithoutPublisherInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4335,6 +4914,7 @@ export type ContentUncheckedUpdateWithoutPublisherInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -4346,6 +4926,9 @@ export type ContentUncheckedUpdateManyWithoutPublisherInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4367,6 +4950,9 @@ export type ContentCreateManyUploaderInput = {
   ownershipTier: string
   publicationStatus?: string
   reviewFeedback?: string | null
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   storyStatus?: string
   coverImageUrl?: string | null
   pricingType?: string
@@ -4388,6 +4974,9 @@ export type ContentUpdateWithoutUploaderInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4414,6 +5003,7 @@ export type ContentUpdateWithoutUploaderInput = {
   creatorRevenues?: Prisma.CreatorRevenueUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUpdateManyWithoutContentNestedInput
 }
 
@@ -4425,6 +5015,9 @@ export type ContentUncheckedUpdateWithoutUploaderInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4451,6 +5044,7 @@ export type ContentUncheckedUpdateWithoutUploaderInput = {
   creatorRevenues?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutContentNestedInput
   knowledgeBase?: Prisma.ContentKnowledgeBaseUncheckedUpdateOneWithoutContentNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutContentNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutNovelNestedInput
   recommendedIn?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutContentNestedInput
 }
 
@@ -4462,6 +5056,9 @@ export type ContentUncheckedUpdateManyWithoutUploaderInput = {
   ownershipTier?: Prisma.StringFieldUpdateOperationsInput | string
   publicationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   reviewFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   storyStatus?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pricingType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4493,6 +5090,7 @@ export type ContentCountOutputType = {
   purchases: number
   creatorRevenues: number
   aiConversations: number
+  aiChatSessions: number
   recommendedIn: number
 }
 
@@ -4509,6 +5107,7 @@ export type ContentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   purchases?: boolean | ContentCountOutputTypeCountPurchasesArgs
   creatorRevenues?: boolean | ContentCountOutputTypeCountCreatorRevenuesArgs
   aiConversations?: boolean | ContentCountOutputTypeCountAiConversationsArgs
+  aiChatSessions?: boolean | ContentCountOutputTypeCountAiChatSessionsArgs
   recommendedIn?: boolean | ContentCountOutputTypeCountRecommendedInArgs
 }
 
@@ -4609,6 +5208,13 @@ export type ContentCountOutputTypeCountAiConversationsArgs<ExtArgs extends runti
 /**
  * ContentCountOutputType without action
  */
+export type ContentCountOutputTypeCountAiChatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiChatSessionWhereInput
+}
+
+/**
+ * ContentCountOutputType without action
+ */
 export type ContentCountOutputTypeCountRecommendedInArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RecommendationCacheWhereInput
 }
@@ -4622,6 +5228,9 @@ export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   ownershipTier?: boolean
   publicationStatus?: boolean
   reviewFeedback?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
   storyStatus?: boolean
   coverImageUrl?: boolean
   pricingType?: boolean
@@ -4652,11 +5261,66 @@ export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   creatorRevenues?: boolean | Prisma.Content$creatorRevenuesArgs<ExtArgs>
   knowledgeBase?: boolean | Prisma.Content$knowledgeBaseArgs<ExtArgs>
   aiConversations?: boolean | Prisma.Content$aiConversationsArgs<ExtArgs>
+  aiChatSessions?: boolean | Prisma.Content$aiChatSessionsArgs<ExtArgs>
   recommendedIn?: boolean | Prisma.Content$recommendedInArgs<ExtArgs>
   _count?: boolean | Prisma.ContentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
+export type ContentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  synopsis?: boolean
+  type?: boolean
+  ownershipTier?: boolean
+  publicationStatus?: boolean
+  reviewFeedback?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
+  storyStatus?: boolean
+  coverImageUrl?: boolean
+  pricingType?: boolean
+  priceCoins?: boolean
+  freeChapters?: boolean
+  allowCommunityTranslation?: boolean
+  pricingChangedAt?: boolean
+  uploaderId?: boolean
+  publisherId?: boolean
+  parentContentId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  publisher?: boolean | Prisma.Content$publisherArgs<ExtArgs>
+  parentContent?: boolean | Prisma.Content$parentContentArgs<ExtArgs>
+}, ExtArgs["result"]["content"]>
 
+export type ContentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  synopsis?: boolean
+  type?: boolean
+  ownershipTier?: boolean
+  publicationStatus?: boolean
+  reviewFeedback?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
+  storyStatus?: boolean
+  coverImageUrl?: boolean
+  pricingType?: boolean
+  priceCoins?: boolean
+  freeChapters?: boolean
+  allowCommunityTranslation?: boolean
+  pricingChangedAt?: boolean
+  uploaderId?: boolean
+  publisherId?: boolean
+  parentContentId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  publisher?: boolean | Prisma.Content$publisherArgs<ExtArgs>
+  parentContent?: boolean | Prisma.Content$parentContentArgs<ExtArgs>
+}, ExtArgs["result"]["content"]>
 
 export type ContentSelectScalar = {
   id?: boolean
@@ -4666,6 +5330,9 @@ export type ContentSelectScalar = {
   ownershipTier?: boolean
   publicationStatus?: boolean
   reviewFeedback?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
   storyStatus?: boolean
   coverImageUrl?: boolean
   pricingType?: boolean
@@ -4680,7 +5347,7 @@ export type ContentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "synopsis" | "type" | "ownershipTier" | "publicationStatus" | "reviewFeedback" | "storyStatus" | "coverImageUrl" | "pricingType" | "priceCoins" | "freeChapters" | "allowCommunityTranslation" | "pricingChangedAt" | "uploaderId" | "publisherId" | "parentContentId" | "createdAt" | "updatedAt", ExtArgs["result"]["content"]>
+export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "synopsis" | "type" | "ownershipTier" | "publicationStatus" | "reviewFeedback" | "aiModerationStatus" | "aiModerationReason" | "aiModeratedAt" | "storyStatus" | "coverImageUrl" | "pricingType" | "priceCoins" | "freeChapters" | "allowCommunityTranslation" | "pricingChangedAt" | "uploaderId" | "publisherId" | "parentContentId" | "createdAt" | "updatedAt", ExtArgs["result"]["content"]>
 export type ContentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   publisher?: boolean | Prisma.Content$publisherArgs<ExtArgs>
@@ -4700,8 +5367,19 @@ export type ContentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   creatorRevenues?: boolean | Prisma.Content$creatorRevenuesArgs<ExtArgs>
   knowledgeBase?: boolean | Prisma.Content$knowledgeBaseArgs<ExtArgs>
   aiConversations?: boolean | Prisma.Content$aiConversationsArgs<ExtArgs>
+  aiChatSessions?: boolean | Prisma.Content$aiChatSessionsArgs<ExtArgs>
   recommendedIn?: boolean | Prisma.Content$recommendedInArgs<ExtArgs>
   _count?: boolean | Prisma.ContentCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ContentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  publisher?: boolean | Prisma.Content$publisherArgs<ExtArgs>
+  parentContent?: boolean | Prisma.Content$parentContentArgs<ExtArgs>
+}
+export type ContentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  publisher?: boolean | Prisma.Content$publisherArgs<ExtArgs>
+  parentContent?: boolean | Prisma.Content$parentContentArgs<ExtArgs>
 }
 
 export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4725,6 +5403,7 @@ export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     creatorRevenues: Prisma.$CreatorRevenuePayload<ExtArgs>[]
     knowledgeBase: Prisma.$ContentKnowledgeBasePayload<ExtArgs> | null
     aiConversations: Prisma.$AIConversationPayload<ExtArgs>[]
+    aiChatSessions: Prisma.$AiChatSessionPayload<ExtArgs>[]
     recommendedIn: Prisma.$RecommendationCachePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -4735,6 +5414,9 @@ export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     ownershipTier: string
     publicationStatus: string
     reviewFeedback: string | null
+    aiModerationStatus: string | null
+    aiModerationReason: string | null
+    aiModeratedAt: Date | null
     storyStatus: string
     coverImageUrl: string | null
     pricingType: string
@@ -4865,6 +5547,30 @@ export interface ContentDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends ContentCreateManyArgs>(args?: Prisma.SelectSubset<T, ContentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Contents and returns the data saved in the database.
+   * @param {ContentCreateManyAndReturnArgs} args - Arguments to create many Contents.
+   * @example
+   * // Create many Contents
+   * const content = await prisma.content.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Contents and only return the `id`
+   * const contentWithIdOnly = await prisma.content.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ContentCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ContentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Content.
    * @param {ContentDeleteArgs} args - Arguments to delete one Content.
    * @example
@@ -4927,6 +5633,36 @@ export interface ContentDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends ContentUpdateManyArgs>(args: Prisma.SelectSubset<T, ContentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Contents and returns the data updated in the database.
+   * @param {ContentUpdateManyAndReturnArgs} args - Arguments to update many Contents.
+   * @example
+   * // Update many Contents
+   * const content = await prisma.content.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Contents and only return the `id`
+   * const contentWithIdOnly = await prisma.content.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ContentUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ContentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Content.
@@ -5105,6 +5841,7 @@ export interface Prisma__ContentClient<T, Null = never, ExtArgs extends runtime.
   creatorRevenues<T extends Prisma.Content$creatorRevenuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$creatorRevenuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreatorRevenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   knowledgeBase<T extends Prisma.Content$knowledgeBaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$knowledgeBaseArgs<ExtArgs>>): Prisma.Prisma__ContentKnowledgeBaseClient<runtime.Types.Result.GetResult<Prisma.$ContentKnowledgeBasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   aiConversations<T extends Prisma.Content$aiConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$aiConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiChatSessions<T extends Prisma.Content$aiChatSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$aiChatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recommendedIn<T extends Prisma.Content$recommendedInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$recommendedInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecommendationCachePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5142,6 +5879,9 @@ export interface ContentFieldRefs {
   readonly ownershipTier: Prisma.FieldRef<"Content", 'String'>
   readonly publicationStatus: Prisma.FieldRef<"Content", 'String'>
   readonly reviewFeedback: Prisma.FieldRef<"Content", 'String'>
+  readonly aiModerationStatus: Prisma.FieldRef<"Content", 'String'>
+  readonly aiModerationReason: Prisma.FieldRef<"Content", 'String'>
+  readonly aiModeratedAt: Prisma.FieldRef<"Content", 'DateTime'>
   readonly storyStatus: Prisma.FieldRef<"Content", 'String'>
   readonly coverImageUrl: Prisma.FieldRef<"Content", 'String'>
   readonly pricingType: Prisma.FieldRef<"Content", 'String'>
@@ -5388,6 +6128,30 @@ export type ContentCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Contents.
    */
   data: Prisma.ContentCreateManyInput | Prisma.ContentCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Content createManyAndReturn
+ */
+export type ContentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Content
+   */
+  select?: Prisma.ContentSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Content
+   */
+  omit?: Prisma.ContentOmit<ExtArgs> | null
+  /**
+   * The data used to create many Contents.
+   */
+  data: Prisma.ContentCreateManyInput | Prisma.ContentCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -5432,6 +6196,36 @@ export type ContentUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Contents to update.
    */
   limit?: number
+}
+
+/**
+ * Content updateManyAndReturn
+ */
+export type ContentUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Content
+   */
+  select?: Prisma.ContentSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Content
+   */
+  omit?: Prisma.ContentOmit<ExtArgs> | null
+  /**
+   * The data used to update Contents.
+   */
+  data: Prisma.XOR<Prisma.ContentUpdateManyMutationInput, Prisma.ContentUncheckedUpdateManyInput>
+  /**
+   * Filter which Contents to update
+   */
+  where?: Prisma.ContentWhereInput
+  /**
+   * Limit how many Contents to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -5881,6 +6675,30 @@ export type Content$aiConversationsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.AIConversationScalarFieldEnum | Prisma.AIConversationScalarFieldEnum[]
+}
+
+/**
+ * Content.aiChatSessions
+ */
+export type Content$aiChatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiChatSession
+   */
+  select?: Prisma.AiChatSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiChatSession
+   */
+  omit?: Prisma.AiChatSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiChatSessionInclude<ExtArgs> | null
+  where?: Prisma.AiChatSessionWhereInput
+  orderBy?: Prisma.AiChatSessionOrderByWithRelationInput | Prisma.AiChatSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AiChatSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiChatSessionScalarFieldEnum | Prisma.AiChatSessionScalarFieldEnum[]
 }
 
 /**

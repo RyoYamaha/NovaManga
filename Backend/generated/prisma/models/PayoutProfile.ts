@@ -453,7 +453,27 @@ export type PayoutProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["payoutProfile"]>
 
+export type PayoutProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  bankName?: boolean
+  bankBin?: boolean
+  bankAccountNumber?: boolean
+  bankAccountName?: boolean
+  updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["payoutProfile"]>
 
+export type PayoutProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  bankName?: boolean
+  bankBin?: boolean
+  bankAccountNumber?: boolean
+  bankAccountName?: boolean
+  updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["payoutProfile"]>
 
 export type PayoutProfileSelectScalar = {
   id?: boolean
@@ -467,6 +487,12 @@ export type PayoutProfileSelectScalar = {
 
 export type PayoutProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bankName" | "bankBin" | "bankAccountNumber" | "bankAccountName" | "updatedAt", ExtArgs["result"]["payoutProfile"]>
 export type PayoutProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type PayoutProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type PayoutProfileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -601,6 +627,30 @@ export interface PayoutProfileDelegate<ExtArgs extends runtime.Types.Extensions.
   createMany<T extends PayoutProfileCreateManyArgs>(args?: Prisma.SelectSubset<T, PayoutProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many PayoutProfiles and returns the data saved in the database.
+   * @param {PayoutProfileCreateManyAndReturnArgs} args - Arguments to create many PayoutProfiles.
+   * @example
+   * // Create many PayoutProfiles
+   * const payoutProfile = await prisma.payoutProfile.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many PayoutProfiles and only return the `id`
+   * const payoutProfileWithIdOnly = await prisma.payoutProfile.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends PayoutProfileCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, PayoutProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayoutProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a PayoutProfile.
    * @param {PayoutProfileDeleteArgs} args - Arguments to delete one PayoutProfile.
    * @example
@@ -663,6 +713,36 @@ export interface PayoutProfileDelegate<ExtArgs extends runtime.Types.Extensions.
    * 
    */
   updateMany<T extends PayoutProfileUpdateManyArgs>(args: Prisma.SelectSubset<T, PayoutProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more PayoutProfiles and returns the data updated in the database.
+   * @param {PayoutProfileUpdateManyAndReturnArgs} args - Arguments to update many PayoutProfiles.
+   * @example
+   * // Update many PayoutProfiles
+   * const payoutProfile = await prisma.payoutProfile.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more PayoutProfiles and only return the `id`
+   * const payoutProfileWithIdOnly = await prisma.payoutProfile.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends PayoutProfileUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, PayoutProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayoutProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one PayoutProfile.
@@ -1094,6 +1174,30 @@ export type PayoutProfileCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many PayoutProfiles.
    */
   data: Prisma.PayoutProfileCreateManyInput | Prisma.PayoutProfileCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * PayoutProfile createManyAndReturn
+ */
+export type PayoutProfileCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayoutProfile
+   */
+  select?: Prisma.PayoutProfileSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayoutProfile
+   */
+  omit?: Prisma.PayoutProfileOmit<ExtArgs> | null
+  /**
+   * The data used to create many PayoutProfiles.
+   */
+  data: Prisma.PayoutProfileCreateManyInput | Prisma.PayoutProfileCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayoutProfileIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1138,6 +1242,36 @@ export type PayoutProfileUpdateManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many PayoutProfiles to update.
    */
   limit?: number
+}
+
+/**
+ * PayoutProfile updateManyAndReturn
+ */
+export type PayoutProfileUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayoutProfile
+   */
+  select?: Prisma.PayoutProfileSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayoutProfile
+   */
+  omit?: Prisma.PayoutProfileOmit<ExtArgs> | null
+  /**
+   * The data used to update PayoutProfiles.
+   */
+  data: Prisma.XOR<Prisma.PayoutProfileUpdateManyMutationInput, Prisma.PayoutProfileUncheckedUpdateManyInput>
+  /**
+   * Filter which PayoutProfiles to update
+   */
+  where?: Prisma.PayoutProfileWhereInput
+  /**
+   * Limit how many PayoutProfiles to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayoutProfileIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

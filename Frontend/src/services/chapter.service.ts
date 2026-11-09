@@ -1,7 +1,7 @@
 import { api } from '@/lib/api'
 import type { Chapter } from '@/types/chapter'
 import type { ContentType } from '@/types/content'
-import type { CreateChapterDto } from '@/types/author'
+import type { CreateChapterDto } from '@/features/creator/types/author'
 
 const base = (type: ContentType) => (type === 'Manga' ? '/manga' : '/novel')
 
@@ -11,6 +11,9 @@ export const chapterService = {
 
   update: async (type: ContentType, chapterId: string, dto: { title?: string }) =>
     (await api.patch<Chapter>(`${base(type)}/chapters/${chapterId}`, dto)).data,
+
+  deletePending: async (type: ContentType, chapterId: string) =>
+    (await api.delete(`${base(type)}/chapters/${chapterId}`)).data,
 
   uploadMangaPages: async (chapterId: string, files: File[]) => {
     const fd = new FormData()

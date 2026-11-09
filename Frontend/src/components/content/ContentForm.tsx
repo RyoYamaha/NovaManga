@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { isAxiosError } from 'axios'
-import { authorService } from '@/services/author.service'
+import { authorService } from '@/features/creator/api/author.service'
 import { contentService } from '@/services/content.service'
 import { financeService } from '@/services/finance.service'
 import { Button } from '@/components/ui/button'
@@ -15,6 +15,8 @@ import { TagInput } from '@/components/ui/tag-input'
 import { ContentPricingFields } from '@/components/content/ContentPricingFields'
 import { PaidContentPayoutNotice } from '@/components/content/PaidContentPayoutNotice'
 import type { ContentType } from '@/types/content'
+
+import { publisherService } from '@/features/creator/api/publisher.service'
 
 const schema = z.object({
   title: z.string().trim().min(1, 'Nhập tên truyện').max(255, 'Tối đa 255 ký tự'),
@@ -34,12 +36,15 @@ type FormValues = z.infer<typeof schema>
 interface Props {
   type: ContentType
   parentContentId?: string // có giá trị => tạo bản dịch
+  targetRole?: 'author' | 'publisher'
 }
 
-export function ContentForm({ type, parentContentId }: Props) {
+export function ContentForm({ type, parentContentId, targetRole }: Props) {
   const navigate = useNavigate()
   const [serverError, setServerError] = useState<string | null>(null)
   const [coverFile, setCoverFile] = useState<File | null>(null)
+
+  const isPublisher = targetRole === 'publisher' || window.location.pathname.startsWith('/publisher')
 
   const { data: genres = [] } = useQuery({
     queryKey: ['genres'],
@@ -101,7 +106,9 @@ export function ContentForm({ type, parentContentId }: Props) {
     let coverUrl: string | undefined = undefined
     if (coverFile) {
       try {
-        const res = await authorService.uploadCover(coverFile)
+        const res = isPublisher 
+          ? await publisherService.uploadCover(coverFile)
+          : await authorService.uploadCover(coverFile)
         coverUrl = res.url
       } catch {
         setServerError('Tải ảnh bìa thất bại. Vui lòng thử lại.')
@@ -116,18 +123,24 @@ export function ContentForm({ type, parentContentId }: Props) {
       pricingType: parentContentId ? 'free' : v.pricingType,
       priceCoins: parentContentId || v.pricingType === 'free' ? 0 : v.priceCoins,
       freeChapters: parentContentId ? 0 : v.freeChapters,
-      allowCommunityTranslation: false,
+      allowCommunityTranslation: isPublisher 
+        ? (v.pricingType === 'free' && v.allowCommunityTranslation)
+        : false,
       coverImageUrl: coverUrl,
       genreIds: v.genreIds && v.genreIds.length > 0 ? v.genreIds : undefined,
       tagIds: v.tagIds && v.tagIds.length > 0 ? v.tagIds : undefined,
     }
     try {
-      if (parentContentId) {
+      if (isPublisher) {
+        await publisherService.createOriginal(dto)
+        navigate('/publisher/dashboard', { replace: true })
+      } else if (parentContentId) {
         await authorService.createTranslation({ ...dto, parentContentId })
+        navigate('/author/dashboard', { replace: true })
       } else {
         await authorService.createOriginal(dto)
+        navigate('/author/dashboard', { replace: true })
       }
-      navigate('/author/dashboard', { replace: true })
     } catch (err) {
       const status = isAxiosError(err) ? err.response?.status : undefined
       const responseMessage =
@@ -184,6 +197,7 @@ export function ContentForm({ type, parentContentId }: Props) {
           })
         }
         showPricing={!parentContentId}
+        showCommunityTranslation={isPublisher}
       />
       {!parentContentId && pricingType === 'paid' && (
         <PaidContentPayoutNotice

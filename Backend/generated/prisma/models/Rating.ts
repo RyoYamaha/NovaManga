@@ -474,6 +474,7 @@ export type RatingCreateOrConnectWithoutContentInput = {
 
 export type RatingCreateManyContentInputEnvelope = {
   data: Prisma.RatingCreateManyContentInput | Prisma.RatingCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type RatingUpsertWithWhereUniqueWithoutContentInput = {
@@ -524,6 +525,7 @@ export type RatingCreateOrConnectWithoutUserInput = {
 
 export type RatingCreateManyUserInputEnvelope = {
   data: Prisma.RatingCreateManyUserInput | Prisma.RatingCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type RatingUpsertWithWhereUniqueWithoutUserInput = {
@@ -610,7 +612,25 @@ export type RatingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rating"]>
 
+export type RatingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  score?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["rating"]>
 
+export type RatingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  score?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["rating"]>
 
 export type RatingSelectScalar = {
   id?: boolean
@@ -622,6 +642,14 @@ export type RatingSelectScalar = {
 
 export type RatingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "contentId" | "score" | "createdAt", ExtArgs["result"]["rating"]>
 export type RatingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type RatingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type RatingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
@@ -756,6 +784,30 @@ export interface RatingDelegate<ExtArgs extends runtime.Types.Extensions.Interna
   createMany<T extends RatingCreateManyArgs>(args?: Prisma.SelectSubset<T, RatingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Ratings and returns the data saved in the database.
+   * @param {RatingCreateManyAndReturnArgs} args - Arguments to create many Ratings.
+   * @example
+   * // Create many Ratings
+   * const rating = await prisma.rating.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Ratings and only return the `id`
+   * const ratingWithIdOnly = await prisma.rating.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends RatingCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, RatingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Rating.
    * @param {RatingDeleteArgs} args - Arguments to delete one Rating.
    * @example
@@ -818,6 +870,36 @@ export interface RatingDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    * 
    */
   updateMany<T extends RatingUpdateManyArgs>(args: Prisma.SelectSubset<T, RatingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Ratings and returns the data updated in the database.
+   * @param {RatingUpdateManyAndReturnArgs} args - Arguments to update many Ratings.
+   * @example
+   * // Update many Ratings
+   * const rating = await prisma.rating.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Ratings and only return the `id`
+   * const ratingWithIdOnly = await prisma.rating.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends RatingUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, RatingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Rating.
@@ -1248,6 +1330,30 @@ export type RatingCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Ratings.
    */
   data: Prisma.RatingCreateManyInput | Prisma.RatingCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Rating createManyAndReturn
+ */
+export type RatingCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Rating
+   */
+  select?: Prisma.RatingSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Rating
+   */
+  omit?: Prisma.RatingOmit<ExtArgs> | null
+  /**
+   * The data used to create many Ratings.
+   */
+  data: Prisma.RatingCreateManyInput | Prisma.RatingCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RatingIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1292,6 +1398,36 @@ export type RatingUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Ratings to update.
    */
   limit?: number
+}
+
+/**
+ * Rating updateManyAndReturn
+ */
+export type RatingUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Rating
+   */
+  select?: Prisma.RatingSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Rating
+   */
+  omit?: Prisma.RatingOmit<ExtArgs> | null
+  /**
+   * The data used to update Ratings.
+   */
+  data: Prisma.XOR<Prisma.RatingUpdateManyMutationInput, Prisma.RatingUncheckedUpdateManyInput>
+  /**
+   * Filter which Ratings to update
+   */
+  where?: Prisma.RatingWhereInput
+  /**
+   * Limit how many Ratings to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RatingIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

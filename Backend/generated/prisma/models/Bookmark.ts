@@ -406,6 +406,7 @@ export type BookmarkCreateOrConnectWithoutContentInput = {
 
 export type BookmarkCreateManyContentInputEnvelope = {
   data: Prisma.BookmarkCreateManyContentInput | Prisma.BookmarkCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type BookmarkUpsertWithWhereUniqueWithoutContentInput = {
@@ -453,6 +454,7 @@ export type BookmarkCreateOrConnectWithoutUserInput = {
 
 export type BookmarkCreateManyUserInputEnvelope = {
   data: Prisma.BookmarkCreateManyUserInput | Prisma.BookmarkCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type BookmarkUpsertWithWhereUniqueWithoutUserInput = {
@@ -530,7 +532,23 @@ export type BookmarkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bookmark"]>
 
+export type BookmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["bookmark"]>
 
+export type BookmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["bookmark"]>
 
 export type BookmarkSelectScalar = {
   id?: boolean
@@ -541,6 +559,14 @@ export type BookmarkSelectScalar = {
 
 export type BookmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "contentId" | "createdAt", ExtArgs["result"]["bookmark"]>
 export type BookmarkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type BookmarkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type BookmarkIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
@@ -674,6 +700,30 @@ export interface BookmarkDelegate<ExtArgs extends runtime.Types.Extensions.Inter
   createMany<T extends BookmarkCreateManyArgs>(args?: Prisma.SelectSubset<T, BookmarkCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Bookmarks and returns the data saved in the database.
+   * @param {BookmarkCreateManyAndReturnArgs} args - Arguments to create many Bookmarks.
+   * @example
+   * // Create many Bookmarks
+   * const bookmark = await prisma.bookmark.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Bookmarks and only return the `id`
+   * const bookmarkWithIdOnly = await prisma.bookmark.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends BookmarkCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, BookmarkCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Bookmark.
    * @param {BookmarkDeleteArgs} args - Arguments to delete one Bookmark.
    * @example
@@ -736,6 +786,36 @@ export interface BookmarkDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * 
    */
   updateMany<T extends BookmarkUpdateManyArgs>(args: Prisma.SelectSubset<T, BookmarkUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Bookmarks and returns the data updated in the database.
+   * @param {BookmarkUpdateManyAndReturnArgs} args - Arguments to update many Bookmarks.
+   * @example
+   * // Update many Bookmarks
+   * const bookmark = await prisma.bookmark.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Bookmarks and only return the `id`
+   * const bookmarkWithIdOnly = await prisma.bookmark.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends BookmarkUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, BookmarkUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Bookmark.
@@ -1165,6 +1245,30 @@ export type BookmarkCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Bookmarks.
    */
   data: Prisma.BookmarkCreateManyInput | Prisma.BookmarkCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Bookmark createManyAndReturn
+ */
+export type BookmarkCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Bookmark
+   */
+  select?: Prisma.BookmarkSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Bookmark
+   */
+  omit?: Prisma.BookmarkOmit<ExtArgs> | null
+  /**
+   * The data used to create many Bookmarks.
+   */
+  data: Prisma.BookmarkCreateManyInput | Prisma.BookmarkCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookmarkIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1209,6 +1313,36 @@ export type BookmarkUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Bookmarks to update.
    */
   limit?: number
+}
+
+/**
+ * Bookmark updateManyAndReturn
+ */
+export type BookmarkUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Bookmark
+   */
+  select?: Prisma.BookmarkSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Bookmark
+   */
+  omit?: Prisma.BookmarkOmit<ExtArgs> | null
+  /**
+   * The data used to update Bookmarks.
+   */
+  data: Prisma.XOR<Prisma.BookmarkUpdateManyMutationInput, Prisma.BookmarkUncheckedUpdateManyInput>
+  /**
+   * Filter which Bookmarks to update
+   */
+  where?: Prisma.BookmarkWhereInput
+  /**
+   * Limit how many Bookmarks to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookmarkIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

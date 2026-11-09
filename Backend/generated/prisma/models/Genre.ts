@@ -414,7 +414,15 @@ export type GenreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   _count?: boolean | Prisma.GenreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["genre"]>
 
+export type GenreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+}, ExtArgs["result"]["genre"]>
 
+export type GenreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+}, ExtArgs["result"]["genre"]>
 
 export type GenreSelectScalar = {
   id?: boolean
@@ -427,6 +435,8 @@ export type GenreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   userPreferences?: boolean | Prisma.Genre$userPreferencesArgs<ExtArgs>
   _count?: boolean | Prisma.GenreCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type GenreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type GenreIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $GenrePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Genre"
@@ -555,6 +565,30 @@ export interface GenreDelegate<ExtArgs extends runtime.Types.Extensions.Internal
   createMany<T extends GenreCreateManyArgs>(args?: Prisma.SelectSubset<T, GenreCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Genres and returns the data saved in the database.
+   * @param {GenreCreateManyAndReturnArgs} args - Arguments to create many Genres.
+   * @example
+   * // Create many Genres
+   * const genre = await prisma.genre.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Genres and only return the `id`
+   * const genreWithIdOnly = await prisma.genre.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends GenreCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, GenreCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GenrePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Genre.
    * @param {GenreDeleteArgs} args - Arguments to delete one Genre.
    * @example
@@ -617,6 +651,36 @@ export interface GenreDelegate<ExtArgs extends runtime.Types.Extensions.Internal
    * 
    */
   updateMany<T extends GenreUpdateManyArgs>(args: Prisma.SelectSubset<T, GenreUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Genres and returns the data updated in the database.
+   * @param {GenreUpdateManyAndReturnArgs} args - Arguments to update many Genres.
+   * @example
+   * // Update many Genres
+   * const genre = await prisma.genre.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Genres and only return the `id`
+   * const genreWithIdOnly = await prisma.genre.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends GenreUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, GenreUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GenrePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Genre.
@@ -1044,6 +1108,26 @@ export type GenreCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * The data used to create many Genres.
    */
   data: Prisma.GenreCreateManyInput | Prisma.GenreCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Genre createManyAndReturn
+ */
+export type GenreCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Genre
+   */
+  select?: Prisma.GenreSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Genre
+   */
+  omit?: Prisma.GenreOmit<ExtArgs> | null
+  /**
+   * The data used to create many Genres.
+   */
+  data: Prisma.GenreCreateManyInput | Prisma.GenreCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1076,6 +1160,32 @@ export type GenreUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
  * Genre updateMany
  */
 export type GenreUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Genres.
+   */
+  data: Prisma.XOR<Prisma.GenreUpdateManyMutationInput, Prisma.GenreUncheckedUpdateManyInput>
+  /**
+   * Filter which Genres to update
+   */
+  where?: Prisma.GenreWhereInput
+  /**
+   * Limit how many Genres to update.
+   */
+  limit?: number
+}
+
+/**
+ * Genre updateManyAndReturn
+ */
+export type GenreUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Genre
+   */
+  select?: Prisma.GenreSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Genre
+   */
+  omit?: Prisma.GenreOmit<ExtArgs> | null
   /**
    * The data used to update Genres.
    */

@@ -1,4 +1,4 @@
-import type { JwtPayload } from '@/types/auth'
+import type { JwtPayload } from '@/features/auth/types/auth'
 
 export function decodeJwtPayload(token: string): JwtPayload {
   const part = token.split('.')[1]

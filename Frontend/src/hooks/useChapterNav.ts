@@ -26,6 +26,7 @@ export function useChapterNav(contentId?: string, chapterId?: string) {
     content,
     isLoading,
     isError,
+    chapters,
     chapter: found ? chapters[index] : undefined,
     prev: found ? chapters[index - 1] : undefined, // Nếu index = 0 (chương 1) thì prev sẽ là undefined (ẩn nút)
     next: found ? chapters[index + 1] : undefined,

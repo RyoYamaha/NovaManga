@@ -32,6 +32,7 @@ export type UserMinAggregateOutputType = {
   role: string | null
   bio: string | null
   isLocked: boolean | null
+  aiBlocked: boolean | null
   payoutBlocked: boolean | null
   createdAt: Date | null
   onboardingCompletedAt: Date | null
@@ -45,6 +46,7 @@ export type UserMaxAggregateOutputType = {
   role: string | null
   bio: string | null
   isLocked: boolean | null
+  aiBlocked: boolean | null
   payoutBlocked: boolean | null
   createdAt: Date | null
   onboardingCompletedAt: Date | null
@@ -58,6 +60,7 @@ export type UserCountAggregateOutputType = {
   role: number
   bio: number
   isLocked: number
+  aiBlocked: number
   payoutBlocked: number
   createdAt: number
   onboardingCompletedAt: number
@@ -73,6 +76,7 @@ export type UserMinAggregateInputType = {
   role?: true
   bio?: true
   isLocked?: true
+  aiBlocked?: true
   payoutBlocked?: true
   createdAt?: true
   onboardingCompletedAt?: true
@@ -86,6 +90,7 @@ export type UserMaxAggregateInputType = {
   role?: true
   bio?: true
   isLocked?: true
+  aiBlocked?: true
   payoutBlocked?: true
   createdAt?: true
   onboardingCompletedAt?: true
@@ -99,6 +104,7 @@ export type UserCountAggregateInputType = {
   role?: true
   bio?: true
   isLocked?: true
+  aiBlocked?: true
   payoutBlocked?: true
   createdAt?: true
   onboardingCompletedAt?: true
@@ -185,6 +191,7 @@ export type UserGroupByOutputType = {
   role: string
   bio: string | null
   isLocked: boolean
+  aiBlocked: boolean
   payoutBlocked: boolean
   createdAt: Date
   onboardingCompletedAt: Date | null
@@ -219,6 +226,7 @@ export type UserWhereInput = {
   role?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringNullableFilter<"User"> | string | null
   isLocked?: Prisma.BoolFilter<"User"> | boolean
+  aiBlocked?: Prisma.BoolFilter<"User"> | boolean
   payoutBlocked?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   onboardingCompletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -234,6 +242,10 @@ export type UserWhereInput = {
   reportsFiled?: Prisma.ReportListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   aiConversations?: Prisma.AIConversationListRelationFilter
+  aiChatSessions?: Prisma.AiChatSessionListRelationFilter
+  aiUsageDaily?: Prisma.AiUsageDailyListRelationFilter
+  aiUsageEvents?: Prisma.AiUsageEventListRelationFilter
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogListRelationFilter
   recommendations?: Prisma.RecommendationCacheListRelationFilter
   supportTickets?: Prisma.SupportTicketListRelationFilter
   ticketMessages?: Prisma.TicketMessageListRelationFilter
@@ -257,6 +269,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  aiBlocked?: Prisma.SortOrder
   payoutBlocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   onboardingCompletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -272,6 +285,10 @@ export type UserOrderByWithRelationInput = {
   reportsFiled?: Prisma.ReportOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
   aiConversations?: Prisma.AIConversationOrderByRelationAggregateInput
+  aiChatSessions?: Prisma.AiChatSessionOrderByRelationAggregateInput
+  aiUsageDaily?: Prisma.AiUsageDailyOrderByRelationAggregateInput
+  aiUsageEvents?: Prisma.AiUsageEventOrderByRelationAggregateInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogOrderByRelationAggregateInput
   recommendations?: Prisma.RecommendationCacheOrderByRelationAggregateInput
   supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
   ticketMessages?: Prisma.TicketMessageOrderByRelationAggregateInput
@@ -298,6 +315,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringNullableFilter<"User"> | string | null
   isLocked?: Prisma.BoolFilter<"User"> | boolean
+  aiBlocked?: Prisma.BoolFilter<"User"> | boolean
   payoutBlocked?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   onboardingCompletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -313,6 +331,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   reportsFiled?: Prisma.ReportListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   aiConversations?: Prisma.AIConversationListRelationFilter
+  aiChatSessions?: Prisma.AiChatSessionListRelationFilter
+  aiUsageDaily?: Prisma.AiUsageDailyListRelationFilter
+  aiUsageEvents?: Prisma.AiUsageEventListRelationFilter
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogListRelationFilter
   recommendations?: Prisma.RecommendationCacheListRelationFilter
   supportTickets?: Prisma.SupportTicketListRelationFilter
   ticketMessages?: Prisma.TicketMessageListRelationFilter
@@ -336,6 +358,7 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  aiBlocked?: Prisma.SortOrder
   payoutBlocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   onboardingCompletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -355,6 +378,7 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
   bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isLocked?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  aiBlocked?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   payoutBlocked?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   onboardingCompletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -368,6 +392,7 @@ export type UserCreateInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -383,6 +408,10 @@ export type UserCreateInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -406,6 +435,7 @@ export type UserUncheckedCreateInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -421,6 +451,10 @@ export type UserUncheckedCreateInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -444,6 +478,7 @@ export type UserUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -459,6 +494,10 @@ export type UserUpdateInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -482,6 +521,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -497,6 +537,10 @@ export type UserUncheckedUpdateInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -520,6 +564,7 @@ export type UserCreateManyInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -533,6 +578,7 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -546,6 +592,7 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -564,6 +611,7 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  aiBlocked?: Prisma.SortOrder
   payoutBlocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   onboardingCompletedAt?: Prisma.SortOrder
@@ -577,6 +625,7 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  aiBlocked?: Prisma.SortOrder
   payoutBlocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   onboardingCompletedAt?: Prisma.SortOrder
@@ -590,6 +639,7 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  aiBlocked?: Prisma.SortOrder
   payoutBlocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   onboardingCompletedAt?: Prisma.SortOrder
@@ -912,6 +962,62 @@ export type UserUpdateOneRequiredWithoutAiConversationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiConversationsInput, Prisma.UserUpdateWithoutAiConversationsInput>, Prisma.UserUncheckedUpdateWithoutAiConversationsInput>
 }
 
+export type UserCreateNestedOneWithoutAiChatSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiChatSessionsInput, Prisma.UserUncheckedCreateWithoutAiChatSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiChatSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiChatSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiChatSessionsInput, Prisma.UserUncheckedCreateWithoutAiChatSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiChatSessionsInput
+  upsert?: Prisma.UserUpsertWithoutAiChatSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiChatSessionsInput, Prisma.UserUpdateWithoutAiChatSessionsInput>, Prisma.UserUncheckedUpdateWithoutAiChatSessionsInput>
+}
+
+export type UserCreateNestedOneWithoutAiUsageDailyInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiUsageDailyInput, Prisma.UserUncheckedCreateWithoutAiUsageDailyInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiUsageDailyInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiUsageDailyNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiUsageDailyInput, Prisma.UserUncheckedCreateWithoutAiUsageDailyInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiUsageDailyInput
+  upsert?: Prisma.UserUpsertWithoutAiUsageDailyInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiUsageDailyInput, Prisma.UserUpdateWithoutAiUsageDailyInput>, Prisma.UserUncheckedUpdateWithoutAiUsageDailyInput>
+}
+
+export type UserCreateNestedOneWithoutAiUsageEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiUsageEventsInput, Prisma.UserUncheckedCreateWithoutAiUsageEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiUsageEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiUsageEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiUsageEventsInput, Prisma.UserUncheckedCreateWithoutAiUsageEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiUsageEventsInput
+  upsert?: Prisma.UserUpsertWithoutAiUsageEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiUsageEventsInput, Prisma.UserUpdateWithoutAiUsageEventsInput>, Prisma.UserUncheckedUpdateWithoutAiUsageEventsInput>
+}
+
+export type UserCreateNestedOneWithoutAiAdminAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiAdminAuditLogsInput, Prisma.UserUncheckedCreateWithoutAiAdminAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiAdminAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiAdminAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiAdminAuditLogsInput, Prisma.UserUncheckedCreateWithoutAiAdminAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiAdminAuditLogsInput
+  upsert?: Prisma.UserUpsertWithoutAiAdminAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiAdminAuditLogsInput, Prisma.UserUpdateWithoutAiAdminAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutAiAdminAuditLogsInput>
+}
+
 export type UserCreateNestedOneWithoutRecommendationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutRecommendationsInput, Prisma.UserUncheckedCreateWithoutRecommendationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutRecommendationsInput
@@ -962,6 +1068,7 @@ export type UserCreateWithoutUploadedContentsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -976,6 +1083,10 @@ export type UserCreateWithoutUploadedContentsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -999,6 +1110,7 @@ export type UserUncheckedCreateWithoutUploadedContentsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1013,6 +1125,10 @@ export type UserUncheckedCreateWithoutUploadedContentsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -1052,6 +1168,7 @@ export type UserUpdateWithoutUploadedContentsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1066,6 +1183,10 @@ export type UserUpdateWithoutUploadedContentsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -1089,6 +1210,7 @@ export type UserUncheckedUpdateWithoutUploadedContentsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1103,6 +1225,10 @@ export type UserUncheckedUpdateWithoutUploadedContentsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -1126,6 +1252,7 @@ export type UserCreateWithoutGenrePreferencesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1140,6 +1267,10 @@ export type UserCreateWithoutGenrePreferencesInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -1163,6 +1294,7 @@ export type UserUncheckedCreateWithoutGenrePreferencesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1177,6 +1309,10 @@ export type UserUncheckedCreateWithoutGenrePreferencesInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -1216,6 +1352,7 @@ export type UserUpdateWithoutGenrePreferencesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1230,6 +1367,10 @@ export type UserUpdateWithoutGenrePreferencesInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -1253,6 +1394,7 @@ export type UserUncheckedUpdateWithoutGenrePreferencesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1267,6 +1409,10 @@ export type UserUncheckedUpdateWithoutGenrePreferencesInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -1290,6 +1436,7 @@ export type UserCreateWithoutPublisherProfileInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1304,6 +1451,10 @@ export type UserCreateWithoutPublisherProfileInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -1327,6 +1478,7 @@ export type UserUncheckedCreateWithoutPublisherProfileInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1341,6 +1493,10 @@ export type UserUncheckedCreateWithoutPublisherProfileInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -1380,6 +1536,7 @@ export type UserUpdateWithoutPublisherProfileInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1394,6 +1551,10 @@ export type UserUpdateWithoutPublisherProfileInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -1417,6 +1578,7 @@ export type UserUncheckedUpdateWithoutPublisherProfileInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1431,6 +1593,10 @@ export type UserUncheckedUpdateWithoutPublisherProfileInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -1454,6 +1620,7 @@ export type UserCreateWithoutWalletInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1469,6 +1636,10 @@ export type UserCreateWithoutWalletInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -1491,6 +1662,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1506,6 +1678,10 @@ export type UserUncheckedCreateWithoutWalletInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -1544,6 +1720,7 @@ export type UserUpdateWithoutWalletInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1559,6 +1736,10 @@ export type UserUpdateWithoutWalletInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -1581,6 +1762,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1596,6 +1778,10 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -1618,6 +1804,7 @@ export type UserCreateWithoutPaymentOrdersInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1633,6 +1820,10 @@ export type UserCreateWithoutPaymentOrdersInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -1655,6 +1846,7 @@ export type UserUncheckedCreateWithoutPaymentOrdersInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1670,6 +1862,10 @@ export type UserUncheckedCreateWithoutPaymentOrdersInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -1708,6 +1904,7 @@ export type UserUpdateWithoutPaymentOrdersInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1723,6 +1920,10 @@ export type UserUpdateWithoutPaymentOrdersInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -1745,6 +1946,7 @@ export type UserUncheckedUpdateWithoutPaymentOrdersInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1760,6 +1962,10 @@ export type UserUncheckedUpdateWithoutPaymentOrdersInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -1782,6 +1988,7 @@ export type UserCreateWithoutProcessedBankTransactionsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1797,6 +2004,10 @@ export type UserCreateWithoutProcessedBankTransactionsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -1819,6 +2030,7 @@ export type UserUncheckedCreateWithoutProcessedBankTransactionsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1834,6 +2046,10 @@ export type UserUncheckedCreateWithoutProcessedBankTransactionsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -1872,6 +2088,7 @@ export type UserUpdateWithoutProcessedBankTransactionsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1887,6 +2104,10 @@ export type UserUpdateWithoutProcessedBankTransactionsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -1909,6 +2130,7 @@ export type UserUncheckedUpdateWithoutProcessedBankTransactionsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1924,6 +2146,10 @@ export type UserUncheckedUpdateWithoutProcessedBankTransactionsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -1946,6 +2172,7 @@ export type UserCreateWithoutWalletLedgerInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1961,6 +2188,10 @@ export type UserCreateWithoutWalletLedgerInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -1983,6 +2214,7 @@ export type UserUncheckedCreateWithoutWalletLedgerInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -1998,6 +2230,10 @@ export type UserUncheckedCreateWithoutWalletLedgerInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -2036,6 +2272,7 @@ export type UserUpdateWithoutWalletLedgerInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2051,6 +2288,10 @@ export type UserUpdateWithoutWalletLedgerInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -2073,6 +2314,7 @@ export type UserUncheckedUpdateWithoutWalletLedgerInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2088,6 +2330,10 @@ export type UserUncheckedUpdateWithoutWalletLedgerInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -2110,6 +2356,7 @@ export type UserCreateWithoutContentPurchasesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2125,6 +2372,10 @@ export type UserCreateWithoutContentPurchasesInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -2147,6 +2398,7 @@ export type UserUncheckedCreateWithoutContentPurchasesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2162,6 +2414,10 @@ export type UserUncheckedCreateWithoutContentPurchasesInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -2200,6 +2456,7 @@ export type UserUpdateWithoutContentPurchasesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2215,6 +2472,10 @@ export type UserUpdateWithoutContentPurchasesInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -2237,6 +2498,7 @@ export type UserUncheckedUpdateWithoutContentPurchasesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2252,6 +2514,10 @@ export type UserUncheckedUpdateWithoutContentPurchasesInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -2274,6 +2540,7 @@ export type UserCreateWithoutCreatorRevenueInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2289,6 +2556,10 @@ export type UserCreateWithoutCreatorRevenueInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -2311,6 +2582,7 @@ export type UserUncheckedCreateWithoutCreatorRevenueInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2326,6 +2598,10 @@ export type UserUncheckedCreateWithoutCreatorRevenueInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -2364,6 +2640,7 @@ export type UserUpdateWithoutCreatorRevenueInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2379,6 +2656,10 @@ export type UserUpdateWithoutCreatorRevenueInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -2401,6 +2682,7 @@ export type UserUncheckedUpdateWithoutCreatorRevenueInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2416,6 +2698,10 @@ export type UserUncheckedUpdateWithoutCreatorRevenueInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -2438,6 +2724,7 @@ export type UserCreateWithoutPayoutProfileInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2453,6 +2740,10 @@ export type UserCreateWithoutPayoutProfileInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -2475,6 +2766,7 @@ export type UserUncheckedCreateWithoutPayoutProfileInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2490,6 +2782,10 @@ export type UserUncheckedCreateWithoutPayoutProfileInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -2528,6 +2824,7 @@ export type UserUpdateWithoutPayoutProfileInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2543,6 +2840,10 @@ export type UserUpdateWithoutPayoutProfileInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -2565,6 +2866,7 @@ export type UserUncheckedUpdateWithoutPayoutProfileInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2580,6 +2882,10 @@ export type UserUncheckedUpdateWithoutPayoutProfileInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -2602,6 +2908,7 @@ export type UserCreateWithoutPayoutRequestsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2617,6 +2924,10 @@ export type UserCreateWithoutPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -2639,6 +2950,7 @@ export type UserUncheckedCreateWithoutPayoutRequestsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2654,6 +2966,10 @@ export type UserUncheckedCreateWithoutPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -2681,6 +2997,7 @@ export type UserCreateWithoutProcessedPayoutRequestsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2696,6 +3013,10 @@ export type UserCreateWithoutProcessedPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -2718,6 +3039,7 @@ export type UserUncheckedCreateWithoutProcessedPayoutRequestsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2733,6 +3055,10 @@ export type UserUncheckedCreateWithoutProcessedPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -2771,6 +3097,7 @@ export type UserUpdateWithoutPayoutRequestsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2786,6 +3113,10 @@ export type UserUpdateWithoutPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -2808,6 +3139,7 @@ export type UserUncheckedUpdateWithoutPayoutRequestsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2823,6 +3155,10 @@ export type UserUncheckedUpdateWithoutPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -2856,6 +3192,7 @@ export type UserUpdateWithoutProcessedPayoutRequestsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2871,6 +3208,10 @@ export type UserUpdateWithoutProcessedPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -2893,6 +3234,7 @@ export type UserUncheckedUpdateWithoutProcessedPayoutRequestsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2908,6 +3250,10 @@ export type UserUncheckedUpdateWithoutProcessedPayoutRequestsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -2930,6 +3276,7 @@ export type UserCreateWithoutBookmarksInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2944,6 +3291,10 @@ export type UserCreateWithoutBookmarksInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -2967,6 +3318,7 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -2981,6 +3333,10 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -3020,6 +3376,7 @@ export type UserUpdateWithoutBookmarksInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3034,6 +3391,10 @@ export type UserUpdateWithoutBookmarksInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -3057,6 +3418,7 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3071,6 +3433,10 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -3094,6 +3460,7 @@ export type UserCreateWithoutFavoritesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3108,6 +3475,10 @@ export type UserCreateWithoutFavoritesInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -3131,6 +3502,7 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3145,6 +3517,10 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -3184,6 +3560,7 @@ export type UserUpdateWithoutFavoritesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3198,6 +3575,10 @@ export type UserUpdateWithoutFavoritesInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -3221,6 +3602,7 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3235,6 +3617,10 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -3258,6 +3644,7 @@ export type UserCreateWithoutRatingsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3272,6 +3659,10 @@ export type UserCreateWithoutRatingsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -3295,6 +3686,7 @@ export type UserUncheckedCreateWithoutRatingsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3309,6 +3701,10 @@ export type UserUncheckedCreateWithoutRatingsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -3348,6 +3744,7 @@ export type UserUpdateWithoutRatingsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3362,6 +3759,10 @@ export type UserUpdateWithoutRatingsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -3385,6 +3786,7 @@ export type UserUncheckedUpdateWithoutRatingsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3399,6 +3801,10 @@ export type UserUncheckedUpdateWithoutRatingsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -3422,6 +3828,7 @@ export type UserCreateWithoutCommentsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3436,6 +3843,10 @@ export type UserCreateWithoutCommentsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -3459,6 +3870,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3473,6 +3885,10 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -3512,6 +3928,7 @@ export type UserUpdateWithoutCommentsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3526,6 +3943,10 @@ export type UserUpdateWithoutCommentsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -3549,6 +3970,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3563,6 +3985,10 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -3586,6 +4012,7 @@ export type UserCreateWithoutReadingProgressInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3600,6 +4027,10 @@ export type UserCreateWithoutReadingProgressInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -3623,6 +4054,7 @@ export type UserUncheckedCreateWithoutReadingProgressInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3637,6 +4069,10 @@ export type UserUncheckedCreateWithoutReadingProgressInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -3676,6 +4112,7 @@ export type UserUpdateWithoutReadingProgressInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3690,6 +4127,10 @@ export type UserUpdateWithoutReadingProgressInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -3713,6 +4154,7 @@ export type UserUncheckedUpdateWithoutReadingProgressInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3727,6 +4169,10 @@ export type UserUncheckedUpdateWithoutReadingProgressInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -3750,6 +4196,7 @@ export type UserCreateWithoutChapterReadsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3765,6 +4212,10 @@ export type UserCreateWithoutChapterReadsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -3787,6 +4238,7 @@ export type UserUncheckedCreateWithoutChapterReadsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3802,6 +4254,10 @@ export type UserUncheckedCreateWithoutChapterReadsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -3840,6 +4296,7 @@ export type UserUpdateWithoutChapterReadsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3855,6 +4312,10 @@ export type UserUpdateWithoutChapterReadsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -3877,6 +4338,7 @@ export type UserUncheckedUpdateWithoutChapterReadsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3892,6 +4354,10 @@ export type UserUncheckedUpdateWithoutChapterReadsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -3914,6 +4380,7 @@ export type UserCreateWithoutNotificationsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3928,6 +4395,10 @@ export type UserCreateWithoutNotificationsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -3951,6 +4422,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -3965,6 +4437,10 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -4004,6 +4480,7 @@ export type UserUpdateWithoutNotificationsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4018,6 +4495,10 @@ export type UserUpdateWithoutNotificationsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -4041,6 +4522,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4055,6 +4537,10 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -4078,6 +4564,7 @@ export type UserCreateWithoutReportsFiledInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4092,6 +4579,10 @@ export type UserCreateWithoutReportsFiledInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -4115,6 +4606,7 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4129,6 +4621,10 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -4168,6 +4664,7 @@ export type UserUpdateWithoutReportsFiledInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4182,6 +4679,10 @@ export type UserUpdateWithoutReportsFiledInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -4205,6 +4706,7 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4219,6 +4721,10 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -4242,6 +4748,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4256,6 +4763,10 @@ export type UserCreateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -4279,6 +4790,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4293,6 +4805,10 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -4332,6 +4848,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4346,6 +4863,10 @@ export type UserUpdateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -4369,6 +4890,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4383,6 +4905,10 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -4406,6 +4932,7 @@ export type UserCreateWithoutAiConversationsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4420,6 +4947,10 @@ export type UserCreateWithoutAiConversationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
@@ -4443,6 +4974,7 @@ export type UserUncheckedCreateWithoutAiConversationsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4457,6 +4989,10 @@ export type UserUncheckedCreateWithoutAiConversationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -4496,6 +5032,7 @@ export type UserUpdateWithoutAiConversationsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4510,6 +5047,10 @@ export type UserUpdateWithoutAiConversationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
@@ -4533,6 +5074,7 @@ export type UserUncheckedUpdateWithoutAiConversationsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4547,6 +5089,746 @@ export type UserUncheckedUpdateWithoutAiConversationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUncheckedUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserCreateWithoutAiChatSessionsInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
+  recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserUncheckedCreateWithoutAiChatSessionsInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherUncheckedCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerUncheckedCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserCreateOrConnectWithoutAiChatSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiChatSessionsInput, Prisma.UserUncheckedCreateWithoutAiChatSessionsInput>
+}
+
+export type UserUpsertWithoutAiChatSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiChatSessionsInput, Prisma.UserUncheckedUpdateWithoutAiChatSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiChatSessionsInput, Prisma.UserUncheckedCreateWithoutAiChatSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiChatSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiChatSessionsInput, Prisma.UserUncheckedUpdateWithoutAiChatSessionsInput>
+}
+
+export type UserUpdateWithoutAiChatSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiChatSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUncheckedUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUncheckedUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserCreateWithoutAiUsageDailyInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
+  recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserUncheckedCreateWithoutAiUsageDailyInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherUncheckedCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerUncheckedCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserCreateOrConnectWithoutAiUsageDailyInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiUsageDailyInput, Prisma.UserUncheckedCreateWithoutAiUsageDailyInput>
+}
+
+export type UserUpsertWithoutAiUsageDailyInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiUsageDailyInput, Prisma.UserUncheckedUpdateWithoutAiUsageDailyInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiUsageDailyInput, Prisma.UserUncheckedCreateWithoutAiUsageDailyInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiUsageDailyInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiUsageDailyInput, Prisma.UserUncheckedUpdateWithoutAiUsageDailyInput>
+}
+
+export type UserUpdateWithoutAiUsageDailyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiUsageDailyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUncheckedUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUncheckedUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserCreateWithoutAiUsageEventsInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
+  recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserUncheckedCreateWithoutAiUsageEventsInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherUncheckedCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerUncheckedCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserCreateOrConnectWithoutAiUsageEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiUsageEventsInput, Prisma.UserUncheckedCreateWithoutAiUsageEventsInput>
+}
+
+export type UserUpsertWithoutAiUsageEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiUsageEventsInput, Prisma.UserUncheckedUpdateWithoutAiUsageEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiUsageEventsInput, Prisma.UserUncheckedCreateWithoutAiUsageEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiUsageEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiUsageEventsInput, Prisma.UserUncheckedUpdateWithoutAiUsageEventsInput>
+}
+
+export type UserUpdateWithoutAiUsageEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiUsageEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUncheckedUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUncheckedUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserCreateWithoutAiAdminAuditLogsInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserUncheckedCreateWithoutAiAdminAuditLogsInput = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  role?: string
+  bio?: string | null
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: Date | string
+  onboardingCompletedAt?: Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedCreateNestedManyWithoutUploaderInput
+  publisherProfile?: Prisma.PublisherUncheckedCreateNestedOneWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutUserInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
+  readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  paymentOrders?: Prisma.PaymentOrderUncheckedCreateNestedManyWithoutUserInput
+  processedBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutProcessedByInput
+  walletLedger?: Prisma.WalletLedgerUncheckedCreateNestedManyWithoutUserInput
+  contentPurchases?: Prisma.ContentPurchaseUncheckedCreateNestedManyWithoutUserInput
+  payoutProfile?: Prisma.PayoutProfileUncheckedCreateNestedOneWithoutUserInput
+  creatorRevenue?: Prisma.CreatorRevenueUncheckedCreateNestedManyWithoutCreatorInput
+  payoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutUserInput
+  processedPayoutRequests?: Prisma.PayoutRequestUncheckedCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserCreateOrConnectWithoutAiAdminAuditLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiAdminAuditLogsInput, Prisma.UserUncheckedCreateWithoutAiAdminAuditLogsInput>
+}
+
+export type UserUpsertWithoutAiAdminAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiAdminAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAiAdminAuditLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiAdminAuditLogsInput, Prisma.UserUncheckedCreateWithoutAiAdminAuditLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiAdminAuditLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiAdminAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAiAdminAuditLogsInput>
+}
+
+export type UserUpdateWithoutAiAdminAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
+  chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  paymentOrders?: Prisma.PaymentOrderUpdateManyWithoutUserNestedInput
+  processedBankTransactions?: Prisma.BankTransactionUpdateManyWithoutProcessedByNestedInput
+  walletLedger?: Prisma.WalletLedgerUpdateManyWithoutUserNestedInput
+  contentPurchases?: Prisma.ContentPurchaseUpdateManyWithoutUserNestedInput
+  payoutProfile?: Prisma.PayoutProfileUpdateOneWithoutUserNestedInput
+  creatorRevenue?: Prisma.CreatorRevenueUpdateManyWithoutCreatorNestedInput
+  payoutRequests?: Prisma.PayoutRequestUpdateManyWithoutUserNestedInput
+  processedPayoutRequests?: Prisma.PayoutRequestUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiAdminAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedContents?: Prisma.ContentUncheckedUpdateManyWithoutUploaderNestedInput
+  publisherProfile?: Prisma.PublisherUncheckedUpdateOneWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutUserNestedInput
+  genrePreferences?: Prisma.UserGenrePreferenceUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
+  readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -4570,6 +5852,7 @@ export type UserCreateWithoutRecommendationsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4585,6 +5868,10 @@ export type UserCreateWithoutRecommendationsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
   chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
@@ -4607,6 +5894,7 @@ export type UserUncheckedCreateWithoutRecommendationsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4622,6 +5910,10 @@ export type UserUncheckedCreateWithoutRecommendationsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
   chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
@@ -4660,6 +5952,7 @@ export type UserUpdateWithoutRecommendationsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4675,6 +5968,10 @@ export type UserUpdateWithoutRecommendationsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
   chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
@@ -4697,6 +5994,7 @@ export type UserUncheckedUpdateWithoutRecommendationsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4712,6 +6010,10 @@ export type UserUncheckedUpdateWithoutRecommendationsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
   chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
@@ -4734,6 +6036,7 @@ export type UserCreateWithoutSupportTicketsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4749,6 +6052,10 @@ export type UserCreateWithoutSupportTicketsInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutSenderInput
   chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
@@ -4771,6 +6078,7 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4786,6 +6094,10 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutSenderInput
   chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
@@ -4824,6 +6136,7 @@ export type UserUpdateWithoutSupportTicketsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4839,6 +6152,10 @@ export type UserUpdateWithoutSupportTicketsInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUpdateManyWithoutSenderNestedInput
   chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
@@ -4861,6 +6178,7 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4876,6 +6194,10 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutSenderNestedInput
   chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
@@ -4898,6 +6220,7 @@ export type UserCreateWithoutTicketMessagesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4913,6 +6236,10 @@ export type UserCreateWithoutTicketMessagesInput = {
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   chapterReads?: Prisma.ChapterReadCreateNestedManyWithoutUserInput
@@ -4935,6 +6262,7 @@ export type UserUncheckedCreateWithoutTicketMessagesInput = {
   role?: string
   bio?: string | null
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: Date | string
   onboardingCompletedAt?: Date | string | null
@@ -4950,6 +6278,10 @@ export type UserUncheckedCreateWithoutTicketMessagesInput = {
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   aiConversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutUserInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedCreateNestedManyWithoutUserInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedCreateNestedManyWithoutUserInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedCreateNestedManyWithoutUserInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   recommendations?: Prisma.RecommendationCacheUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   chapterReads?: Prisma.ChapterReadUncheckedCreateNestedManyWithoutUserInput
@@ -4988,6 +6320,7 @@ export type UserUpdateWithoutTicketMessagesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5003,6 +6336,10 @@ export type UserUpdateWithoutTicketMessagesInput = {
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   chapterReads?: Prisma.ChapterReadUpdateManyWithoutUserNestedInput
@@ -5025,6 +6362,7 @@ export type UserUncheckedUpdateWithoutTicketMessagesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   payoutBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5040,6 +6378,10 @@ export type UserUncheckedUpdateWithoutTicketMessagesInput = {
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   aiConversations?: Prisma.AIConversationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatSessions?: Prisma.AiChatSessionUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageDaily?: Prisma.AiUsageDailyUncheckedUpdateManyWithoutUserNestedInput
+  aiUsageEvents?: Prisma.AiUsageEventUncheckedUpdateManyWithoutUserNestedInput
+  aiAdminAuditLogs?: Prisma.AiAdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   recommendations?: Prisma.RecommendationCacheUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   chapterReads?: Prisma.ChapterReadUncheckedUpdateManyWithoutUserNestedInput
@@ -5071,6 +6413,10 @@ export type UserCountOutputType = {
   reportsFiled: number
   refreshTokens: number
   aiConversations: number
+  aiChatSessions: number
+  aiUsageDaily: number
+  aiUsageEvents: number
+  aiAdminAuditLogs: number
   recommendations: number
   supportTickets: number
   ticketMessages: number
@@ -5096,6 +6442,10 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   reportsFiled?: boolean | UserCountOutputTypeCountReportsFiledArgs
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
   aiConversations?: boolean | UserCountOutputTypeCountAiConversationsArgs
+  aiChatSessions?: boolean | UserCountOutputTypeCountAiChatSessionsArgs
+  aiUsageDaily?: boolean | UserCountOutputTypeCountAiUsageDailyArgs
+  aiUsageEvents?: boolean | UserCountOutputTypeCountAiUsageEventsArgs
+  aiAdminAuditLogs?: boolean | UserCountOutputTypeCountAiAdminAuditLogsArgs
   recommendations?: boolean | UserCountOutputTypeCountRecommendationsArgs
   supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
   ticketMessages?: boolean | UserCountOutputTypeCountTicketMessagesArgs
@@ -5199,6 +6549,34 @@ export type UserCountOutputTypeCountAiConversationsArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountAiChatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiChatSessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAiUsageDailyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiUsageDailyWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAiUsageEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiUsageEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAiAdminAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiAdminAuditLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountRecommendationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RecommendationCacheWhereInput
 }
@@ -5282,6 +6660,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   bio?: boolean
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: boolean
   onboardingCompletedAt?: boolean
@@ -5297,6 +6676,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   reportsFiled?: boolean | Prisma.User$reportsFiledArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   aiConversations?: boolean | Prisma.User$aiConversationsArgs<ExtArgs>
+  aiChatSessions?: boolean | Prisma.User$aiChatSessionsArgs<ExtArgs>
+  aiUsageDaily?: boolean | Prisma.User$aiUsageDailyArgs<ExtArgs>
+  aiUsageEvents?: boolean | Prisma.User$aiUsageEventsArgs<ExtArgs>
+  aiAdminAuditLogs?: boolean | Prisma.User$aiAdminAuditLogsArgs<ExtArgs>
   recommendations?: boolean | Prisma.User$recommendationsArgs<ExtArgs>
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
   ticketMessages?: boolean | Prisma.User$ticketMessagesArgs<ExtArgs>
@@ -5313,7 +6696,33 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
+export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  username?: boolean
+  email?: boolean
+  passwordHash?: boolean
+  role?: boolean
+  bio?: boolean
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: boolean
+  onboardingCompletedAt?: boolean
+}, ExtArgs["result"]["user"]>
 
+export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  username?: boolean
+  email?: boolean
+  passwordHash?: boolean
+  role?: boolean
+  bio?: boolean
+  isLocked?: boolean
+  aiBlocked?: boolean
+  payoutBlocked?: boolean
+  createdAt?: boolean
+  onboardingCompletedAt?: boolean
+}, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
@@ -5323,12 +6732,13 @@ export type UserSelectScalar = {
   role?: boolean
   bio?: boolean
   isLocked?: boolean
+  aiBlocked?: boolean
   payoutBlocked?: boolean
   createdAt?: boolean
   onboardingCompletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "role" | "bio" | "isLocked" | "payoutBlocked" | "createdAt" | "onboardingCompletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "role" | "bio" | "isLocked" | "aiBlocked" | "payoutBlocked" | "createdAt" | "onboardingCompletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   uploadedContents?: boolean | Prisma.User$uploadedContentsArgs<ExtArgs>
   publisherProfile?: boolean | Prisma.User$publisherProfileArgs<ExtArgs>
@@ -5342,6 +6752,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   reportsFiled?: boolean | Prisma.User$reportsFiledArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   aiConversations?: boolean | Prisma.User$aiConversationsArgs<ExtArgs>
+  aiChatSessions?: boolean | Prisma.User$aiChatSessionsArgs<ExtArgs>
+  aiUsageDaily?: boolean | Prisma.User$aiUsageDailyArgs<ExtArgs>
+  aiUsageEvents?: boolean | Prisma.User$aiUsageEventsArgs<ExtArgs>
+  aiAdminAuditLogs?: boolean | Prisma.User$aiAdminAuditLogsArgs<ExtArgs>
   recommendations?: boolean | Prisma.User$recommendationsArgs<ExtArgs>
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
   ticketMessages?: boolean | Prisma.User$ticketMessagesArgs<ExtArgs>
@@ -5357,6 +6771,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   processedPayoutRequests?: boolean | Prisma.User$processedPayoutRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -5373,6 +6789,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     reportsFiled: Prisma.$ReportPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
     aiConversations: Prisma.$AIConversationPayload<ExtArgs>[]
+    aiChatSessions: Prisma.$AiChatSessionPayload<ExtArgs>[]
+    aiUsageDaily: Prisma.$AiUsageDailyPayload<ExtArgs>[]
+    aiUsageEvents: Prisma.$AiUsageEventPayload<ExtArgs>[]
+    aiAdminAuditLogs: Prisma.$AiAdminAuditLogPayload<ExtArgs>[]
     recommendations: Prisma.$RecommendationCachePayload<ExtArgs>[]
     supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
     ticketMessages: Prisma.$TicketMessagePayload<ExtArgs>[]
@@ -5395,6 +6815,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: string
     bio: string | null
     isLocked: boolean
+    aiBlocked: boolean
     payoutBlocked: boolean
     createdAt: Date
     onboardingCompletedAt: Date | null
@@ -5516,6 +6937,30 @@ export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
   createMany<T extends UserCreateManyArgs>(args?: Prisma.SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Users and returns the data saved in the database.
+   * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+   * @example
+   * // Create many Users
+   * const user = await prisma.user.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Users and only return the `id`
+   * const userWithIdOnly = await prisma.user.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a User.
    * @param {UserDeleteArgs} args - Arguments to delete one User.
    * @example
@@ -5578,6 +7023,36 @@ export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * 
    */
   updateMany<T extends UserUpdateManyArgs>(args: Prisma.SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Users and returns the data updated in the database.
+   * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+   * @example
+   * // Update many Users
+   * const user = await prisma.user.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Users and only return the `id`
+   * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one User.
@@ -5750,6 +7225,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   reportsFiled<T extends Prisma.User$reportsFiledArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsFiledArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.User$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aiConversations<T extends Prisma.User$aiConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiChatSessions<T extends Prisma.User$aiChatSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiChatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiUsageDaily<T extends Prisma.User$aiUsageDailyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiUsageDailyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiUsageDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiUsageEvents<T extends Prisma.User$aiUsageEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiUsageEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiUsageEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiAdminAuditLogs<T extends Prisma.User$aiAdminAuditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiAdminAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiAdminAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recommendations<T extends Prisma.User$recommendationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$recommendationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecommendationCachePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supportTickets<T extends Prisma.User$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ticketMessages<T extends Prisma.User$ticketMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5799,6 +7278,7 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'String'>
   readonly bio: Prisma.FieldRef<"User", 'String'>
   readonly isLocked: Prisma.FieldRef<"User", 'Boolean'>
+  readonly aiBlocked: Prisma.FieldRef<"User", 'Boolean'>
   readonly payoutBlocked: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly onboardingCompletedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -6036,6 +7516,26 @@ export type UserCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Users.
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * User createManyAndReturn
+ */
+export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * The data used to create many Users.
+   */
+  data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -6068,6 +7568,32 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
  * User updateMany
  */
 export type UserUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Users.
+   */
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyInput>
+  /**
+   * Filter which Users to update
+   */
+  where?: Prisma.UserWhereInput
+  /**
+   * Limit how many Users to update.
+   */
+  limit?: number
+}
+
+/**
+ * User updateManyAndReturn
+ */
+export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
   /**
    * The data used to update Users.
    */
@@ -6429,6 +7955,102 @@ export type User$aiConversationsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.AIConversationScalarFieldEnum | Prisma.AIConversationScalarFieldEnum[]
+}
+
+/**
+ * User.aiChatSessions
+ */
+export type User$aiChatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiChatSession
+   */
+  select?: Prisma.AiChatSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiChatSession
+   */
+  omit?: Prisma.AiChatSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiChatSessionInclude<ExtArgs> | null
+  where?: Prisma.AiChatSessionWhereInput
+  orderBy?: Prisma.AiChatSessionOrderByWithRelationInput | Prisma.AiChatSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AiChatSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiChatSessionScalarFieldEnum | Prisma.AiChatSessionScalarFieldEnum[]
+}
+
+/**
+ * User.aiUsageDaily
+ */
+export type User$aiUsageDailyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiUsageDaily
+   */
+  select?: Prisma.AiUsageDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiUsageDaily
+   */
+  omit?: Prisma.AiUsageDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiUsageDailyInclude<ExtArgs> | null
+  where?: Prisma.AiUsageDailyWhereInput
+  orderBy?: Prisma.AiUsageDailyOrderByWithRelationInput | Prisma.AiUsageDailyOrderByWithRelationInput[]
+  cursor?: Prisma.AiUsageDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiUsageDailyScalarFieldEnum | Prisma.AiUsageDailyScalarFieldEnum[]
+}
+
+/**
+ * User.aiUsageEvents
+ */
+export type User$aiUsageEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiUsageEvent
+   */
+  select?: Prisma.AiUsageEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiUsageEvent
+   */
+  omit?: Prisma.AiUsageEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiUsageEventInclude<ExtArgs> | null
+  where?: Prisma.AiUsageEventWhereInput
+  orderBy?: Prisma.AiUsageEventOrderByWithRelationInput | Prisma.AiUsageEventOrderByWithRelationInput[]
+  cursor?: Prisma.AiUsageEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiUsageEventScalarFieldEnum | Prisma.AiUsageEventScalarFieldEnum[]
+}
+
+/**
+ * User.aiAdminAuditLogs
+ */
+export type User$aiAdminAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiAdminAuditLog
+   */
+  select?: Prisma.AiAdminAuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiAdminAuditLog
+   */
+  omit?: Prisma.AiAdminAuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiAdminAuditLogInclude<ExtArgs> | null
+  where?: Prisma.AiAdminAuditLogWhereInput
+  orderBy?: Prisma.AiAdminAuditLogOrderByWithRelationInput | Prisma.AiAdminAuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AiAdminAuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiAdminAuditLogScalarFieldEnum | Prisma.AiAdminAuditLogScalarFieldEnum[]
 }
 
 /**

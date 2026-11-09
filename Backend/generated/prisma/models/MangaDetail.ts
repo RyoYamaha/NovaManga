@@ -318,7 +318,17 @@ export type MangaDetailSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mangaDetail"]>
 
+export type MangaDetailSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["mangaDetail"]>
 
+export type MangaDetailSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["mangaDetail"]>
 
 export type MangaDetailSelectScalar = {
   id?: boolean
@@ -327,6 +337,12 @@ export type MangaDetailSelectScalar = {
 
 export type MangaDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contentId", ExtArgs["result"]["mangaDetail"]>
 export type MangaDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type MangaDetailIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type MangaDetailIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 
@@ -456,6 +472,30 @@ export interface MangaDetailDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends MangaDetailCreateManyArgs>(args?: Prisma.SelectSubset<T, MangaDetailCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many MangaDetails and returns the data saved in the database.
+   * @param {MangaDetailCreateManyAndReturnArgs} args - Arguments to create many MangaDetails.
+   * @example
+   * // Create many MangaDetails
+   * const mangaDetail = await prisma.mangaDetail.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many MangaDetails and only return the `id`
+   * const mangaDetailWithIdOnly = await prisma.mangaDetail.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends MangaDetailCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, MangaDetailCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MangaDetailPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a MangaDetail.
    * @param {MangaDetailDeleteArgs} args - Arguments to delete one MangaDetail.
    * @example
@@ -518,6 +558,36 @@ export interface MangaDetailDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends MangaDetailUpdateManyArgs>(args: Prisma.SelectSubset<T, MangaDetailUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more MangaDetails and returns the data updated in the database.
+   * @param {MangaDetailUpdateManyAndReturnArgs} args - Arguments to update many MangaDetails.
+   * @example
+   * // Update many MangaDetails
+   * const mangaDetail = await prisma.mangaDetail.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more MangaDetails and only return the `id`
+   * const mangaDetailWithIdOnly = await prisma.mangaDetail.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends MangaDetailUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, MangaDetailUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MangaDetailPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one MangaDetail.
@@ -944,6 +1014,30 @@ export type MangaDetailCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many MangaDetails.
    */
   data: Prisma.MangaDetailCreateManyInput | Prisma.MangaDetailCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * MangaDetail createManyAndReturn
+ */
+export type MangaDetailCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MangaDetail
+   */
+  select?: Prisma.MangaDetailSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the MangaDetail
+   */
+  omit?: Prisma.MangaDetailOmit<ExtArgs> | null
+  /**
+   * The data used to create many MangaDetails.
+   */
+  data: Prisma.MangaDetailCreateManyInput | Prisma.MangaDetailCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MangaDetailIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -988,6 +1082,36 @@ export type MangaDetailUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many MangaDetails to update.
    */
   limit?: number
+}
+
+/**
+ * MangaDetail updateManyAndReturn
+ */
+export type MangaDetailUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MangaDetail
+   */
+  select?: Prisma.MangaDetailSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the MangaDetail
+   */
+  omit?: Prisma.MangaDetailOmit<ExtArgs> | null
+  /**
+   * The data used to update MangaDetails.
+   */
+  data: Prisma.XOR<Prisma.MangaDetailUpdateManyMutationInput, Prisma.MangaDetailUncheckedUpdateManyInput>
+  /**
+   * Filter which MangaDetails to update
+   */
+  where?: Prisma.MangaDetailWhereInput
+  /**
+   * Limit how many MangaDetails to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MangaDetailIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

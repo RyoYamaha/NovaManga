@@ -406,6 +406,7 @@ export type FavoriteCreateOrConnectWithoutContentInput = {
 
 export type FavoriteCreateManyContentInputEnvelope = {
   data: Prisma.FavoriteCreateManyContentInput | Prisma.FavoriteCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type FavoriteUpsertWithWhereUniqueWithoutContentInput = {
@@ -453,6 +454,7 @@ export type FavoriteCreateOrConnectWithoutUserInput = {
 
 export type FavoriteCreateManyUserInputEnvelope = {
   data: Prisma.FavoriteCreateManyUserInput | Prisma.FavoriteCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type FavoriteUpsertWithWhereUniqueWithoutUserInput = {
@@ -530,7 +532,23 @@ export type FavoriteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["favorite"]>
 
+export type FavoriteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["favorite"]>
 
+export type FavoriteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["favorite"]>
 
 export type FavoriteSelectScalar = {
   id?: boolean
@@ -541,6 +559,14 @@ export type FavoriteSelectScalar = {
 
 export type FavoriteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "contentId" | "createdAt", ExtArgs["result"]["favorite"]>
 export type FavoriteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type FavoriteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type FavoriteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
@@ -674,6 +700,30 @@ export interface FavoriteDelegate<ExtArgs extends runtime.Types.Extensions.Inter
   createMany<T extends FavoriteCreateManyArgs>(args?: Prisma.SelectSubset<T, FavoriteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Favorites and returns the data saved in the database.
+   * @param {FavoriteCreateManyAndReturnArgs} args - Arguments to create many Favorites.
+   * @example
+   * // Create many Favorites
+   * const favorite = await prisma.favorite.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Favorites and only return the `id`
+   * const favoriteWithIdOnly = await prisma.favorite.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends FavoriteCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, FavoriteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Favorite.
    * @param {FavoriteDeleteArgs} args - Arguments to delete one Favorite.
    * @example
@@ -736,6 +786,36 @@ export interface FavoriteDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * 
    */
   updateMany<T extends FavoriteUpdateManyArgs>(args: Prisma.SelectSubset<T, FavoriteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Favorites and returns the data updated in the database.
+   * @param {FavoriteUpdateManyAndReturnArgs} args - Arguments to update many Favorites.
+   * @example
+   * // Update many Favorites
+   * const favorite = await prisma.favorite.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Favorites and only return the `id`
+   * const favoriteWithIdOnly = await prisma.favorite.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends FavoriteUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, FavoriteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Favorite.
@@ -1165,6 +1245,30 @@ export type FavoriteCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Favorites.
    */
   data: Prisma.FavoriteCreateManyInput | Prisma.FavoriteCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Favorite createManyAndReturn
+ */
+export type FavoriteCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Favorite
+   */
+  select?: Prisma.FavoriteSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Favorite
+   */
+  omit?: Prisma.FavoriteOmit<ExtArgs> | null
+  /**
+   * The data used to create many Favorites.
+   */
+  data: Prisma.FavoriteCreateManyInput | Prisma.FavoriteCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1209,6 +1313,36 @@ export type FavoriteUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Favorites to update.
    */
   limit?: number
+}
+
+/**
+ * Favorite updateManyAndReturn
+ */
+export type FavoriteUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Favorite
+   */
+  select?: Prisma.FavoriteSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Favorite
+   */
+  omit?: Prisma.FavoriteOmit<ExtArgs> | null
+  /**
+   * The data used to update Favorites.
+   */
+  data: Prisma.XOR<Prisma.FavoriteUpdateManyMutationInput, Prisma.FavoriteUncheckedUpdateManyInput>
+  /**
+   * Filter which Favorites to update
+   */
+  where?: Prisma.FavoriteWhereInput
+  /**
+   * Limit how many Favorites to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

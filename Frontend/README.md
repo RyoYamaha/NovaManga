@@ -1,32 +1,41 @@
-# React + TypeScript + Vite
+# 📚 Nova Manga Frontend Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Nền tảng đọc và xuất bản truyện tranh (Manga) & tiểu thuyết (Novel) trực tuyến.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Khởi chạy dự án (Getting Started)
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+1. Cài đặt các gói phụ thuộc:
+```bash
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+2. Khởi chạy máy chủ phát triển cục bộ:
+```bash
+npm run dev
+```
+
+3. Kiểm tra mã nguồn & đóng gói dự án:
+```bash
+npm run build
+```
+
+---
+
+## 🏛️ Tài liệu cấu trúc thư mục & Quy chuẩn code
+
+Để nắm rõ cách tổ chức thư mục, phân quyền theo vai trò (Admin, Publisher, Author, Reader) và cách thức tái sử dụng code thông minh, vui lòng xem tài liệu chi tiết tại:
+
+👉 **[Tài liệu cấu trúc thư mục Frontend (`src/STRUCTURE.md`)](./src/STRUCTURE.md)**
+
+---
+
+## 🛠️ Công nghệ cốt lõi
+
+- **Framework**: React 19 + TypeScript + Vite
+- **Styling**: Tailwind CSS + Lucide React Icons
+- **Data Fetching & Cache**: TanStack React Query v5
+- **Form & Validation**: React Hook Form + Zod
+- **Routing**: React Router v7
+- **State Management**: Zustand

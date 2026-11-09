@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { User } from '@/types/auth'
+import type { User } from '@/features/auth/types/auth'
 
 export const REFRESH_TOKEN_KEY = 'refresh_token'
 

@@ -187,6 +187,12 @@ export const financeService = {
     id: string,
     payload: { externalId: string; paidAmount: number; reason: string },
   ) => api.post(`/admin/payments/orders/${encodeURIComponent(id)}/confirm`, payload),
+  confirmPaymentOrderManually: (id: string, paidAmount: number) =>
+    api.post(`/admin/payments/orders/${encodeURIComponent(id)}/confirm`, {
+      externalId: `ADMIN-MANUAL-${id}`,
+      paidAmount,
+      reason: 'Admin xác nhận thủ công sau khi kiểm tra sao kê ngân hàng.',
+    }),
 
   getRevenueSummary: () => api.get<RevenueSummary>('/revenue/me'),
   getRevenueHistory: (page = 1, limit = 20) =>
@@ -208,9 +214,9 @@ export const financeService = {
   createPayoutRequest: (amountCoins: number) =>
     api.post<PayoutRequest>('/payout/requests', { amountCoins }),
 
-  getAdminPayoutRequests: (page = 1, limit = 50) =>
+  getAdminPayoutRequests: (page = 1, limit = 50, status: 'Pending' | 'Processed' = 'Pending') =>
     api.get<PageResult<PayoutRequest>>('/admin/payout/requests', {
-      params: { page, limit },
+      params: { page, limit, status },
     }),
   markPayoutPaid: (id: string) =>
     api.patch(`/admin/payout/requests/${encodeURIComponent(id)}/paid`),

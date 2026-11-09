@@ -8,6 +8,7 @@ import type {
   QueryContentParams,
   RankedContentPaginationResponse,
   RecommendedContentPaginationResponse,
+  SimilarContentListItem,
   RankingContentParams,
   Tag,
 } from '@/types/content'
@@ -20,6 +21,8 @@ export const contentService = {
     api.get<RankedContentPaginationResponse>('/content/rankings', { params }),
   getRecommendations: (params?: Pick<RankingContentParams, 'page' | 'limit'>) =>
     api.get<RecommendedContentPaginationResponse>('/content/recommendations', { params }),
+  getSimilar: (id: string) =>
+    api.get<SimilarContentListItem[]>(`/content/${id}/similar`),
   getDetail: (id: string) => api.get<ContentDetailData>(`/content/${id}`),
   getGenres: () => api.get<Genre[]>('/content/genres'),
   getTags: (sort: 'name' | 'popular' = 'name') =>
@@ -30,4 +33,3 @@ export const contentService = {
   getNovelChapterPages: (chapterId: string) => api.get<ChapterPage[]>(`/novel/chapters/${chapterId}/pages`),
   getNovelChapterText: (chapterId: string) => api.get<ChapterContent>(`/novel/chapters/${chapterId}/text`),
 }
-

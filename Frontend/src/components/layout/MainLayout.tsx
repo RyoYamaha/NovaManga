@@ -1,4 +1,4 @@
-import { Home, Library, History, ShieldCheck, MessageSquare, BookOpen, LayoutDashboard, ListChecks, Flag, ClipboardList, Users, Languages, Wallet, Banknote, ChartNoAxesCombined, Settings, ShieldAlert } from 'lucide-react'
+import { Home, Library, History, ShieldCheck, MessageSquare, BookOpen, LayoutDashboard, ListChecks, Flag, ClipboardList, Users, Languages, Wallet, Banknote, ChartNoAxesCombined, Settings, Bot, BookOpenCheck } from 'lucide-react'
 import { Navigate } from 'react-router'
 import { SidebarLayout } from './SidebarLayout'
 import type { SidebarItem } from './Sidebar'
@@ -14,6 +14,10 @@ export const MainLayout = () => {
   const USER_ITEMS: SidebarItem[] = [
     { label: 'Trang chủ', to: '/', icon: Home, end: true },
   ]
+
+  if (user?.role === 'Reader') {
+    USER_ITEMS.push({ label: 'Trợ lý AI Novel', to: '/assistant', icon: Bot })
+  }
 
   if (user?.role === 'Reader') {
     USER_ITEMS.push({ label: 'Ví coin', to: '/wallet', icon: Wallet })
@@ -57,12 +61,13 @@ export const MainLayout = () => {
       { label: 'Dashboard Admin', to: '/admin/dashboard', icon: LayoutDashboard },
       { label: 'Truyện đã xuất bản', to: '/admin/content/published', icon: LayoutDashboard },
       { label: 'Truyện chưa xuất bản', to: '/admin/content/unpublished', icon: ListChecks },
+      { label: 'Chapter chờ duyệt', to: '/admin/chapters/pending', icon: BookOpenCheck },
       { label: 'Báo cáo vi phạm', to: '/admin/reports', icon: Flag },
-      { label: 'Từ khóa cảnh báo Novel', to: '/admin/novel-moderation', icon: ShieldAlert },
       { label: 'Quản lý người dùng', to: '/admin/users', icon: Users },
       { label: 'Yêu cầu hỗ trợ', to: '/admin/tickets', icon: MessageSquare },
       { label: 'Quản lý nạp coin', to: '/admin/payments', icon: Banknote },
-      { label: 'Quản lý payout', to: '/admin/payouts', icon: ChartNoAxesCombined }
+      { label: 'Quản lý payout', to: '/admin/payouts', icon: ChartNoAxesCombined },
+      { label: 'Quản lý AI', to: '/admin/ai', icon: Bot }
     )
   }
 

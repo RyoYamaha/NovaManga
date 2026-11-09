@@ -424,6 +424,7 @@ export type AIConversationCreateOrConnectWithoutContentInput = {
 
 export type AIConversationCreateManyContentInputEnvelope = {
   data: Prisma.AIConversationCreateManyContentInput | Prisma.AIConversationCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type AIConversationUpsertWithWhereUniqueWithoutContentInput = {
@@ -474,6 +475,7 @@ export type AIConversationCreateOrConnectWithoutUserInput = {
 
 export type AIConversationCreateManyUserInputEnvelope = {
   data: Prisma.AIConversationCreateManyUserInput | Prisma.AIConversationCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type AIConversationUpsertWithWhereUniqueWithoutUserInput = {
@@ -560,7 +562,25 @@ export type AIConversationSelect<ExtArgs extends runtime.Types.Extensions.Intern
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIConversation"]>
 
+export type AIConversationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  messages?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["aIConversation"]>
 
+export type AIConversationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  messages?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["aIConversation"]>
 
 export type AIConversationSelectScalar = {
   id?: boolean
@@ -572,6 +592,14 @@ export type AIConversationSelectScalar = {
 
 export type AIConversationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "contentId" | "messages" | "createdAt", ExtArgs["result"]["aIConversation"]>
 export type AIConversationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type AIConversationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type AIConversationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
@@ -706,6 +734,30 @@ export interface AIConversationDelegate<ExtArgs extends runtime.Types.Extensions
   createMany<T extends AIConversationCreateManyArgs>(args?: Prisma.SelectSubset<T, AIConversationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many AIConversations and returns the data saved in the database.
+   * @param {AIConversationCreateManyAndReturnArgs} args - Arguments to create many AIConversations.
+   * @example
+   * // Create many AIConversations
+   * const aIConversation = await prisma.aIConversation.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many AIConversations and only return the `id`
+   * const aIConversationWithIdOnly = await prisma.aIConversation.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends AIConversationCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, AIConversationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIConversationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a AIConversation.
    * @param {AIConversationDeleteArgs} args - Arguments to delete one AIConversation.
    * @example
@@ -768,6 +820,36 @@ export interface AIConversationDelegate<ExtArgs extends runtime.Types.Extensions
    * 
    */
   updateMany<T extends AIConversationUpdateManyArgs>(args: Prisma.SelectSubset<T, AIConversationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more AIConversations and returns the data updated in the database.
+   * @param {AIConversationUpdateManyAndReturnArgs} args - Arguments to update many AIConversations.
+   * @example
+   * // Update many AIConversations
+   * const aIConversation = await prisma.aIConversation.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more AIConversations and only return the `id`
+   * const aIConversationWithIdOnly = await prisma.aIConversation.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends AIConversationUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, AIConversationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIConversationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one AIConversation.
@@ -1198,6 +1280,30 @@ export type AIConversationCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many AIConversations.
    */
   data: Prisma.AIConversationCreateManyInput | Prisma.AIConversationCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * AIConversation createManyAndReturn
+ */
+export type AIConversationCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AIConversation
+   */
+  select?: Prisma.AIConversationSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the AIConversation
+   */
+  omit?: Prisma.AIConversationOmit<ExtArgs> | null
+  /**
+   * The data used to create many AIConversations.
+   */
+  data: Prisma.AIConversationCreateManyInput | Prisma.AIConversationCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIConversationIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1242,6 +1348,36 @@ export type AIConversationUpdateManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many AIConversations to update.
    */
   limit?: number
+}
+
+/**
+ * AIConversation updateManyAndReturn
+ */
+export type AIConversationUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AIConversation
+   */
+  select?: Prisma.AIConversationSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the AIConversation
+   */
+  omit?: Prisma.AIConversationOmit<ExtArgs> | null
+  /**
+   * The data used to update AIConversations.
+   */
+  data: Prisma.XOR<Prisma.AIConversationUpdateManyMutationInput, Prisma.AIConversationUncheckedUpdateManyInput>
+  /**
+   * Filter which AIConversations to update
+   */
+  where?: Prisma.AIConversationWhereInput
+  /**
+   * Limit how many AIConversations to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIConversationIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

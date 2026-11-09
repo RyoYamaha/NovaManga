@@ -4,7 +4,7 @@
 
 ## Setup
 - [ ] Backend server đang chạy (`npm run start:dev`)
-- [ ] SQL Server container đang chạy (`docker-compose up -d`)
+- [ ] PostgreSQL container đang chạy (`docker compose --env-file Backend/.env up -d postgres`)
 - [ ] Đã đăng ký user test
 - [ ] Đã login và lưu `accessToken`
 
@@ -40,9 +40,9 @@
 ## 3. Author Service
 **Cần token + role Author**
 
-**Đổi role trong SSMS:**
+**Đổi role bằng `psql` hoặc PostgreSQL client:**
 ```sql
-UPDATE dbo.[User] SET role = 'Author' WHERE username = 'testuser';
+UPDATE public."User" SET role = 'Author' WHERE username = 'testuser';
 ```
 
 - [ ] GET `/author/browse-licensed` - Xem content licensed
@@ -67,9 +67,9 @@ UPDATE dbo.[User] SET role = 'Author' WHERE username = 'testuser';
 ## 4. Publisher Service
 **Cần token + role Publisher**
 
-**Đổi role trong SSMS:**
+**Đổi role bằng `psql` hoặc PostgreSQL client:**
 ```sql
-UPDATE dbo.[User] SET role = 'Publisher' WHERE username = 'testuser';
+UPDATE public."User" SET role = 'Publisher' WHERE username = 'testuser';
 ```
 
 - [ ] POST `/publisher/register` - Đăng ký publisher
@@ -225,9 +225,9 @@ UPDATE dbo.[User] SET role = 'Publisher' WHERE username = 'testuser';
 ## 12. Admin Report Service
 **Cần token + role Admin**
 
-**Đổi role trong SSMS:**
+**Đổi role bằng `psql` hoặc PostgreSQL client:**
 ```sql
-UPDATE dbo.[User] SET role = 'Admin' WHERE username = 'testuser';
+UPDATE public."User" SET role = 'Admin' WHERE username = 'testuser';
 ```
 
 - [ ] GET `/admin/reports` - Lấy tất cả reports (có filter status)
@@ -250,7 +250,7 @@ UPDATE dbo.[User] SET role = 'Admin' WHERE username = 'testuser';
 ## Notes
 
 - **Role hierarchy:** Reader < Author < Publisher < Admin
-- **Mỗi lần đổi role trong SSMS, phải login lại để lấy token mới**
+- **Mỗi lần đổi role, phải login lại để lấy token mới**
 - **Content ID từ bước 3 hoặc 4 dùng cho các service sau (Bookmark, Rating, Comment, Report)**
 - **Chapter ID từ bước 5 hoặc 6 dùng cho upload pages/text**
 - **Test theo thứ tự: Auth → Author/Publisher (tạo content) → Manga/Novel (tạo chapter) → Bookmark/Rating/Comment/Notification/Report → Admin**

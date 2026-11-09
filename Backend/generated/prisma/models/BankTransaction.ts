@@ -636,6 +636,7 @@ export type BankTransactionCreateOrConnectWithoutProcessedByInput = {
 
 export type BankTransactionCreateManyProcessedByInputEnvelope = {
   data: Prisma.BankTransactionCreateManyProcessedByInput | Prisma.BankTransactionCreateManyProcessedByInput[]
+  skipDuplicates?: boolean
 }
 
 export type BankTransactionUpsertWithWhereUniqueWithoutProcessedByInput = {
@@ -707,6 +708,7 @@ export type BankTransactionCreateOrConnectWithoutPaymentOrderInput = {
 
 export type BankTransactionCreateManyPaymentOrderInputEnvelope = {
   data: Prisma.BankTransactionCreateManyPaymentOrderInput | Prisma.BankTransactionCreateManyPaymentOrderInput[]
+  skipDuplicates?: boolean
 }
 
 export type BankTransactionUpsertWithWhereUniqueWithoutPaymentOrderInput = {
@@ -856,7 +858,39 @@ export type BankTransactionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   processedBy?: boolean | Prisma.BankTransaction$processedByArgs<ExtArgs>
 }, ExtArgs["result"]["bankTransaction"]>
 
+export type BankTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  externalId?: boolean
+  paymentOrderId?: boolean
+  transferType?: boolean
+  transferAmount?: boolean
+  destinationAccountNumber?: boolean
+  description?: boolean
+  rawPayload?: boolean
+  processingStatus?: boolean
+  processedById?: boolean
+  adminNote?: boolean
+  receivedAt?: boolean
+  paymentOrder?: boolean | Prisma.BankTransaction$paymentOrderArgs<ExtArgs>
+  processedBy?: boolean | Prisma.BankTransaction$processedByArgs<ExtArgs>
+}, ExtArgs["result"]["bankTransaction"]>
 
+export type BankTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  externalId?: boolean
+  paymentOrderId?: boolean
+  transferType?: boolean
+  transferAmount?: boolean
+  destinationAccountNumber?: boolean
+  description?: boolean
+  rawPayload?: boolean
+  processingStatus?: boolean
+  processedById?: boolean
+  adminNote?: boolean
+  receivedAt?: boolean
+  paymentOrder?: boolean | Prisma.BankTransaction$paymentOrderArgs<ExtArgs>
+  processedBy?: boolean | Prisma.BankTransaction$processedByArgs<ExtArgs>
+}, ExtArgs["result"]["bankTransaction"]>
 
 export type BankTransactionSelectScalar = {
   id?: boolean
@@ -875,6 +909,14 @@ export type BankTransactionSelectScalar = {
 
 export type BankTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalId" | "paymentOrderId" | "transferType" | "transferAmount" | "destinationAccountNumber" | "description" | "rawPayload" | "processingStatus" | "processedById" | "adminNote" | "receivedAt", ExtArgs["result"]["bankTransaction"]>
 export type BankTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  paymentOrder?: boolean | Prisma.BankTransaction$paymentOrderArgs<ExtArgs>
+  processedBy?: boolean | Prisma.BankTransaction$processedByArgs<ExtArgs>
+}
+export type BankTransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  paymentOrder?: boolean | Prisma.BankTransaction$paymentOrderArgs<ExtArgs>
+  processedBy?: boolean | Prisma.BankTransaction$processedByArgs<ExtArgs>
+}
+export type BankTransactionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   paymentOrder?: boolean | Prisma.BankTransaction$paymentOrderArgs<ExtArgs>
   processedBy?: boolean | Prisma.BankTransaction$processedByArgs<ExtArgs>
 }
@@ -1016,6 +1058,30 @@ export interface BankTransactionDelegate<ExtArgs extends runtime.Types.Extension
   createMany<T extends BankTransactionCreateManyArgs>(args?: Prisma.SelectSubset<T, BankTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many BankTransactions and returns the data saved in the database.
+   * @param {BankTransactionCreateManyAndReturnArgs} args - Arguments to create many BankTransactions.
+   * @example
+   * // Create many BankTransactions
+   * const bankTransaction = await prisma.bankTransaction.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many BankTransactions and only return the `id`
+   * const bankTransactionWithIdOnly = await prisma.bankTransaction.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends BankTransactionCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, BankTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BankTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a BankTransaction.
    * @param {BankTransactionDeleteArgs} args - Arguments to delete one BankTransaction.
    * @example
@@ -1078,6 +1144,36 @@ export interface BankTransactionDelegate<ExtArgs extends runtime.Types.Extension
    * 
    */
   updateMany<T extends BankTransactionUpdateManyArgs>(args: Prisma.SelectSubset<T, BankTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more BankTransactions and returns the data updated in the database.
+   * @param {BankTransactionUpdateManyAndReturnArgs} args - Arguments to update many BankTransactions.
+   * @example
+   * // Update many BankTransactions
+   * const bankTransaction = await prisma.bankTransaction.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more BankTransactions and only return the `id`
+   * const bankTransactionWithIdOnly = await prisma.bankTransaction.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends BankTransactionUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, BankTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BankTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one BankTransaction.
@@ -1515,6 +1611,30 @@ export type BankTransactionCreateManyArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many BankTransactions.
    */
   data: Prisma.BankTransactionCreateManyInput | Prisma.BankTransactionCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * BankTransaction createManyAndReturn
+ */
+export type BankTransactionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BankTransaction
+   */
+  select?: Prisma.BankTransactionSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the BankTransaction
+   */
+  omit?: Prisma.BankTransactionOmit<ExtArgs> | null
+  /**
+   * The data used to create many BankTransactions.
+   */
+  data: Prisma.BankTransactionCreateManyInput | Prisma.BankTransactionCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BankTransactionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1559,6 +1679,36 @@ export type BankTransactionUpdateManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many BankTransactions to update.
    */
   limit?: number
+}
+
+/**
+ * BankTransaction updateManyAndReturn
+ */
+export type BankTransactionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BankTransaction
+   */
+  select?: Prisma.BankTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the BankTransaction
+   */
+  omit?: Prisma.BankTransactionOmit<ExtArgs> | null
+  /**
+   * The data used to update BankTransactions.
+   */
+  data: Prisma.XOR<Prisma.BankTransactionUpdateManyMutationInput, Prisma.BankTransactionUncheckedUpdateManyInput>
+  /**
+   * Filter which BankTransactions to update
+   */
+  where?: Prisma.BankTransactionWhereInput
+  /**
+   * Limit how many BankTransactions to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BankTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

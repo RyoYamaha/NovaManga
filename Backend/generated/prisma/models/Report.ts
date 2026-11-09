@@ -452,6 +452,7 @@ export type ReportCreateOrConnectWithoutReporterInput = {
 
 export type ReportCreateManyReporterInputEnvelope = {
   data: Prisma.ReportCreateManyReporterInput | Prisma.ReportCreateManyReporterInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReportUpsertWithWhereUniqueWithoutReporterInput = {
@@ -538,7 +539,29 @@ export type ReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   reporter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["report"]>
 
+export type ReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  reporterId?: boolean
+  targetType?: boolean
+  targetId?: boolean
+  reason?: boolean
+  evidence?: boolean
+  status?: boolean
+  createdAt?: boolean
+  reporter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["report"]>
 
+export type ReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  reporterId?: boolean
+  targetType?: boolean
+  targetId?: boolean
+  reason?: boolean
+  evidence?: boolean
+  status?: boolean
+  createdAt?: boolean
+  reporter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["report"]>
 
 export type ReportSelectScalar = {
   id?: boolean
@@ -553,6 +576,12 @@ export type ReportSelectScalar = {
 
 export type ReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reporterId" | "targetType" | "targetId" | "reason" | "evidence" | "status" | "createdAt", ExtArgs["result"]["report"]>
 export type ReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reporter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type ReportIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reporter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type ReportIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reporter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -688,6 +717,30 @@ export interface ReportDelegate<ExtArgs extends runtime.Types.Extensions.Interna
   createMany<T extends ReportCreateManyArgs>(args?: Prisma.SelectSubset<T, ReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Reports and returns the data saved in the database.
+   * @param {ReportCreateManyAndReturnArgs} args - Arguments to create many Reports.
+   * @example
+   * // Create many Reports
+   * const report = await prisma.report.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Reports and only return the `id`
+   * const reportWithIdOnly = await prisma.report.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ReportCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Report.
    * @param {ReportDeleteArgs} args - Arguments to delete one Report.
    * @example
@@ -750,6 +803,36 @@ export interface ReportDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    * 
    */
   updateMany<T extends ReportUpdateManyArgs>(args: Prisma.SelectSubset<T, ReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Reports and returns the data updated in the database.
+   * @param {ReportUpdateManyAndReturnArgs} args - Arguments to update many Reports.
+   * @example
+   * // Update many Reports
+   * const report = await prisma.report.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Reports and only return the `id`
+   * const reportWithIdOnly = await prisma.report.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ReportUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Report.
@@ -1182,6 +1265,30 @@ export type ReportCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Reports.
    */
   data: Prisma.ReportCreateManyInput | Prisma.ReportCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Report createManyAndReturn
+ */
+export type ReportCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Report
+   */
+  select?: Prisma.ReportSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Report
+   */
+  omit?: Prisma.ReportOmit<ExtArgs> | null
+  /**
+   * The data used to create many Reports.
+   */
+  data: Prisma.ReportCreateManyInput | Prisma.ReportCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1226,6 +1333,36 @@ export type ReportUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Reports to update.
    */
   limit?: number
+}
+
+/**
+ * Report updateManyAndReturn
+ */
+export type ReportUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Report
+   */
+  select?: Prisma.ReportSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Report
+   */
+  omit?: Prisma.ReportOmit<ExtArgs> | null
+  /**
+   * The data used to update Reports.
+   */
+  data: Prisma.XOR<Prisma.ReportUpdateManyMutationInput, Prisma.ReportUncheckedUpdateManyInput>
+  /**
+   * Filter which Reports to update
+   */
+  where?: Prisma.ReportWhereInput
+  /**
+   * Limit how many Reports to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

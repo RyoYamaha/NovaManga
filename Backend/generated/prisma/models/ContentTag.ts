@@ -359,6 +359,7 @@ export type ContentTagCreateOrConnectWithoutContentInput = {
 
 export type ContentTagCreateManyContentInputEnvelope = {
   data: Prisma.ContentTagCreateManyContentInput | Prisma.ContentTagCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentTagUpsertWithWhereUniqueWithoutContentInput = {
@@ -400,6 +401,7 @@ export type ContentTagCreateOrConnectWithoutTagInput = {
 
 export type ContentTagCreateManyTagInputEnvelope = {
   data: Prisma.ContentTagCreateManyTagInput | Prisma.ContentTagCreateManyTagInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentTagUpsertWithWhereUniqueWithoutTagInput = {
@@ -459,7 +461,19 @@ export type ContentTagSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contentTag"]>
 
+export type ContentTagSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  contentId?: boolean
+  tagId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentTag"]>
 
+export type ContentTagSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  contentId?: boolean
+  tagId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentTag"]>
 
 export type ContentTagSelectScalar = {
   contentId?: boolean
@@ -468,6 +482,14 @@ export type ContentTagSelectScalar = {
 
 export type ContentTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contentId" | "tagId", ExtArgs["result"]["contentTag"]>
 export type ContentTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
+}
+export type ContentTagIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
+}
+export type ContentTagIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
   tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
 }
@@ -599,6 +621,30 @@ export interface ContentTagDelegate<ExtArgs extends runtime.Types.Extensions.Int
   createMany<T extends ContentTagCreateManyArgs>(args?: Prisma.SelectSubset<T, ContentTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ContentTags and returns the data saved in the database.
+   * @param {ContentTagCreateManyAndReturnArgs} args - Arguments to create many ContentTags.
+   * @example
+   * // Create many ContentTags
+   * const contentTag = await prisma.contentTag.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ContentTags and only return the `contentId`
+   * const contentTagWithContentIdOnly = await prisma.contentTag.createManyAndReturn({
+   *   select: { contentId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ContentTagCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ContentTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ContentTag.
    * @param {ContentTagDeleteArgs} args - Arguments to delete one ContentTag.
    * @example
@@ -661,6 +707,36 @@ export interface ContentTagDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   updateMany<T extends ContentTagUpdateManyArgs>(args: Prisma.SelectSubset<T, ContentTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ContentTags and returns the data updated in the database.
+   * @param {ContentTagUpdateManyAndReturnArgs} args - Arguments to update many ContentTags.
+   * @example
+   * // Update many ContentTags
+   * const contentTag = await prisma.contentTag.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ContentTags and only return the `contentId`
+   * const contentTagWithContentIdOnly = await prisma.contentTag.updateManyAndReturn({
+   *   select: { contentId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ContentTagUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ContentTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ContentTag.
@@ -1088,6 +1164,30 @@ export type ContentTagCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * The data used to create many ContentTags.
    */
   data: Prisma.ContentTagCreateManyInput | Prisma.ContentTagCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ContentTag createManyAndReturn
+ */
+export type ContentTagCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentTag
+   */
+  select?: Prisma.ContentTagSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentTag
+   */
+  omit?: Prisma.ContentTagOmit<ExtArgs> | null
+  /**
+   * The data used to create many ContentTags.
+   */
+  data: Prisma.ContentTagCreateManyInput | Prisma.ContentTagCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentTagIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1132,6 +1232,36 @@ export type ContentTagUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many ContentTags to update.
    */
   limit?: number
+}
+
+/**
+ * ContentTag updateManyAndReturn
+ */
+export type ContentTagUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentTag
+   */
+  select?: Prisma.ContentTagSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentTag
+   */
+  omit?: Prisma.ContentTagOmit<ExtArgs> | null
+  /**
+   * The data used to update ContentTags.
+   */
+  data: Prisma.XOR<Prisma.ContentTagUpdateManyMutationInput, Prisma.ContentTagUncheckedUpdateManyInput>
+  /**
+   * Filter which ContentTags to update
+   */
+  where?: Prisma.ContentTagWhereInput
+  /**
+   * Limit how many ContentTags to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentTagIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

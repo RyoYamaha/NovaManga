@@ -636,6 +636,7 @@ export type PayoutRequestCreateOrConnectWithoutUserInput = {
 
 export type PayoutRequestCreateManyUserInputEnvelope = {
   data: Prisma.PayoutRequestCreateManyUserInput | Prisma.PayoutRequestCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type PayoutRequestCreateWithoutProcessedByInput = {
@@ -673,6 +674,7 @@ export type PayoutRequestCreateOrConnectWithoutProcessedByInput = {
 
 export type PayoutRequestCreateManyProcessedByInputEnvelope = {
   data: Prisma.PayoutRequestCreateManyProcessedByInput | Prisma.PayoutRequestCreateManyProcessedByInput[]
+  skipDuplicates?: boolean
 }
 
 export type PayoutRequestUpsertWithWhereUniqueWithoutUserInput = {
@@ -856,7 +858,39 @@ export type PayoutRequestSelect<ExtArgs extends runtime.Types.Extensions.Interna
   processedBy?: boolean | Prisma.PayoutRequest$processedByArgs<ExtArgs>
 }, ExtArgs["result"]["payoutRequest"]>
 
+export type PayoutRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  amountCoins?: boolean
+  status?: boolean
+  bankName?: boolean
+  bankBin?: boolean
+  bankAccountNumber?: boolean
+  bankAccountName?: boolean
+  requestedAt?: boolean
+  processedAt?: boolean
+  processedById?: boolean
+  rejectionReason?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  processedBy?: boolean | Prisma.PayoutRequest$processedByArgs<ExtArgs>
+}, ExtArgs["result"]["payoutRequest"]>
 
+export type PayoutRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  amountCoins?: boolean
+  status?: boolean
+  bankName?: boolean
+  bankBin?: boolean
+  bankAccountNumber?: boolean
+  bankAccountName?: boolean
+  requestedAt?: boolean
+  processedAt?: boolean
+  processedById?: boolean
+  rejectionReason?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  processedBy?: boolean | Prisma.PayoutRequest$processedByArgs<ExtArgs>
+}, ExtArgs["result"]["payoutRequest"]>
 
 export type PayoutRequestSelectScalar = {
   id?: boolean
@@ -875,6 +909,14 @@ export type PayoutRequestSelectScalar = {
 
 export type PayoutRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "amountCoins" | "status" | "bankName" | "bankBin" | "bankAccountNumber" | "bankAccountName" | "requestedAt" | "processedAt" | "processedById" | "rejectionReason", ExtArgs["result"]["payoutRequest"]>
 export type PayoutRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  processedBy?: boolean | Prisma.PayoutRequest$processedByArgs<ExtArgs>
+}
+export type PayoutRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  processedBy?: boolean | Prisma.PayoutRequest$processedByArgs<ExtArgs>
+}
+export type PayoutRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.PayoutRequest$processedByArgs<ExtArgs>
 }
@@ -1016,6 +1058,30 @@ export interface PayoutRequestDelegate<ExtArgs extends runtime.Types.Extensions.
   createMany<T extends PayoutRequestCreateManyArgs>(args?: Prisma.SelectSubset<T, PayoutRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many PayoutRequests and returns the data saved in the database.
+   * @param {PayoutRequestCreateManyAndReturnArgs} args - Arguments to create many PayoutRequests.
+   * @example
+   * // Create many PayoutRequests
+   * const payoutRequest = await prisma.payoutRequest.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many PayoutRequests and only return the `id`
+   * const payoutRequestWithIdOnly = await prisma.payoutRequest.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends PayoutRequestCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, PayoutRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayoutRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a PayoutRequest.
    * @param {PayoutRequestDeleteArgs} args - Arguments to delete one PayoutRequest.
    * @example
@@ -1078,6 +1144,36 @@ export interface PayoutRequestDelegate<ExtArgs extends runtime.Types.Extensions.
    * 
    */
   updateMany<T extends PayoutRequestUpdateManyArgs>(args: Prisma.SelectSubset<T, PayoutRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more PayoutRequests and returns the data updated in the database.
+   * @param {PayoutRequestUpdateManyAndReturnArgs} args - Arguments to update many PayoutRequests.
+   * @example
+   * // Update many PayoutRequests
+   * const payoutRequest = await prisma.payoutRequest.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more PayoutRequests and only return the `id`
+   * const payoutRequestWithIdOnly = await prisma.payoutRequest.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends PayoutRequestUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, PayoutRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayoutRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one PayoutRequest.
@@ -1515,6 +1611,30 @@ export type PayoutRequestCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many PayoutRequests.
    */
   data: Prisma.PayoutRequestCreateManyInput | Prisma.PayoutRequestCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * PayoutRequest createManyAndReturn
+ */
+export type PayoutRequestCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayoutRequest
+   */
+  select?: Prisma.PayoutRequestSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayoutRequest
+   */
+  omit?: Prisma.PayoutRequestOmit<ExtArgs> | null
+  /**
+   * The data used to create many PayoutRequests.
+   */
+  data: Prisma.PayoutRequestCreateManyInput | Prisma.PayoutRequestCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayoutRequestIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1559,6 +1679,36 @@ export type PayoutRequestUpdateManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many PayoutRequests to update.
    */
   limit?: number
+}
+
+/**
+ * PayoutRequest updateManyAndReturn
+ */
+export type PayoutRequestUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayoutRequest
+   */
+  select?: Prisma.PayoutRequestSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayoutRequest
+   */
+  omit?: Prisma.PayoutRequestOmit<ExtArgs> | null
+  /**
+   * The data used to update PayoutRequests.
+   */
+  data: Prisma.XOR<Prisma.PayoutRequestUpdateManyMutationInput, Prisma.PayoutRequestUncheckedUpdateManyInput>
+  /**
+   * Filter which PayoutRequests to update
+   */
+  where?: Prisma.PayoutRequestWhereInput
+  /**
+   * Limit how many PayoutRequests to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayoutRequestIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

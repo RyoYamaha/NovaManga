@@ -372,7 +372,21 @@ export type ContentKnowledgeBaseSelect<ExtArgs extends runtime.Types.Extensions.
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contentKnowledgeBase"]>
 
+export type ContentKnowledgeBaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  summaryText?: boolean
+  updatedAt?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentKnowledgeBase"]>
 
+export type ContentKnowledgeBaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  summaryText?: boolean
+  updatedAt?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentKnowledgeBase"]>
 
 export type ContentKnowledgeBaseSelectScalar = {
   id?: boolean
@@ -383,6 +397,12 @@ export type ContentKnowledgeBaseSelectScalar = {
 
 export type ContentKnowledgeBaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contentId" | "summaryText" | "updatedAt", ExtArgs["result"]["contentKnowledgeBase"]>
 export type ContentKnowledgeBaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type ContentKnowledgeBaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type ContentKnowledgeBaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 
@@ -514,6 +534,30 @@ export interface ContentKnowledgeBaseDelegate<ExtArgs extends runtime.Types.Exte
   createMany<T extends ContentKnowledgeBaseCreateManyArgs>(args?: Prisma.SelectSubset<T, ContentKnowledgeBaseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ContentKnowledgeBases and returns the data saved in the database.
+   * @param {ContentKnowledgeBaseCreateManyAndReturnArgs} args - Arguments to create many ContentKnowledgeBases.
+   * @example
+   * // Create many ContentKnowledgeBases
+   * const contentKnowledgeBase = await prisma.contentKnowledgeBase.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ContentKnowledgeBases and only return the `id`
+   * const contentKnowledgeBaseWithIdOnly = await prisma.contentKnowledgeBase.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ContentKnowledgeBaseCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ContentKnowledgeBaseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentKnowledgeBasePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ContentKnowledgeBase.
    * @param {ContentKnowledgeBaseDeleteArgs} args - Arguments to delete one ContentKnowledgeBase.
    * @example
@@ -576,6 +620,36 @@ export interface ContentKnowledgeBaseDelegate<ExtArgs extends runtime.Types.Exte
    * 
    */
   updateMany<T extends ContentKnowledgeBaseUpdateManyArgs>(args: Prisma.SelectSubset<T, ContentKnowledgeBaseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ContentKnowledgeBases and returns the data updated in the database.
+   * @param {ContentKnowledgeBaseUpdateManyAndReturnArgs} args - Arguments to update many ContentKnowledgeBases.
+   * @example
+   * // Update many ContentKnowledgeBases
+   * const contentKnowledgeBase = await prisma.contentKnowledgeBase.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ContentKnowledgeBases and only return the `id`
+   * const contentKnowledgeBaseWithIdOnly = await prisma.contentKnowledgeBase.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ContentKnowledgeBaseUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ContentKnowledgeBaseUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentKnowledgeBasePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ContentKnowledgeBase.
@@ -1004,6 +1078,30 @@ export type ContentKnowledgeBaseCreateManyArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many ContentKnowledgeBases.
    */
   data: Prisma.ContentKnowledgeBaseCreateManyInput | Prisma.ContentKnowledgeBaseCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ContentKnowledgeBase createManyAndReturn
+ */
+export type ContentKnowledgeBaseCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentKnowledgeBase
+   */
+  select?: Prisma.ContentKnowledgeBaseSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentKnowledgeBase
+   */
+  omit?: Prisma.ContentKnowledgeBaseOmit<ExtArgs> | null
+  /**
+   * The data used to create many ContentKnowledgeBases.
+   */
+  data: Prisma.ContentKnowledgeBaseCreateManyInput | Prisma.ContentKnowledgeBaseCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentKnowledgeBaseIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1048,6 +1146,36 @@ export type ContentKnowledgeBaseUpdateManyArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many ContentKnowledgeBases to update.
    */
   limit?: number
+}
+
+/**
+ * ContentKnowledgeBase updateManyAndReturn
+ */
+export type ContentKnowledgeBaseUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentKnowledgeBase
+   */
+  select?: Prisma.ContentKnowledgeBaseSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentKnowledgeBase
+   */
+  omit?: Prisma.ContentKnowledgeBaseOmit<ExtArgs> | null
+  /**
+   * The data used to update ContentKnowledgeBases.
+   */
+  data: Prisma.XOR<Prisma.ContentKnowledgeBaseUpdateManyMutationInput, Prisma.ContentKnowledgeBaseUncheckedUpdateManyInput>
+  /**
+   * Filter which ContentKnowledgeBases to update
+   */
+  where?: Prisma.ContentKnowledgeBaseWhereInput
+  /**
+   * Limit how many ContentKnowledgeBases to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentKnowledgeBaseIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -269,7 +269,17 @@ export type SystemSettingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   updatedAt?: boolean
 }, ExtArgs["result"]["systemSetting"]>
 
+export type SystemSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  key?: boolean
+  value?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["systemSetting"]>
 
+export type SystemSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  key?: boolean
+  value?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["systemSetting"]>
 
 export type SystemSettingSelectScalar = {
   key?: boolean
@@ -404,6 +414,30 @@ export interface SystemSettingDelegate<ExtArgs extends runtime.Types.Extensions.
   createMany<T extends SystemSettingCreateManyArgs>(args?: Prisma.SelectSubset<T, SystemSettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many SystemSettings and returns the data saved in the database.
+   * @param {SystemSettingCreateManyAndReturnArgs} args - Arguments to create many SystemSettings.
+   * @example
+   * // Create many SystemSettings
+   * const systemSetting = await prisma.systemSetting.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many SystemSettings and only return the `key`
+   * const systemSettingWithKeyOnly = await prisma.systemSetting.createManyAndReturn({
+   *   select: { key: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends SystemSettingCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, SystemSettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a SystemSetting.
    * @param {SystemSettingDeleteArgs} args - Arguments to delete one SystemSetting.
    * @example
@@ -466,6 +500,36 @@ export interface SystemSettingDelegate<ExtArgs extends runtime.Types.Extensions.
    * 
    */
   updateMany<T extends SystemSettingUpdateManyArgs>(args: Prisma.SelectSubset<T, SystemSettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more SystemSettings and returns the data updated in the database.
+   * @param {SystemSettingUpdateManyAndReturnArgs} args - Arguments to update many SystemSettings.
+   * @example
+   * // Update many SystemSettings
+   * const systemSetting = await prisma.systemSetting.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more SystemSettings and only return the `key`
+   * const systemSettingWithKeyOnly = await prisma.systemSetting.updateManyAndReturn({
+   *   select: { key: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends SystemSettingUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, SystemSettingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one SystemSetting.
@@ -868,6 +932,26 @@ export type SystemSettingCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many SystemSettings.
    */
   data: Prisma.SystemSettingCreateManyInput | Prisma.SystemSettingCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * SystemSetting createManyAndReturn
+ */
+export type SystemSettingCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SystemSetting
+   */
+  select?: Prisma.SystemSettingSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the SystemSetting
+   */
+  omit?: Prisma.SystemSettingOmit<ExtArgs> | null
+  /**
+   * The data used to create many SystemSettings.
+   */
+  data: Prisma.SystemSettingCreateManyInput | Prisma.SystemSettingCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -896,6 +980,32 @@ export type SystemSettingUpdateArgs<ExtArgs extends runtime.Types.Extensions.Int
  * SystemSetting updateMany
  */
 export type SystemSettingUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update SystemSettings.
+   */
+  data: Prisma.XOR<Prisma.SystemSettingUpdateManyMutationInput, Prisma.SystemSettingUncheckedUpdateManyInput>
+  /**
+   * Filter which SystemSettings to update
+   */
+  where?: Prisma.SystemSettingWhereInput
+  /**
+   * Limit how many SystemSettings to update.
+   */
+  limit?: number
+}
+
+/**
+ * SystemSetting updateManyAndReturn
+ */
+export type SystemSettingUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SystemSetting
+   */
+  select?: Prisma.SystemSettingSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the SystemSetting
+   */
+  omit?: Prisma.SystemSettingOmit<ExtArgs> | null
   /**
    * The data used to update SystemSettings.
    */

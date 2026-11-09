@@ -73,7 +73,6 @@ export const ModelName = {
   PayoutProfile: 'PayoutProfile',
   PayoutRequest: 'PayoutRequest',
   SystemSetting: 'SystemSetting',
-  NovelModerationKeyword: 'NovelModerationKeyword',
   Bookmark: 'Bookmark',
   Favorite: 'Favorite',
   Rating: 'Rating',
@@ -85,6 +84,11 @@ export const ModelName = {
   RefreshToken: 'RefreshToken',
   ContentKnowledgeBase: 'ContentKnowledgeBase',
   AIConversation: 'AIConversation',
+  AiChatSession: 'AiChatSession',
+  AiChatMessage: 'AiChatMessage',
+  AiUsageDaily: 'AiUsageDaily',
+  AiUsageEvent: 'AiUsageEvent',
+  AiAdminAuditLog: 'AiAdminAuditLog',
   RecommendationCache: 'RecommendationCache',
   SupportTicket: 'SupportTicket',
   TicketMessage: 'TicketMessage'
@@ -100,8 +104,7 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
-  Serializable: 'Serializable',
-  Snapshot: 'Snapshot'
+  Serializable: 'Serializable'
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
@@ -115,6 +118,9 @@ export const ContentScalarFieldEnum = {
   ownershipTier: 'ownershipTier',
   publicationStatus: 'publicationStatus',
   reviewFeedback: 'reviewFeedback',
+  aiModerationStatus: 'aiModerationStatus',
+  aiModerationReason: 'aiModerationReason',
+  aiModeratedAt: 'aiModeratedAt',
   storyStatus: 'storyStatus',
   coverImageUrl: 'coverImageUrl',
   pricingType: 'pricingType',
@@ -154,6 +160,9 @@ export const ChapterScalarFieldEnum = {
   number: 'number',
   title: 'title',
   moderationStatus: 'moderationStatus',
+  aiModerationStatus: 'aiModerationStatus',
+  aiModerationReason: 'aiModerationReason',
+  aiModeratedAt: 'aiModeratedAt',
   publishedAt: 'publishedAt'
 } as const
 
@@ -238,6 +247,7 @@ export const UserScalarFieldEnum = {
   role: 'role',
   bio: 'bio',
   isLocked: 'isLocked',
+  aiBlocked: 'aiBlocked',
   payoutBlocked: 'payoutBlocked',
   createdAt: 'createdAt',
   onboardingCompletedAt: 'onboardingCompletedAt'
@@ -377,15 +387,6 @@ export const SystemSettingScalarFieldEnum = {
 export type SystemSettingScalarFieldEnum = (typeof SystemSettingScalarFieldEnum)[keyof typeof SystemSettingScalarFieldEnum]
 
 
-export const NovelModerationKeywordScalarFieldEnum = {
-  id: 'id',
-  keyword: 'keyword',
-  createdAt: 'createdAt'
-} as const
-
-export type NovelModerationKeywordScalarFieldEnum = (typeof NovelModerationKeywordScalarFieldEnum)[keyof typeof NovelModerationKeywordScalarFieldEnum]
-
-
 export const BookmarkScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -510,6 +511,65 @@ export const AIConversationScalarFieldEnum = {
 export type AIConversationScalarFieldEnum = (typeof AIConversationScalarFieldEnum)[keyof typeof AIConversationScalarFieldEnum]
 
 
+export const AiChatSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  novelId: 'novelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AiChatSessionScalarFieldEnum = (typeof AiChatSessionScalarFieldEnum)[keyof typeof AiChatSessionScalarFieldEnum]
+
+
+export const AiChatMessageScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt'
+} as const
+
+export type AiChatMessageScalarFieldEnum = (typeof AiChatMessageScalarFieldEnum)[keyof typeof AiChatMessageScalarFieldEnum]
+
+
+export const AiUsageDailyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  date: 'date',
+  count: 'count',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AiUsageDailyScalarFieldEnum = (typeof AiUsageDailyScalarFieldEnum)[keyof typeof AiUsageDailyScalarFieldEnum]
+
+
+export const AiUsageEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  status: 'status',
+  promptTokens: 'promptTokens',
+  completionTokens: 'completionTokens',
+  estimatedCostUsd: 'estimatedCostUsd',
+  errorCode: 'errorCode',
+  createdAt: 'createdAt'
+} as const
+
+export type AiUsageEventScalarFieldEnum = (typeof AiUsageEventScalarFieldEnum)[keyof typeof AiUsageEventScalarFieldEnum]
+
+
+export const AiAdminAuditLogScalarFieldEnum = {
+  id: 'id',
+  actorId: 'actorId',
+  action: 'action',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type AiAdminAuditLogScalarFieldEnum = (typeof AiAdminAuditLogScalarFieldEnum)[keyof typeof AiAdminAuditLogScalarFieldEnum]
+
+
 export const RecommendationCacheScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -550,6 +610,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {

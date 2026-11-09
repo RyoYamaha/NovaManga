@@ -4,7 +4,7 @@ import { Link, Outlet } from 'react-router'
 export function AuthLayout() {
   return (
     <div className="grid min-h-screen bg-background lg:grid-cols-2">
-      <aside className="relative isolate flex min-h-[320px] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#2b3746] via-[#1e2631] to-[#151b23] px-6 py-8 text-foreground sm:px-10 sm:py-10 lg:min-h-screen lg:px-14 lg:py-12">
+      <aside className="relative isolate flex min-h-[320px] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#131b26] via-[#0b0f17] to-[#070a0f] border-r border-white/5 px-6 py-8 text-foreground sm:px-10 sm:py-10 lg:min-h-screen lg:px-14 lg:py-12">
         <div className="pointer-events-none absolute -right-24 -top-24 -z-10 h-80 w-80 rounded-full bg-primary/15 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -left-24 -z-10 h-96 w-96 rounded-full bg-sky-400/10 blur-3xl" />
 

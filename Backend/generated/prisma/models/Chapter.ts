@@ -40,6 +40,9 @@ export type ChapterMinAggregateOutputType = {
   number: number | null
   title: string | null
   moderationStatus: string | null
+  aiModerationStatus: string | null
+  aiModerationReason: string | null
+  aiModeratedAt: Date | null
   publishedAt: Date | null
 }
 
@@ -49,6 +52,9 @@ export type ChapterMaxAggregateOutputType = {
   number: number | null
   title: string | null
   moderationStatus: string | null
+  aiModerationStatus: string | null
+  aiModerationReason: string | null
+  aiModeratedAt: Date | null
   publishedAt: Date | null
 }
 
@@ -58,6 +64,9 @@ export type ChapterCountAggregateOutputType = {
   number: number
   title: number
   moderationStatus: number
+  aiModerationStatus: number
+  aiModerationReason: number
+  aiModeratedAt: number
   publishedAt: number
   _all: number
 }
@@ -77,6 +86,9 @@ export type ChapterMinAggregateInputType = {
   number?: true
   title?: true
   moderationStatus?: true
+  aiModerationStatus?: true
+  aiModerationReason?: true
+  aiModeratedAt?: true
   publishedAt?: true
 }
 
@@ -86,6 +98,9 @@ export type ChapterMaxAggregateInputType = {
   number?: true
   title?: true
   moderationStatus?: true
+  aiModerationStatus?: true
+  aiModerationReason?: true
+  aiModeratedAt?: true
   publishedAt?: true
 }
 
@@ -95,6 +110,9 @@ export type ChapterCountAggregateInputType = {
   number?: true
   title?: true
   moderationStatus?: true
+  aiModerationStatus?: true
+  aiModerationReason?: true
+  aiModeratedAt?: true
   publishedAt?: true
   _all?: true
 }
@@ -191,6 +209,9 @@ export type ChapterGroupByOutputType = {
   number: number
   title: string | null
   moderationStatus: string
+  aiModerationStatus: string | null
+  aiModerationReason: string | null
+  aiModeratedAt: Date | null
   publishedAt: Date | null
   _count: ChapterCountAggregateOutputType | null
   _avg: ChapterAvgAggregateOutputType | null
@@ -223,6 +244,9 @@ export type ChapterWhereInput = {
   number?: Prisma.IntFilter<"Chapter"> | number
   title?: Prisma.StringNullableFilter<"Chapter"> | string | null
   moderationStatus?: Prisma.StringFilter<"Chapter"> | string
+  aiModerationStatus?: Prisma.StringNullableFilter<"Chapter"> | string | null
+  aiModerationReason?: Prisma.StringNullableFilter<"Chapter"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   publishedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   content?: Prisma.XOR<Prisma.ContentScalarRelationFilter, Prisma.ContentWhereInput>
   pages?: Prisma.ChapterPageListRelationFilter
@@ -237,6 +261,9 @@ export type ChapterOrderByWithRelationInput = {
   number?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   moderationStatus?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.ContentOrderByWithRelationInput
   pages?: Prisma.ChapterPageOrderByRelationAggregateInput
@@ -255,6 +282,9 @@ export type ChapterWhereUniqueInput = Prisma.AtLeast<{
   number?: Prisma.IntFilter<"Chapter"> | number
   title?: Prisma.StringNullableFilter<"Chapter"> | string | null
   moderationStatus?: Prisma.StringFilter<"Chapter"> | string
+  aiModerationStatus?: Prisma.StringNullableFilter<"Chapter"> | string | null
+  aiModerationReason?: Prisma.StringNullableFilter<"Chapter"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   publishedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   content?: Prisma.XOR<Prisma.ContentScalarRelationFilter, Prisma.ContentWhereInput>
   pages?: Prisma.ChapterPageListRelationFilter
@@ -269,6 +299,9 @@ export type ChapterOrderByWithAggregationInput = {
   number?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   moderationStatus?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChapterCountOrderByAggregateInput
   _avg?: Prisma.ChapterAvgOrderByAggregateInput
@@ -286,6 +319,9 @@ export type ChapterScalarWhereWithAggregatesInput = {
   number?: Prisma.IntWithAggregatesFilter<"Chapter"> | number
   title?: Prisma.StringNullableWithAggregatesFilter<"Chapter"> | string | null
   moderationStatus?: Prisma.StringWithAggregatesFilter<"Chapter"> | string
+  aiModerationStatus?: Prisma.StringNullableWithAggregatesFilter<"Chapter"> | string | null
+  aiModerationReason?: Prisma.StringNullableWithAggregatesFilter<"Chapter"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
 }
 
@@ -294,6 +330,9 @@ export type ChapterCreateInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   content: Prisma.ContentCreateNestedOneWithoutChaptersInput
   pages?: Prisma.ChapterPageCreateNestedManyWithoutChapterInput
@@ -308,6 +347,9 @@ export type ChapterUncheckedCreateInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   pages?: Prisma.ChapterPageUncheckedCreateNestedManyWithoutChapterInput
   chapterContent?: Prisma.ChapterContentUncheckedCreateNestedOneWithoutChapterInput
@@ -320,6 +362,9 @@ export type ChapterUpdateInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   content?: Prisma.ContentUpdateOneRequiredWithoutChaptersNestedInput
   pages?: Prisma.ChapterPageUpdateManyWithoutChapterNestedInput
@@ -334,6 +379,9 @@ export type ChapterUncheckedUpdateInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pages?: Prisma.ChapterPageUncheckedUpdateManyWithoutChapterNestedInput
   chapterContent?: Prisma.ChapterContentUncheckedUpdateOneWithoutChapterNestedInput
@@ -347,6 +395,9 @@ export type ChapterCreateManyInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
 }
 
@@ -355,6 +406,9 @@ export type ChapterUpdateManyMutationInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -364,6 +418,9 @@ export type ChapterUncheckedUpdateManyInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -388,6 +445,9 @@ export type ChapterCountOrderByAggregateInput = {
   number?: Prisma.SortOrder
   title?: Prisma.SortOrder
   moderationStatus?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
 }
 
@@ -401,6 +461,9 @@ export type ChapterMaxOrderByAggregateInput = {
   number?: Prisma.SortOrder
   title?: Prisma.SortOrder
   moderationStatus?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
 }
 
@@ -410,6 +473,9 @@ export type ChapterMinOrderByAggregateInput = {
   number?: Prisma.SortOrder
   title?: Prisma.SortOrder
   moderationStatus?: Prisma.SortOrder
+  aiModerationStatus?: Prisma.SortOrder
+  aiModerationReason?: Prisma.SortOrder
+  aiModeratedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
 }
 
@@ -525,6 +591,9 @@ export type ChapterCreateWithoutContentInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   pages?: Prisma.ChapterPageCreateNestedManyWithoutChapterInput
   chapterContent?: Prisma.ChapterContentCreateNestedOneWithoutChapterInput
@@ -537,6 +606,9 @@ export type ChapterUncheckedCreateWithoutContentInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   pages?: Prisma.ChapterPageUncheckedCreateNestedManyWithoutChapterInput
   chapterContent?: Prisma.ChapterContentUncheckedCreateNestedOneWithoutChapterInput
@@ -551,6 +623,7 @@ export type ChapterCreateOrConnectWithoutContentInput = {
 
 export type ChapterCreateManyContentInputEnvelope = {
   data: Prisma.ChapterCreateManyContentInput | Prisma.ChapterCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ChapterUpsertWithWhereUniqueWithoutContentInput = {
@@ -578,6 +651,9 @@ export type ChapterScalarWhereInput = {
   number?: Prisma.IntFilter<"Chapter"> | number
   title?: Prisma.StringNullableFilter<"Chapter"> | string | null
   moderationStatus?: Prisma.StringFilter<"Chapter"> | string
+  aiModerationStatus?: Prisma.StringNullableFilter<"Chapter"> | string | null
+  aiModerationReason?: Prisma.StringNullableFilter<"Chapter"> | string | null
+  aiModeratedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   publishedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
 }
 
@@ -586,6 +662,9 @@ export type ChapterCreateWithoutPagesInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   content: Prisma.ContentCreateNestedOneWithoutChaptersInput
   chapterContent?: Prisma.ChapterContentCreateNestedOneWithoutChapterInput
@@ -599,6 +678,9 @@ export type ChapterUncheckedCreateWithoutPagesInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   chapterContent?: Prisma.ChapterContentUncheckedCreateNestedOneWithoutChapterInput
   readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutLastChapterInput
@@ -626,6 +708,9 @@ export type ChapterUpdateWithoutPagesInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   content?: Prisma.ContentUpdateOneRequiredWithoutChaptersNestedInput
   chapterContent?: Prisma.ChapterContentUpdateOneWithoutChapterNestedInput
@@ -639,6 +724,9 @@ export type ChapterUncheckedUpdateWithoutPagesInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapterContent?: Prisma.ChapterContentUncheckedUpdateOneWithoutChapterNestedInput
   readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutLastChapterNestedInput
@@ -650,6 +738,9 @@ export type ChapterCreateWithoutChapterContentInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   content: Prisma.ContentCreateNestedOneWithoutChaptersInput
   pages?: Prisma.ChapterPageCreateNestedManyWithoutChapterInput
@@ -663,6 +754,9 @@ export type ChapterUncheckedCreateWithoutChapterContentInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   pages?: Prisma.ChapterPageUncheckedCreateNestedManyWithoutChapterInput
   readingProgress?: Prisma.ReadingProgressUncheckedCreateNestedManyWithoutLastChapterInput
@@ -690,6 +784,9 @@ export type ChapterUpdateWithoutChapterContentInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   content?: Prisma.ContentUpdateOneRequiredWithoutChaptersNestedInput
   pages?: Prisma.ChapterPageUpdateManyWithoutChapterNestedInput
@@ -703,6 +800,9 @@ export type ChapterUncheckedUpdateWithoutChapterContentInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pages?: Prisma.ChapterPageUncheckedUpdateManyWithoutChapterNestedInput
   readingProgress?: Prisma.ReadingProgressUncheckedUpdateManyWithoutLastChapterNestedInput
@@ -714,6 +814,9 @@ export type ChapterCreateWithoutReadingProgressInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   content: Prisma.ContentCreateNestedOneWithoutChaptersInput
   pages?: Prisma.ChapterPageCreateNestedManyWithoutChapterInput
@@ -727,6 +830,9 @@ export type ChapterUncheckedCreateWithoutReadingProgressInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   pages?: Prisma.ChapterPageUncheckedCreateNestedManyWithoutChapterInput
   chapterContent?: Prisma.ChapterContentUncheckedCreateNestedOneWithoutChapterInput
@@ -754,6 +860,9 @@ export type ChapterUpdateWithoutReadingProgressInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   content?: Prisma.ContentUpdateOneRequiredWithoutChaptersNestedInput
   pages?: Prisma.ChapterPageUpdateManyWithoutChapterNestedInput
@@ -767,6 +876,9 @@ export type ChapterUncheckedUpdateWithoutReadingProgressInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pages?: Prisma.ChapterPageUncheckedUpdateManyWithoutChapterNestedInput
   chapterContent?: Prisma.ChapterContentUncheckedUpdateOneWithoutChapterNestedInput
@@ -778,6 +890,9 @@ export type ChapterCreateWithoutChapterReadsInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   content: Prisma.ContentCreateNestedOneWithoutChaptersInput
   pages?: Prisma.ChapterPageCreateNestedManyWithoutChapterInput
@@ -791,6 +906,9 @@ export type ChapterUncheckedCreateWithoutChapterReadsInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
   pages?: Prisma.ChapterPageUncheckedCreateNestedManyWithoutChapterInput
   chapterContent?: Prisma.ChapterContentUncheckedCreateNestedOneWithoutChapterInput
@@ -818,6 +936,9 @@ export type ChapterUpdateWithoutChapterReadsInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   content?: Prisma.ContentUpdateOneRequiredWithoutChaptersNestedInput
   pages?: Prisma.ChapterPageUpdateManyWithoutChapterNestedInput
@@ -831,6 +952,9 @@ export type ChapterUncheckedUpdateWithoutChapterReadsInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pages?: Prisma.ChapterPageUncheckedUpdateManyWithoutChapterNestedInput
   chapterContent?: Prisma.ChapterContentUncheckedUpdateOneWithoutChapterNestedInput
@@ -842,6 +966,9 @@ export type ChapterCreateManyContentInput = {
   number: number
   title?: string | null
   moderationStatus?: string
+  aiModerationStatus?: string | null
+  aiModerationReason?: string | null
+  aiModeratedAt?: Date | string | null
   publishedAt?: Date | string | null
 }
 
@@ -850,6 +977,9 @@ export type ChapterUpdateWithoutContentInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pages?: Prisma.ChapterPageUpdateManyWithoutChapterNestedInput
   chapterContent?: Prisma.ChapterContentUpdateOneWithoutChapterNestedInput
@@ -862,6 +992,9 @@ export type ChapterUncheckedUpdateWithoutContentInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pages?: Prisma.ChapterPageUncheckedUpdateManyWithoutChapterNestedInput
   chapterContent?: Prisma.ChapterContentUncheckedUpdateOneWithoutChapterNestedInput
@@ -874,6 +1007,9 @@ export type ChapterUncheckedUpdateManyWithoutContentInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  aiModerationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModerationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiModeratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -932,6 +1068,9 @@ export type ChapterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   number?: boolean
   title?: boolean
   moderationStatus?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
   publishedAt?: boolean
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
   pages?: boolean | Prisma.Chapter$pagesArgs<ExtArgs>
@@ -941,7 +1080,31 @@ export type ChapterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   _count?: boolean | Prisma.ChapterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chapter"]>
 
+export type ChapterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  number?: boolean
+  title?: boolean
+  moderationStatus?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
+  publishedAt?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["chapter"]>
 
+export type ChapterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  number?: boolean
+  title?: boolean
+  moderationStatus?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
+  publishedAt?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["chapter"]>
 
 export type ChapterSelectScalar = {
   id?: boolean
@@ -949,10 +1112,13 @@ export type ChapterSelectScalar = {
   number?: boolean
   title?: boolean
   moderationStatus?: boolean
+  aiModerationStatus?: boolean
+  aiModerationReason?: boolean
+  aiModeratedAt?: boolean
   publishedAt?: boolean
 }
 
-export type ChapterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contentId" | "number" | "title" | "moderationStatus" | "publishedAt", ExtArgs["result"]["chapter"]>
+export type ChapterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contentId" | "number" | "title" | "moderationStatus" | "aiModerationStatus" | "aiModerationReason" | "aiModeratedAt" | "publishedAt", ExtArgs["result"]["chapter"]>
 export type ChapterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
   pages?: boolean | Prisma.Chapter$pagesArgs<ExtArgs>
@@ -960,6 +1126,12 @@ export type ChapterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   readingProgress?: boolean | Prisma.Chapter$readingProgressArgs<ExtArgs>
   chapterReads?: boolean | Prisma.Chapter$chapterReadsArgs<ExtArgs>
   _count?: boolean | Prisma.ChapterCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ChapterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type ChapterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 
 export type $ChapterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -977,6 +1149,9 @@ export type $ChapterPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     number: number
     title: string | null
     moderationStatus: string
+    aiModerationStatus: string | null
+    aiModerationReason: string | null
+    aiModeratedAt: Date | null
     publishedAt: Date | null
   }, ExtArgs["result"]["chapter"]>
   composites: {}
@@ -1096,6 +1271,30 @@ export interface ChapterDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends ChapterCreateManyArgs>(args?: Prisma.SelectSubset<T, ChapterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Chapters and returns the data saved in the database.
+   * @param {ChapterCreateManyAndReturnArgs} args - Arguments to create many Chapters.
+   * @example
+   * // Create many Chapters
+   * const chapter = await prisma.chapter.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Chapters and only return the `id`
+   * const chapterWithIdOnly = await prisma.chapter.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ChapterCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ChapterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Chapter.
    * @param {ChapterDeleteArgs} args - Arguments to delete one Chapter.
    * @example
@@ -1158,6 +1357,36 @@ export interface ChapterDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends ChapterUpdateManyArgs>(args: Prisma.SelectSubset<T, ChapterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Chapters and returns the data updated in the database.
+   * @param {ChapterUpdateManyAndReturnArgs} args - Arguments to update many Chapters.
+   * @example
+   * // Update many Chapters
+   * const chapter = await prisma.chapter.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Chapters and only return the `id`
+   * const chapterWithIdOnly = await prisma.chapter.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ChapterUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ChapterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Chapter.
@@ -1357,6 +1586,9 @@ export interface ChapterFieldRefs {
   readonly number: Prisma.FieldRef<"Chapter", 'Int'>
   readonly title: Prisma.FieldRef<"Chapter", 'String'>
   readonly moderationStatus: Prisma.FieldRef<"Chapter", 'String'>
+  readonly aiModerationStatus: Prisma.FieldRef<"Chapter", 'String'>
+  readonly aiModerationReason: Prisma.FieldRef<"Chapter", 'String'>
+  readonly aiModeratedAt: Prisma.FieldRef<"Chapter", 'DateTime'>
   readonly publishedAt: Prisma.FieldRef<"Chapter", 'DateTime'>
 }
     
@@ -1592,6 +1824,30 @@ export type ChapterCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Chapters.
    */
   data: Prisma.ChapterCreateManyInput | Prisma.ChapterCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Chapter createManyAndReturn
+ */
+export type ChapterCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Chapter
+   */
+  select?: Prisma.ChapterSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Chapter
+   */
+  omit?: Prisma.ChapterOmit<ExtArgs> | null
+  /**
+   * The data used to create many Chapters.
+   */
+  data: Prisma.ChapterCreateManyInput | Prisma.ChapterCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1636,6 +1892,36 @@ export type ChapterUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Chapters to update.
    */
   limit?: number
+}
+
+/**
+ * Chapter updateManyAndReturn
+ */
+export type ChapterUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Chapter
+   */
+  select?: Prisma.ChapterSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Chapter
+   */
+  omit?: Prisma.ChapterOmit<ExtArgs> | null
+  /**
+   * The data used to update Chapters.
+   */
+  data: Prisma.XOR<Prisma.ChapterUpdateManyMutationInput, Prisma.ChapterUncheckedUpdateManyInput>
+  /**
+   * Filter which Chapters to update
+   */
+  where?: Prisma.ChapterWhereInput
+  /**
+   * Limit how many Chapters to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -482,6 +482,7 @@ export type RecommendationCacheCreateOrConnectWithoutContentInput = {
 
 export type RecommendationCacheCreateManyContentInputEnvelope = {
   data: Prisma.RecommendationCacheCreateManyContentInput | Prisma.RecommendationCacheCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type RecommendationCacheUpsertWithWhereUniqueWithoutContentInput = {
@@ -532,6 +533,7 @@ export type RecommendationCacheCreateOrConnectWithoutUserInput = {
 
 export type RecommendationCacheCreateManyUserInputEnvelope = {
   data: Prisma.RecommendationCacheCreateManyUserInput | Prisma.RecommendationCacheCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type RecommendationCacheUpsertWithWhereUniqueWithoutUserInput = {
@@ -618,7 +620,25 @@ export type RecommendationCacheSelect<ExtArgs extends runtime.Types.Extensions.I
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["recommendationCache"]>
 
+export type RecommendationCacheSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  score?: boolean
+  generatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["recommendationCache"]>
 
+export type RecommendationCacheSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  score?: boolean
+  generatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["recommendationCache"]>
 
 export type RecommendationCacheSelectScalar = {
   id?: boolean
@@ -630,6 +650,14 @@ export type RecommendationCacheSelectScalar = {
 
 export type RecommendationCacheOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "contentId" | "score" | "generatedAt", ExtArgs["result"]["recommendationCache"]>
 export type RecommendationCacheInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type RecommendationCacheIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type RecommendationCacheIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
@@ -764,6 +792,30 @@ export interface RecommendationCacheDelegate<ExtArgs extends runtime.Types.Exten
   createMany<T extends RecommendationCacheCreateManyArgs>(args?: Prisma.SelectSubset<T, RecommendationCacheCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many RecommendationCaches and returns the data saved in the database.
+   * @param {RecommendationCacheCreateManyAndReturnArgs} args - Arguments to create many RecommendationCaches.
+   * @example
+   * // Create many RecommendationCaches
+   * const recommendationCache = await prisma.recommendationCache.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many RecommendationCaches and only return the `id`
+   * const recommendationCacheWithIdOnly = await prisma.recommendationCache.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends RecommendationCacheCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, RecommendationCacheCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecommendationCachePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a RecommendationCache.
    * @param {RecommendationCacheDeleteArgs} args - Arguments to delete one RecommendationCache.
    * @example
@@ -826,6 +878,36 @@ export interface RecommendationCacheDelegate<ExtArgs extends runtime.Types.Exten
    * 
    */
   updateMany<T extends RecommendationCacheUpdateManyArgs>(args: Prisma.SelectSubset<T, RecommendationCacheUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more RecommendationCaches and returns the data updated in the database.
+   * @param {RecommendationCacheUpdateManyAndReturnArgs} args - Arguments to update many RecommendationCaches.
+   * @example
+   * // Update many RecommendationCaches
+   * const recommendationCache = await prisma.recommendationCache.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more RecommendationCaches and only return the `id`
+   * const recommendationCacheWithIdOnly = await prisma.recommendationCache.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends RecommendationCacheUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, RecommendationCacheUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecommendationCachePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one RecommendationCache.
@@ -1256,6 +1338,30 @@ export type RecommendationCacheCreateManyArgs<ExtArgs extends runtime.Types.Exte
    * The data used to create many RecommendationCaches.
    */
   data: Prisma.RecommendationCacheCreateManyInput | Prisma.RecommendationCacheCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * RecommendationCache createManyAndReturn
+ */
+export type RecommendationCacheCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RecommendationCache
+   */
+  select?: Prisma.RecommendationCacheSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the RecommendationCache
+   */
+  omit?: Prisma.RecommendationCacheOmit<ExtArgs> | null
+  /**
+   * The data used to create many RecommendationCaches.
+   */
+  data: Prisma.RecommendationCacheCreateManyInput | Prisma.RecommendationCacheCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecommendationCacheIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1300,6 +1406,36 @@ export type RecommendationCacheUpdateManyArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many RecommendationCaches to update.
    */
   limit?: number
+}
+
+/**
+ * RecommendationCache updateManyAndReturn
+ */
+export type RecommendationCacheUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RecommendationCache
+   */
+  select?: Prisma.RecommendationCacheSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the RecommendationCache
+   */
+  omit?: Prisma.RecommendationCacheOmit<ExtArgs> | null
+  /**
+   * The data used to update RecommendationCaches.
+   */
+  data: Prisma.XOR<Prisma.RecommendationCacheUpdateManyMutationInput, Prisma.RecommendationCacheUncheckedUpdateManyInput>
+  /**
+   * Filter which RecommendationCaches to update
+   */
+  where?: Prisma.RecommendationCacheWhereInput
+  /**
+   * Limit how many RecommendationCaches to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecommendationCacheIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

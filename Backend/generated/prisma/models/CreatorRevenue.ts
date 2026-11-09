@@ -621,6 +621,7 @@ export type CreatorRevenueCreateOrConnectWithoutContentInput = {
 
 export type CreatorRevenueCreateManyContentInputEnvelope = {
   data: Prisma.CreatorRevenueCreateManyContentInput | Prisma.CreatorRevenueCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type CreatorRevenueUpsertWithWhereUniqueWithoutContentInput = {
@@ -683,6 +684,7 @@ export type CreatorRevenueCreateOrConnectWithoutCreatorInput = {
 
 export type CreatorRevenueCreateManyCreatorInputEnvelope = {
   data: Prisma.CreatorRevenueCreateManyCreatorInput | Prisma.CreatorRevenueCreateManyCreatorInput[]
+  skipDuplicates?: boolean
 }
 
 export type CreatorRevenueUpsertWithWhereUniqueWithoutCreatorInput = {
@@ -866,7 +868,35 @@ export type CreatorRevenueSelect<ExtArgs extends runtime.Types.Extensions.Intern
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["creatorRevenue"]>
 
+export type CreatorRevenueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  creatorId?: boolean
+  purchaseId?: boolean
+  contentId?: boolean
+  grossCoins?: boolean
+  sharePercent?: boolean
+  creatorCoins?: boolean
+  platformCoins?: boolean
+  createdAt?: boolean
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["creatorRevenue"]>
 
+export type CreatorRevenueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  creatorId?: boolean
+  purchaseId?: boolean
+  contentId?: boolean
+  grossCoins?: boolean
+  sharePercent?: boolean
+  creatorCoins?: boolean
+  platformCoins?: boolean
+  createdAt?: boolean
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["creatorRevenue"]>
 
 export type CreatorRevenueSelectScalar = {
   id?: boolean
@@ -882,6 +912,16 @@ export type CreatorRevenueSelectScalar = {
 
 export type CreatorRevenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creatorId" | "purchaseId" | "contentId" | "grossCoins" | "sharePercent" | "creatorCoins" | "platformCoins" | "createdAt", ExtArgs["result"]["creatorRevenue"]>
 export type CreatorRevenueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type CreatorRevenueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type CreatorRevenueIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
@@ -1022,6 +1062,30 @@ export interface CreatorRevenueDelegate<ExtArgs extends runtime.Types.Extensions
   createMany<T extends CreatorRevenueCreateManyArgs>(args?: Prisma.SelectSubset<T, CreatorRevenueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many CreatorRevenues and returns the data saved in the database.
+   * @param {CreatorRevenueCreateManyAndReturnArgs} args - Arguments to create many CreatorRevenues.
+   * @example
+   * // Create many CreatorRevenues
+   * const creatorRevenue = await prisma.creatorRevenue.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many CreatorRevenues and only return the `id`
+   * const creatorRevenueWithIdOnly = await prisma.creatorRevenue.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends CreatorRevenueCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, CreatorRevenueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreatorRevenuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a CreatorRevenue.
    * @param {CreatorRevenueDeleteArgs} args - Arguments to delete one CreatorRevenue.
    * @example
@@ -1084,6 +1148,36 @@ export interface CreatorRevenueDelegate<ExtArgs extends runtime.Types.Extensions
    * 
    */
   updateMany<T extends CreatorRevenueUpdateManyArgs>(args: Prisma.SelectSubset<T, CreatorRevenueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more CreatorRevenues and returns the data updated in the database.
+   * @param {CreatorRevenueUpdateManyAndReturnArgs} args - Arguments to update many CreatorRevenues.
+   * @example
+   * // Update many CreatorRevenues
+   * const creatorRevenue = await prisma.creatorRevenue.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more CreatorRevenues and only return the `id`
+   * const creatorRevenueWithIdOnly = await prisma.creatorRevenue.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends CreatorRevenueUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, CreatorRevenueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreatorRevenuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one CreatorRevenue.
@@ -1519,6 +1613,30 @@ export type CreatorRevenueCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many CreatorRevenues.
    */
   data: Prisma.CreatorRevenueCreateManyInput | Prisma.CreatorRevenueCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * CreatorRevenue createManyAndReturn
+ */
+export type CreatorRevenueCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CreatorRevenue
+   */
+  select?: Prisma.CreatorRevenueSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the CreatorRevenue
+   */
+  omit?: Prisma.CreatorRevenueOmit<ExtArgs> | null
+  /**
+   * The data used to create many CreatorRevenues.
+   */
+  data: Prisma.CreatorRevenueCreateManyInput | Prisma.CreatorRevenueCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CreatorRevenueIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1563,6 +1681,36 @@ export type CreatorRevenueUpdateManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many CreatorRevenues to update.
    */
   limit?: number
+}
+
+/**
+ * CreatorRevenue updateManyAndReturn
+ */
+export type CreatorRevenueUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CreatorRevenue
+   */
+  select?: Prisma.CreatorRevenueSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the CreatorRevenue
+   */
+  omit?: Prisma.CreatorRevenueOmit<ExtArgs> | null
+  /**
+   * The data used to update CreatorRevenues.
+   */
+  data: Prisma.XOR<Prisma.CreatorRevenueUpdateManyMutationInput, Prisma.CreatorRevenueUncheckedUpdateManyInput>
+  /**
+   * Filter which CreatorRevenues to update
+   */
+  where?: Prisma.CreatorRevenueWhereInput
+  /**
+   * Limit how many CreatorRevenues to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CreatorRevenueIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

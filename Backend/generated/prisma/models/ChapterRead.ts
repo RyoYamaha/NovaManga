@@ -406,6 +406,7 @@ export type ChapterReadCreateOrConnectWithoutChapterInput = {
 
 export type ChapterReadCreateManyChapterInputEnvelope = {
   data: Prisma.ChapterReadCreateManyChapterInput | Prisma.ChapterReadCreateManyChapterInput[]
+  skipDuplicates?: boolean
 }
 
 export type ChapterReadUpsertWithWhereUniqueWithoutChapterInput = {
@@ -453,6 +454,7 @@ export type ChapterReadCreateOrConnectWithoutUserInput = {
 
 export type ChapterReadCreateManyUserInputEnvelope = {
   data: Prisma.ChapterReadCreateManyUserInput | Prisma.ChapterReadCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type ChapterReadUpsertWithWhereUniqueWithoutUserInput = {
@@ -530,7 +532,23 @@ export type ChapterReadSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chapterRead"]>
 
+export type ChapterReadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  chapterId?: boolean
+  completedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["chapterRead"]>
 
+export type ChapterReadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  chapterId?: boolean
+  completedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["chapterRead"]>
 
 export type ChapterReadSelectScalar = {
   id?: boolean
@@ -541,6 +559,14 @@ export type ChapterReadSelectScalar = {
 
 export type ChapterReadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "chapterId" | "completedAt", ExtArgs["result"]["chapterRead"]>
 export type ChapterReadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}
+export type ChapterReadIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}
+export type ChapterReadIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
 }
@@ -674,6 +700,30 @@ export interface ChapterReadDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends ChapterReadCreateManyArgs>(args?: Prisma.SelectSubset<T, ChapterReadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ChapterReads and returns the data saved in the database.
+   * @param {ChapterReadCreateManyAndReturnArgs} args - Arguments to create many ChapterReads.
+   * @example
+   * // Create many ChapterReads
+   * const chapterRead = await prisma.chapterRead.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ChapterReads and only return the `id`
+   * const chapterReadWithIdOnly = await prisma.chapterRead.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ChapterReadCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ChapterReadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChapterReadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ChapterRead.
    * @param {ChapterReadDeleteArgs} args - Arguments to delete one ChapterRead.
    * @example
@@ -736,6 +786,36 @@ export interface ChapterReadDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends ChapterReadUpdateManyArgs>(args: Prisma.SelectSubset<T, ChapterReadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ChapterReads and returns the data updated in the database.
+   * @param {ChapterReadUpdateManyAndReturnArgs} args - Arguments to update many ChapterReads.
+   * @example
+   * // Update many ChapterReads
+   * const chapterRead = await prisma.chapterRead.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ChapterReads and only return the `id`
+   * const chapterReadWithIdOnly = await prisma.chapterRead.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ChapterReadUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ChapterReadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChapterReadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ChapterRead.
@@ -1165,6 +1245,30 @@ export type ChapterReadCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many ChapterReads.
    */
   data: Prisma.ChapterReadCreateManyInput | Prisma.ChapterReadCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ChapterRead createManyAndReturn
+ */
+export type ChapterReadCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChapterRead
+   */
+  select?: Prisma.ChapterReadSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChapterRead
+   */
+  omit?: Prisma.ChapterReadOmit<ExtArgs> | null
+  /**
+   * The data used to create many ChapterReads.
+   */
+  data: Prisma.ChapterReadCreateManyInput | Prisma.ChapterReadCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterReadIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1209,6 +1313,36 @@ export type ChapterReadUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many ChapterReads to update.
    */
   limit?: number
+}
+
+/**
+ * ChapterRead updateManyAndReturn
+ */
+export type ChapterReadUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChapterRead
+   */
+  select?: Prisma.ChapterReadSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChapterRead
+   */
+  omit?: Prisma.ChapterReadOmit<ExtArgs> | null
+  /**
+   * The data used to update ChapterReads.
+   */
+  data: Prisma.XOR<Prisma.ChapterReadUpdateManyMutationInput, Prisma.ChapterReadUncheckedUpdateManyInput>
+  /**
+   * Filter which ChapterReads to update
+   */
+  where?: Prisma.ChapterReadWhereInput
+  /**
+   * Limit how many ChapterReads to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterReadIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -505,7 +505,23 @@ export type PublisherSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   _count?: boolean | Prisma.PublisherCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["publisher"]>
 
+export type PublisherSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  organizationName?: boolean
+  verificationDocumentUrl?: boolean
+  verificationStatus?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["publisher"]>
 
+export type PublisherSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  organizationName?: boolean
+  verificationDocumentUrl?: boolean
+  verificationStatus?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["publisher"]>
 
 export type PublisherSelectScalar = {
   id?: boolean
@@ -520,6 +536,12 @@ export type PublisherInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   contents?: boolean | Prisma.Publisher$contentsArgs<ExtArgs>
   _count?: boolean | Prisma.PublisherCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type PublisherIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type PublisherIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $PublisherPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -652,6 +674,30 @@ export interface PublisherDelegate<ExtArgs extends runtime.Types.Extensions.Inte
   createMany<T extends PublisherCreateManyArgs>(args?: Prisma.SelectSubset<T, PublisherCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Publishers and returns the data saved in the database.
+   * @param {PublisherCreateManyAndReturnArgs} args - Arguments to create many Publishers.
+   * @example
+   * // Create many Publishers
+   * const publisher = await prisma.publisher.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Publishers and only return the `id`
+   * const publisherWithIdOnly = await prisma.publisher.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends PublisherCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, PublisherCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PublisherPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Publisher.
    * @param {PublisherDeleteArgs} args - Arguments to delete one Publisher.
    * @example
@@ -714,6 +760,36 @@ export interface PublisherDelegate<ExtArgs extends runtime.Types.Extensions.Inte
    * 
    */
   updateMany<T extends PublisherUpdateManyArgs>(args: Prisma.SelectSubset<T, PublisherUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Publishers and returns the data updated in the database.
+   * @param {PublisherUpdateManyAndReturnArgs} args - Arguments to update many Publishers.
+   * @example
+   * // Update many Publishers
+   * const publisher = await prisma.publisher.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Publishers and only return the `id`
+   * const publisherWithIdOnly = await prisma.publisher.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends PublisherUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, PublisherUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PublisherPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Publisher.
@@ -1144,6 +1220,30 @@ export type PublisherCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Publishers.
    */
   data: Prisma.PublisherCreateManyInput | Prisma.PublisherCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * Publisher createManyAndReturn
+ */
+export type PublisherCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Publisher
+   */
+  select?: Prisma.PublisherSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Publisher
+   */
+  omit?: Prisma.PublisherOmit<ExtArgs> | null
+  /**
+   * The data used to create many Publishers.
+   */
+  data: Prisma.PublisherCreateManyInput | Prisma.PublisherCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PublisherIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1188,6 +1288,36 @@ export type PublisherUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Publishers to update.
    */
   limit?: number
+}
+
+/**
+ * Publisher updateManyAndReturn
+ */
+export type PublisherUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Publisher
+   */
+  select?: Prisma.PublisherSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Publisher
+   */
+  omit?: Prisma.PublisherOmit<ExtArgs> | null
+  /**
+   * The data used to update Publishers.
+   */
+  data: Prisma.XOR<Prisma.PublisherUpdateManyMutationInput, Prisma.PublisherUncheckedUpdateManyInput>
+  /**
+   * Filter which Publishers to update
+   */
+  where?: Prisma.PublisherWhereInput
+  /**
+   * Limit how many Publishers to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PublisherIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

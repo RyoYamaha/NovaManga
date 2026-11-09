@@ -318,7 +318,17 @@ export type NovelDetailSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["novelDetail"]>
 
+export type NovelDetailSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["novelDetail"]>
 
+export type NovelDetailSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  contentId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["novelDetail"]>
 
 export type NovelDetailSelectScalar = {
   id?: boolean
@@ -327,6 +337,12 @@ export type NovelDetailSelectScalar = {
 
 export type NovelDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contentId", ExtArgs["result"]["novelDetail"]>
 export type NovelDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type NovelDetailIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type NovelDetailIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 
@@ -456,6 +472,30 @@ export interface NovelDetailDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends NovelDetailCreateManyArgs>(args?: Prisma.SelectSubset<T, NovelDetailCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many NovelDetails and returns the data saved in the database.
+   * @param {NovelDetailCreateManyAndReturnArgs} args - Arguments to create many NovelDetails.
+   * @example
+   * // Create many NovelDetails
+   * const novelDetail = await prisma.novelDetail.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many NovelDetails and only return the `id`
+   * const novelDetailWithIdOnly = await prisma.novelDetail.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends NovelDetailCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, NovelDetailCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NovelDetailPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a NovelDetail.
    * @param {NovelDetailDeleteArgs} args - Arguments to delete one NovelDetail.
    * @example
@@ -518,6 +558,36 @@ export interface NovelDetailDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends NovelDetailUpdateManyArgs>(args: Prisma.SelectSubset<T, NovelDetailUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more NovelDetails and returns the data updated in the database.
+   * @param {NovelDetailUpdateManyAndReturnArgs} args - Arguments to update many NovelDetails.
+   * @example
+   * // Update many NovelDetails
+   * const novelDetail = await prisma.novelDetail.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more NovelDetails and only return the `id`
+   * const novelDetailWithIdOnly = await prisma.novelDetail.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends NovelDetailUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, NovelDetailUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NovelDetailPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one NovelDetail.
@@ -944,6 +1014,30 @@ export type NovelDetailCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many NovelDetails.
    */
   data: Prisma.NovelDetailCreateManyInput | Prisma.NovelDetailCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * NovelDetail createManyAndReturn
+ */
+export type NovelDetailCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NovelDetail
+   */
+  select?: Prisma.NovelDetailSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the NovelDetail
+   */
+  omit?: Prisma.NovelDetailOmit<ExtArgs> | null
+  /**
+   * The data used to create many NovelDetails.
+   */
+  data: Prisma.NovelDetailCreateManyInput | Prisma.NovelDetailCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NovelDetailIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -988,6 +1082,36 @@ export type NovelDetailUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many NovelDetails to update.
    */
   limit?: number
+}
+
+/**
+ * NovelDetail updateManyAndReturn
+ */
+export type NovelDetailUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NovelDetail
+   */
+  select?: Prisma.NovelDetailSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the NovelDetail
+   */
+  omit?: Prisma.NovelDetailOmit<ExtArgs> | null
+  /**
+   * The data used to update NovelDetails.
+   */
+  data: Prisma.XOR<Prisma.NovelDetailUpdateManyMutationInput, Prisma.NovelDetailUncheckedUpdateManyInput>
+  /**
+   * Filter which NovelDetails to update
+   */
+  where?: Prisma.NovelDetailWhereInput
+  /**
+   * Limit how many NovelDetails to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NovelDetailIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

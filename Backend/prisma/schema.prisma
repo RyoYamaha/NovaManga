@@ -4,10 +4,10 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "postgresql"
 }
 
-// SQL Server không hỗ trợ Prisma enum -> dùng String, validate giá trị ở DTO (class-validator)
+// Keep domain values as String and validate them in DTOs (class-validator).
 // ContentType: "Manga" | "Novel"
 // OwnershipTier: "Licensed" | "FanTranslation"
 // PublicationStatus: "Draft" | "PendingApproval" | "Published" | "Rejected" | "Hidden"
@@ -21,11 +21,14 @@ datasource db {
 model Content {
   id                        String    @id @default(uuid()) //id của chính content
   title                     String
-  synopsis                  String?   @db.NVarChar(Max)
+  synopsis                  String?   @db.Text
   type                      String
   ownershipTier             String
   publicationStatus         String    @default("Draft")
-  reviewFeedback            String?   @db.NVarChar(Max)
+  reviewFeedback            String?   @db.Text
+  aiModerationStatus        String?   @db.VarChar(20)
+  aiModerationReason        String?   @db.VarChar(1000)
+  aiModeratedAt             DateTime?
   storyStatus               String    @default("Ongoing")
   coverImageUrl             String?
   pricingType               String    @default("free") @db.VarChar(10)
@@ -63,6 +66,7 @@ model Content {
 
   knowledgeBase   ContentKnowledgeBase?
   aiConversations AIConversation[]
+  aiChatSessions  AiChatSession[]
   recommendedIn   RecommendationCache[]
 
   createdAt DateTime @default(now())
@@ -93,6 +97,9 @@ model Chapter {
   number           Int
   title            String?
   moderationStatus String    @default("Published")
+  aiModerationStatus String? @db.VarChar(20)
+  aiModerationReason String? @db.VarChar(1000)
+  aiModeratedAt      DateTime?
   publishedAt      DateTime?
 
   pages           ChapterPage[]
@@ -118,7 +125,7 @@ model ChapterContent {
   id        String  @id @default(uuid())
   chapterId String  @unique
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  textBody  String  @db.NVarChar(Max)
+  textBody  String  @db.Text
 }
 
 model Genre {
@@ -181,6 +188,7 @@ model User {
   role         String   @default("Reader")
   bio          String?
   isLocked     Boolean  @default(false)
+  aiBlocked    Boolean  @default(false)
   payoutBlocked Boolean @default(false)
   createdAt    DateTime @default(now())
   onboardingCompletedAt DateTime?
@@ -198,6 +206,10 @@ model User {
   reportsFiled    Report[]              @relation("ReportedBy")
   refreshTokens   RefreshToken[]
   aiConversations AIConversation[]
+  aiChatSessions  AiChatSession[]
+  aiUsageDaily    AiUsageDaily[]
+  aiUsageEvents   AiUsageEvent[]
+  aiAdminAuditLogs AiAdminAuditLog[]
   recommendations RecommendationCache[]
 
   supportTickets SupportTicket[] @relation("UserTickets")
@@ -256,12 +268,12 @@ model BankTransaction {
   transferType     String        @db.VarChar(10)
   transferAmount   Int
   destinationAccountNumber String? @db.VarChar(30)
-  description      String        @db.NVarChar(Max)
-  rawPayload       String        @db.NVarChar(Max)
+  description      String        @db.Text
+  rawPayload       String        @db.Text
   processingStatus String        @db.VarChar(32)
   processedById    String?
   processedBy      User?          @relation("BankTransactionProcessor", fields: [processedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  adminNote        String?        @db.NVarChar(500)
+  adminNote        String?        @db.VarChar(500)
   receivedAt       DateTime      @default(now())
 
   @@index([paymentOrderId])
@@ -279,7 +291,7 @@ model WalletLedger {
   transactionType String   @db.VarChar(32)
   sourceType      String   @db.VarChar(32)
   sourceReference String   @db.VarChar(100)
-  description     String   @db.NVarChar(500)
+  description     String   @db.VarChar(500)
   createdAt       DateTime @default(now())
 
   @@unique([sourceType, sourceReference])
@@ -321,10 +333,10 @@ model PayoutProfile {
   id                String   @id @default(uuid())
   userId            String   @unique
   user              User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  bankName          String   @db.NVarChar(100)
+  bankName          String   @db.VarChar(100)
   bankBin           String   @db.VarChar(20)
   bankAccountNumber String   @db.VarChar(30)
-  bankAccountName   String   @db.NVarChar(100)
+  bankAccountName   String   @db.VarChar(100)
   updatedAt         DateTime @updatedAt
 }
 
@@ -334,15 +346,15 @@ model PayoutRequest {
   user              User     @relation("PayoutOwner", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   amountCoins       Int
   status            String   @default("Pending")
-  bankName          String   @db.NVarChar(100)
+  bankName          String   @db.VarChar(100)
   bankBin           String   @db.VarChar(20)
   bankAccountNumber String   @db.VarChar(30)
-  bankAccountName   String   @db.NVarChar(100)
+  bankAccountName   String   @db.VarChar(100)
   requestedAt       DateTime @default(now())
   processedAt       DateTime?
   processedById     String?
   processedBy       User?    @relation("PayoutProcessor", fields: [processedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  rejectionReason   String?  @db.NVarChar(500)
+  rejectionReason   String?  @db.VarChar(500)
 
   @@index([userId, requestedAt])
   @@index([status, requestedAt])
@@ -350,14 +362,8 @@ model PayoutRequest {
 
 model SystemSetting {
   key       String   @id @db.VarChar(100)
-  value     String   @db.NVarChar(1000)
+  value     String   @db.VarChar(1000)
   updatedAt DateTime @updatedAt
-}
-
-model NovelModerationKeyword {
-  id        String   @id @default(uuid())
-  keyword   String   @unique @db.NVarChar(200)
-  createdAt DateTime @default(now())
 }
 
 model Bookmark {
@@ -403,7 +409,7 @@ model Comment {
   parentCommentId  String?
   parentComment    Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   replies          Comment[] @relation("CommentReplies")
-  body             String    @db.NVarChar(Max)
+  body             String    @db.Text
   moderationStatus String    @default("Published")
   createdAt        DateTime  @default(now())
 
@@ -479,7 +485,7 @@ model ContentKnowledgeBase {
   id          String   @id @default(uuid())
   contentId   String   @unique
   content     Content  @relation(fields: [contentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  summaryText String   @db.NVarChar(Max)
+  summaryText String   @db.Text
   updatedAt   DateTime @updatedAt
 }
 
@@ -489,10 +495,75 @@ model AIConversation {
   user      User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contentId String
   content   Content  @relation(fields: [contentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  messages  String   @db.NVarChar(Max)
+  messages  String   @db.Text
   createdAt DateTime @default(now())
 
   @@index([userId, contentId])
+}
+
+model AiChatSession {
+  id        String          @id @default(uuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  novelId   String?
+  novel     Content?        @relation(fields: [novelId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  messages  AiChatMessage[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([userId, updatedAt])
+  @@index([novelId])
+}
+
+model AiChatMessage {
+  id        String        @id @default(uuid())
+  sessionId String
+  session   AiChatSession @relation(fields: [sessionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  role      String
+  content   String        @db.Text
+  createdAt DateTime      @default(now())
+
+  @@index([sessionId, createdAt])
+}
+
+model AiUsageDaily {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  date      DateTime @db.Date
+  count     Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([date])
+}
+
+model AiUsageEvent {
+  id               String         @id @default(uuid())
+  userId           String
+  user             User           @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sessionId        String?
+  status           String
+  promptTokens     Int?
+  completionTokens Int?
+  estimatedCostUsd Float?
+  errorCode        String?
+  createdAt        DateTime       @default(now())
+
+  @@index([createdAt, status])
+  @@index([userId, createdAt])
+}
+
+model AiAdminAuditLog {
+  id        String   @id @default(uuid())
+  actorId   String
+  actor     User     @relation(fields: [actorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  action    String
+  details   String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([actorId, createdAt])
 }
 
 model RecommendationCache {
@@ -528,7 +599,7 @@ model TicketMessage {
   ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   senderId  String
   sender    User          @relation(fields: [senderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  body      String        @db.NVarChar(Max)
+  body      String        @db.Text
   createdAt DateTime      @default(now())
 
   @@index([ticketId])

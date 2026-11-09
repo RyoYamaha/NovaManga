@@ -1,0 +1,383 @@
+/**
+ * Novel FlipBook & 3D Book Spread Styles
+ * Referencing BooksJS (books/lib/booksjs.css & books.js)
+ * Enhanced with realistic spine crease, paper textures, 3D shadows, and modern themes.
+ */
+
+:root {
+  --book-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.novel-book-viewport {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Outer Book Container / Stage */
+.novel-book-stage {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(620px, 78vh, 940px);
+  min-height: 520px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--book-shadow);
+  perspective: 2200px;
+  transition: background-color 300ms ease, box-shadow 300ms ease;
+}
+
+/* Double-page desktop view */
+.novel-book-stage.is-double-page {
+  /* Classic open book proportions */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Single-page mobile view */
+.novel-book-stage.is-single-page {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Clickable turning zones (BooksJS UX enhancement) */
+.novel-click-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  z-index: 10;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.novel-click-zone.left-zone {
+  left: 0;
+  cursor: w-resize;
+}
+
+.novel-click-zone.right-zone {
+  right: 0;
+  cursor: e-resize;
+}
+
+/* Underlay, Spread and Sheet Layers (BooksJS Architecture) */
+.novel-book-underlay,
+.novel-book-spread {
+  position: absolute;
+  inset: 8px;
+  display: flex;
+}
+
+.novel-book-underlay {
+  z-index: 2;
+  visibility: hidden;
+}
+
+.novel-book-spread {
+  z-index: 3;
+}
+
+/* Individual Book Pages */
+.novel-book-page {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  background-color: var(--novel-flipbook-paper);
+  color: var(--novel-flipbook-ink);
+  user-select: none;
+}
+
+.novel-book-stage.is-double-page .novel-book-page {
+  width: 50%;
+}
+
+.novel-book-stage.is-single-page .novel-book-page {
+  width: 100%;
+}
+
+.manga-book-viewport {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.manga-book-stage.novel-book-stage {
+  height: clamp(620px, 78vh, 940px);
+  min-height: 520px;
+}
+
+.manga-book-page.novel-book-page {
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  background: #fff;
+  color: #111;
+}
+
+.manga-book-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.novel-book-stage.is-double-page .manga-book-page.page-left,
+.novel-book-stage.is-double-page .manga-book-page.page-right {
+  border: 0;
+  box-shadow: none;
+  background-image: none;
+}
+
+.novel-book-stage .novel-sheet-face .manga-book-page {
+  background: #fff;
+}
+
+.manga-book-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.25rem;
+  color: #94a3b8;
+}
+
+.manga-book-button {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  color: #e2e8f0;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.manga-book-button:hover:not(:disabled) {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.manga-book-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.manga-book-counter {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Left page in spread */
+.novel-book-stage.is-double-page .page-left {
+  left: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  /* Inner spine gradient shadow */
+  box-shadow: inset -18px 0 24px -16px rgba(0, 0, 0, 0.35);
+  background-image: linear-gradient(90deg, rgba(0,0,0,0.02) 0%, transparent 12%, rgba(0,0,0,0.06) 100%);
+}
+
+/* Right page in spread */
+.novel-book-stage.is-double-page .page-right {
+  right: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  /* Inner spine gradient shadow */
+  box-shadow: inset 18px 0 24px -16px rgba(0, 0, 0, 0.35);
+  background-image: linear-gradient(-90deg, rgba(0,0,0,0.02) 0%, transparent 12%, rgba(0,0,0,0.06) 100%);
+}
+
+.novel-book-stage.is-single-page .page-left {
+  display: none;
+}
+
+.novel-book-stage.is-single-page .page-right {
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+/* Center spine groove & highlight */
+.novel-book-spine {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 24px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 8;
+  mix-blend-mode: multiply;
+}
+
+/* Book running header & footer */
+.novel-book-header {
+  height: 28px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: inherit;
+  opacity: 0.55;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.12);
+  padding-bottom: 4px;
+}
+
+.novel-book-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.novel-book-text {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  letter-spacing: normal;
+  text-rendering: optimizeLegibility;
+  text-align: start;
+}
+
+.novel-book-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.novel-book-footer {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  opacity: 0.6;
+  border-top: 1px solid rgba(125, 125, 125, 0.1);
+  padding-top: 4px;
+}
+
+/* 3D Flipping Sheet (Modeled after booksjs-page-container & booksjs-page-turn) */
+.novel-book-sheet {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 8px;
+  z-index: 6;
+  width: calc(50% - 8px);
+  visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 620ms cubic-bezier(0.25, 1, 0.45, 1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.novel-book-stage.is-single-page .novel-book-sheet {
+  width: calc(100% - 16px);
+  right: 8px;
+  left: 8px;
+}
+
+/* Forward Page Turn */
+.novel-book-sheet.is-turning-forward {
+  visibility: visible;
+  transform: rotateY(-180deg);
+}
+
+/* Backward Page Turn */
+.novel-book-sheet.is-turning-backward {
+  visibility: visible;
+  right: auto;
+  left: 8px;
+  transform-origin: right center;
+  transform: rotateY(180deg);
+}
+
+.novel-book-stage.is-single-page .novel-book-sheet.is-turning-backward {
+  right: 8px;
+  left: 8px;
+  transform-origin: left center;
+}
+
+/* Sheet Front & Back Faces */
+.novel-sheet-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background-color: var(--novel-flipbook-paper);
+  color: var(--novel-flipbook-ink);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.novel-book-stage .novel-sheet-face .novel-book-page {
+  left: 0;
+  right: 0;
+  width: 100%;
+  border: 0;
+  box-shadow: none;
+  background-image: none;
+}
+
+.novel-sheet-front {
+  z-index: 2;
+  box-shadow: inset -6px 0 12px rgba(0,0,0,0.15);
+}
+
+.novel-sheet-back {
+  z-index: 1;
+  transform: rotateY(180deg);
+  box-shadow: inset 6px 0 12px rgba(0,0,0,0.15);
+}
+
+/* Reveal underlay during turn */
+.novel-book-stage.is-turning-forward .novel-book-underlay,
+.novel-book-stage.is-turning-backward .novel-book-underlay {
+  visibility: visible;
+}
+
+.novel-book-stage.is-turning-forward .novel-book-spread .page-right {
+  z-index: 0;
+}
+
+.novel-book-stage.is-turning-backward .novel-book-spread .page-left {
+  z-index: 0;
+}
+
+/* Themes Paper & Ink Variables */
+.novel-book-stage.theme-paper {
+  --novel-flipbook-paper: #f9f6f0;
+  --novel-flipbook-ink: #23201d;
+  --novel-flipbook-stage: #e8e4db;
+}
+
+.novel-book-stage.theme-sepia {
+  --novel-flipbook-paper: #f4ebd8;
+  --novel-flipbook-ink: #382e21;
+  --novel-flipbook-stage: #2c2419;
+}
+
+.novel-book-stage.theme-dark {
+  --novel-flipbook-paper: #131b26;
+  --novel-flipbook-ink: #f1f5f9;
+  --novel-flipbook-stage: #0b0f17;
+}
+
+.novel-book-stage.theme-midnight {
+  --novel-flipbook-paper: #090b0e;
+  --novel-flipbook-ink: #e2e8f0;
+  --novel-flipbook-stage: #000000;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .novel-book-sheet {
+    transition-duration: 1ms !important;
+  }
+}

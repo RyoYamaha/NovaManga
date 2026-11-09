@@ -359,6 +359,7 @@ export type UserGenrePreferenceCreateOrConnectWithoutGenreInput = {
 
 export type UserGenrePreferenceCreateManyGenreInputEnvelope = {
   data: Prisma.UserGenrePreferenceCreateManyGenreInput | Prisma.UserGenrePreferenceCreateManyGenreInput[]
+  skipDuplicates?: boolean
 }
 
 export type UserGenrePreferenceUpsertWithWhereUniqueWithoutGenreInput = {
@@ -400,6 +401,7 @@ export type UserGenrePreferenceCreateOrConnectWithoutUserInput = {
 
 export type UserGenrePreferenceCreateManyUserInputEnvelope = {
   data: Prisma.UserGenrePreferenceCreateManyUserInput | Prisma.UserGenrePreferenceCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type UserGenrePreferenceUpsertWithWhereUniqueWithoutUserInput = {
@@ -459,7 +461,19 @@ export type UserGenrePreferenceSelect<ExtArgs extends runtime.Types.Extensions.I
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userGenrePreference"]>
 
+export type UserGenrePreferenceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  userId?: boolean
+  genreId?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["userGenrePreference"]>
 
+export type UserGenrePreferenceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  userId?: boolean
+  genreId?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["userGenrePreference"]>
 
 export type UserGenrePreferenceSelectScalar = {
   userId?: boolean
@@ -468,6 +482,14 @@ export type UserGenrePreferenceSelectScalar = {
 
 export type UserGenrePreferenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "genreId", ExtArgs["result"]["userGenrePreference"]>
 export type UserGenrePreferenceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}
+export type UserGenrePreferenceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}
+export type UserGenrePreferenceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
 }
@@ -599,6 +621,30 @@ export interface UserGenrePreferenceDelegate<ExtArgs extends runtime.Types.Exten
   createMany<T extends UserGenrePreferenceCreateManyArgs>(args?: Prisma.SelectSubset<T, UserGenrePreferenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many UserGenrePreferences and returns the data saved in the database.
+   * @param {UserGenrePreferenceCreateManyAndReturnArgs} args - Arguments to create many UserGenrePreferences.
+   * @example
+   * // Create many UserGenrePreferences
+   * const userGenrePreference = await prisma.userGenrePreference.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many UserGenrePreferences and only return the `userId`
+   * const userGenrePreferenceWithUserIdOnly = await prisma.userGenrePreference.createManyAndReturn({
+   *   select: { userId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends UserGenrePreferenceCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UserGenrePreferenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserGenrePreferencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a UserGenrePreference.
    * @param {UserGenrePreferenceDeleteArgs} args - Arguments to delete one UserGenrePreference.
    * @example
@@ -661,6 +707,36 @@ export interface UserGenrePreferenceDelegate<ExtArgs extends runtime.Types.Exten
    * 
    */
   updateMany<T extends UserGenrePreferenceUpdateManyArgs>(args: Prisma.SelectSubset<T, UserGenrePreferenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more UserGenrePreferences and returns the data updated in the database.
+   * @param {UserGenrePreferenceUpdateManyAndReturnArgs} args - Arguments to update many UserGenrePreferences.
+   * @example
+   * // Update many UserGenrePreferences
+   * const userGenrePreference = await prisma.userGenrePreference.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more UserGenrePreferences and only return the `userId`
+   * const userGenrePreferenceWithUserIdOnly = await prisma.userGenrePreference.updateManyAndReturn({
+   *   select: { userId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends UserGenrePreferenceUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UserGenrePreferenceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserGenrePreferencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one UserGenrePreference.
@@ -1088,6 +1164,30 @@ export type UserGenrePreferenceCreateManyArgs<ExtArgs extends runtime.Types.Exte
    * The data used to create many UserGenrePreferences.
    */
   data: Prisma.UserGenrePreferenceCreateManyInput | Prisma.UserGenrePreferenceCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * UserGenrePreference createManyAndReturn
+ */
+export type UserGenrePreferenceCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserGenrePreference
+   */
+  select?: Prisma.UserGenrePreferenceSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserGenrePreference
+   */
+  omit?: Prisma.UserGenrePreferenceOmit<ExtArgs> | null
+  /**
+   * The data used to create many UserGenrePreferences.
+   */
+  data: Prisma.UserGenrePreferenceCreateManyInput | Prisma.UserGenrePreferenceCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserGenrePreferenceIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1132,6 +1232,36 @@ export type UserGenrePreferenceUpdateManyArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many UserGenrePreferences to update.
    */
   limit?: number
+}
+
+/**
+ * UserGenrePreference updateManyAndReturn
+ */
+export type UserGenrePreferenceUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserGenrePreference
+   */
+  select?: Prisma.UserGenrePreferenceSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserGenrePreference
+   */
+  omit?: Prisma.UserGenrePreferenceOmit<ExtArgs> | null
+  /**
+   * The data used to update UserGenrePreferences.
+   */
+  data: Prisma.XOR<Prisma.UserGenrePreferenceUpdateManyMutationInput, Prisma.UserGenrePreferenceUncheckedUpdateManyInput>
+  /**
+   * Filter which UserGenrePreferences to update
+   */
+  where?: Prisma.UserGenrePreferenceWhereInput
+  /**
+   * Limit how many UserGenrePreferences to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserGenrePreferenceIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

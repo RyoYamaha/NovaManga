@@ -16,9 +16,9 @@ interface SidebarProps {
 
 export function Sidebar({ items, title }: SidebarProps) {
   return (
-    <aside className="w-full shrink-0 border-b border-border bg-background/90 md:w-56 md:border-b-0 md:border-r">
+    <aside className="w-full shrink-0 border-b border-border bg-[#1a2533] md:w-52 md:border-b-0 md:border-r">
       <nav
-        className="flex gap-1 overflow-x-auto p-2 md:sticky md:top-14 md:flex-col md:overflow-visible md:p-3"
+        className="flex gap-1 overflow-x-auto p-2 md:sticky md:top-12 md:flex-col md:h-[calc(100vh-3rem)] md:overflow-y-auto md:p-3"
         aria-label={title ?? 'Điều hướng'}
       >
         {title && (
@@ -33,14 +33,14 @@ export function Sidebar({ items, title }: SidebarProps) {
             end={end}
             className={({ isActive }) =>
               cn(
-                'flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors md:w-full',
+                'flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-md px-3 py-2 text-[13px] font-medium transition-colors md:w-full',
                 isActive
-                  ? 'bg-primary/15 text-primary'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                  ? 'bg-[#344357] text-white'
+                  : 'text-slate-300 hover:bg-white/5 hover:text-white',
               )
             }
           >
-            {Icon && <Icon className="h-4 w-4" />}
+            {Icon && <Icon className="h-4 w-4 shrink-0 text-slate-400" />}
             {label}
           </NavLink>
         ))}

@@ -359,6 +359,7 @@ export type ContentGenreCreateOrConnectWithoutContentInput = {
 
 export type ContentGenreCreateManyContentInputEnvelope = {
   data: Prisma.ContentGenreCreateManyContentInput | Prisma.ContentGenreCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentGenreUpsertWithWhereUniqueWithoutContentInput = {
@@ -400,6 +401,7 @@ export type ContentGenreCreateOrConnectWithoutGenreInput = {
 
 export type ContentGenreCreateManyGenreInputEnvelope = {
   data: Prisma.ContentGenreCreateManyGenreInput | Prisma.ContentGenreCreateManyGenreInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentGenreUpsertWithWhereUniqueWithoutGenreInput = {
@@ -459,7 +461,19 @@ export type ContentGenreSelect<ExtArgs extends runtime.Types.Extensions.Internal
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contentGenre"]>
 
+export type ContentGenreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  contentId?: boolean
+  genreId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentGenre"]>
 
+export type ContentGenreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  contentId?: boolean
+  genreId?: boolean
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentGenre"]>
 
 export type ContentGenreSelectScalar = {
   contentId?: boolean
@@ -468,6 +482,14 @@ export type ContentGenreSelectScalar = {
 
 export type ContentGenreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contentId" | "genreId", ExtArgs["result"]["contentGenre"]>
 export type ContentGenreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}
+export type ContentGenreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+  genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+}
+export type ContentGenreIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
 }
@@ -599,6 +621,30 @@ export interface ContentGenreDelegate<ExtArgs extends runtime.Types.Extensions.I
   createMany<T extends ContentGenreCreateManyArgs>(args?: Prisma.SelectSubset<T, ContentGenreCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ContentGenres and returns the data saved in the database.
+   * @param {ContentGenreCreateManyAndReturnArgs} args - Arguments to create many ContentGenres.
+   * @example
+   * // Create many ContentGenres
+   * const contentGenre = await prisma.contentGenre.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ContentGenres and only return the `contentId`
+   * const contentGenreWithContentIdOnly = await prisma.contentGenre.createManyAndReturn({
+   *   select: { contentId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ContentGenreCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ContentGenreCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentGenrePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ContentGenre.
    * @param {ContentGenreDeleteArgs} args - Arguments to delete one ContentGenre.
    * @example
@@ -661,6 +707,36 @@ export interface ContentGenreDelegate<ExtArgs extends runtime.Types.Extensions.I
    * 
    */
   updateMany<T extends ContentGenreUpdateManyArgs>(args: Prisma.SelectSubset<T, ContentGenreUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ContentGenres and returns the data updated in the database.
+   * @param {ContentGenreUpdateManyAndReturnArgs} args - Arguments to update many ContentGenres.
+   * @example
+   * // Update many ContentGenres
+   * const contentGenre = await prisma.contentGenre.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ContentGenres and only return the `contentId`
+   * const contentGenreWithContentIdOnly = await prisma.contentGenre.updateManyAndReturn({
+   *   select: { contentId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ContentGenreUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ContentGenreUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentGenrePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ContentGenre.
@@ -1088,6 +1164,30 @@ export type ContentGenreCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many ContentGenres.
    */
   data: Prisma.ContentGenreCreateManyInput | Prisma.ContentGenreCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ContentGenre createManyAndReturn
+ */
+export type ContentGenreCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentGenre
+   */
+  select?: Prisma.ContentGenreSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentGenre
+   */
+  omit?: Prisma.ContentGenreOmit<ExtArgs> | null
+  /**
+   * The data used to create many ContentGenres.
+   */
+  data: Prisma.ContentGenreCreateManyInput | Prisma.ContentGenreCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentGenreIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1132,6 +1232,36 @@ export type ContentGenreUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many ContentGenres to update.
    */
   limit?: number
+}
+
+/**
+ * ContentGenre updateManyAndReturn
+ */
+export type ContentGenreUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentGenre
+   */
+  select?: Prisma.ContentGenreSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentGenre
+   */
+  omit?: Prisma.ContentGenreOmit<ExtArgs> | null
+  /**
+   * The data used to update ContentGenres.
+   */
+  data: Prisma.XOR<Prisma.ContentGenreUpdateManyMutationInput, Prisma.ContentGenreUncheckedUpdateManyInput>
+  /**
+   * Filter which ContentGenres to update
+   */
+  where?: Prisma.ContentGenreWhereInput
+  /**
+   * Limit how many ContentGenres to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentGenreIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -502,6 +502,7 @@ export type ContentPurchaseCreateOrConnectWithoutContentInput = {
 
 export type ContentPurchaseCreateManyContentInputEnvelope = {
   data: Prisma.ContentPurchaseCreateManyContentInput | Prisma.ContentPurchaseCreateManyContentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentPurchaseUpsertWithWhereUniqueWithoutContentInput = {
@@ -554,6 +555,7 @@ export type ContentPurchaseCreateOrConnectWithoutUserInput = {
 
 export type ContentPurchaseCreateManyUserInputEnvelope = {
   data: Prisma.ContentPurchaseCreateManyUserInput | Prisma.ContentPurchaseCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContentPurchaseUpsertWithWhereUniqueWithoutUserInput = {
@@ -693,7 +695,25 @@ export type ContentPurchaseSelect<ExtArgs extends runtime.Types.Extensions.Inter
   revenue?: boolean | Prisma.ContentPurchase$revenueArgs<ExtArgs>
 }, ExtArgs["result"]["contentPurchase"]>
 
+export type ContentPurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  priceCoins?: boolean
+  purchasedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentPurchase"]>
 
+export type ContentPurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  contentId?: boolean
+  priceCoins?: boolean
+  purchasedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["contentPurchase"]>
 
 export type ContentPurchaseSelectScalar = {
   id?: boolean
@@ -708,6 +728,14 @@ export type ContentPurchaseInclude<ExtArgs extends runtime.Types.Extensions.Inte
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
   revenue?: boolean | Prisma.ContentPurchase$revenueArgs<ExtArgs>
+}
+export type ContentPurchaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
+}
+export type ContentPurchaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 
 export type $ContentPurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -841,6 +869,30 @@ export interface ContentPurchaseDelegate<ExtArgs extends runtime.Types.Extension
   createMany<T extends ContentPurchaseCreateManyArgs>(args?: Prisma.SelectSubset<T, ContentPurchaseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ContentPurchases and returns the data saved in the database.
+   * @param {ContentPurchaseCreateManyAndReturnArgs} args - Arguments to create many ContentPurchases.
+   * @example
+   * // Create many ContentPurchases
+   * const contentPurchase = await prisma.contentPurchase.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ContentPurchases and only return the `id`
+   * const contentPurchaseWithIdOnly = await prisma.contentPurchase.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ContentPurchaseCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ContentPurchaseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPurchasePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ContentPurchase.
    * @param {ContentPurchaseDeleteArgs} args - Arguments to delete one ContentPurchase.
    * @example
@@ -903,6 +955,36 @@ export interface ContentPurchaseDelegate<ExtArgs extends runtime.Types.Extension
    * 
    */
   updateMany<T extends ContentPurchaseUpdateManyArgs>(args: Prisma.SelectSubset<T, ContentPurchaseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ContentPurchases and returns the data updated in the database.
+   * @param {ContentPurchaseUpdateManyAndReturnArgs} args - Arguments to update many ContentPurchases.
+   * @example
+   * // Update many ContentPurchases
+   * const contentPurchase = await prisma.contentPurchase.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ContentPurchases and only return the `id`
+   * const contentPurchaseWithIdOnly = await prisma.contentPurchase.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ContentPurchaseUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ContentPurchaseUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPurchasePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ContentPurchase.
@@ -1334,6 +1416,30 @@ export type ContentPurchaseCreateManyArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many ContentPurchases.
    */
   data: Prisma.ContentPurchaseCreateManyInput | Prisma.ContentPurchaseCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ContentPurchase createManyAndReturn
+ */
+export type ContentPurchaseCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentPurchase
+   */
+  select?: Prisma.ContentPurchaseSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentPurchase
+   */
+  omit?: Prisma.ContentPurchaseOmit<ExtArgs> | null
+  /**
+   * The data used to create many ContentPurchases.
+   */
+  data: Prisma.ContentPurchaseCreateManyInput | Prisma.ContentPurchaseCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentPurchaseIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1378,6 +1484,36 @@ export type ContentPurchaseUpdateManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many ContentPurchases to update.
    */
   limit?: number
+}
+
+/**
+ * ContentPurchase updateManyAndReturn
+ */
+export type ContentPurchaseUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentPurchase
+   */
+  select?: Prisma.ContentPurchaseSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentPurchase
+   */
+  omit?: Prisma.ContentPurchaseOmit<ExtArgs> | null
+  /**
+   * The data used to update ContentPurchases.
+   */
+  data: Prisma.XOR<Prisma.ContentPurchaseUpdateManyMutationInput, Prisma.ContentPurchaseUncheckedUpdateManyInput>
+  /**
+   * Filter which ContentPurchases to update
+   */
+  where?: Prisma.ContentPurchaseWhereInput
+  /**
+   * Limit how many ContentPurchases to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentPurchaseIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

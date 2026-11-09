@@ -150,11 +150,6 @@ export type PayoutRequest = Prisma.PayoutRequestModel
  */
 export type SystemSetting = Prisma.SystemSettingModel
 /**
- * Model NovelModerationKeyword
- * 
- */
-export type NovelModerationKeyword = Prisma.NovelModerationKeywordModel
-/**
  * Model Bookmark
  * 
  */
@@ -209,6 +204,31 @@ export type ContentKnowledgeBase = Prisma.ContentKnowledgeBaseModel
  * 
  */
 export type AIConversation = Prisma.AIConversationModel
+/**
+ * Model AiChatSession
+ * 
+ */
+export type AiChatSession = Prisma.AiChatSessionModel
+/**
+ * Model AiChatMessage
+ * 
+ */
+export type AiChatMessage = Prisma.AiChatMessageModel
+/**
+ * Model AiUsageDaily
+ * 
+ */
+export type AiUsageDaily = Prisma.AiUsageDailyModel
+/**
+ * Model AiUsageEvent
+ * 
+ */
+export type AiUsageEvent = Prisma.AiUsageEventModel
+/**
+ * Model AiAdminAuditLog
+ * 
+ */
+export type AiAdminAuditLog = Prisma.AiAdminAuditLogModel
 /**
  * Model RecommendationCache
  * 

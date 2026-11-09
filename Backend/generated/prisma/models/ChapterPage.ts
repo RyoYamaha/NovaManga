@@ -406,6 +406,7 @@ export type ChapterPageCreateOrConnectWithoutChapterInput = {
 
 export type ChapterPageCreateManyChapterInputEnvelope = {
   data: Prisma.ChapterPageCreateManyChapterInput | Prisma.ChapterPageCreateManyChapterInput[]
+  skipDuplicates?: boolean
 }
 
 export type ChapterPageUpsertWithWhereUniqueWithoutChapterInput = {
@@ -468,7 +469,21 @@ export type ChapterPageSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chapterPage"]>
 
+export type ChapterPageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  chapterId?: boolean
+  pageNumber?: boolean
+  imageUrl?: boolean
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["chapterPage"]>
 
+export type ChapterPageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  chapterId?: boolean
+  pageNumber?: boolean
+  imageUrl?: boolean
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["chapterPage"]>
 
 export type ChapterPageSelectScalar = {
   id?: boolean
@@ -479,6 +494,12 @@ export type ChapterPageSelectScalar = {
 
 export type ChapterPageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chapterId" | "pageNumber" | "imageUrl", ExtArgs["result"]["chapterPage"]>
 export type ChapterPageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}
+export type ChapterPageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
+}
+export type ChapterPageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapter?: boolean | Prisma.ChapterDefaultArgs<ExtArgs>
 }
 
@@ -610,6 +631,30 @@ export interface ChapterPageDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends ChapterPageCreateManyArgs>(args?: Prisma.SelectSubset<T, ChapterPageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ChapterPages and returns the data saved in the database.
+   * @param {ChapterPageCreateManyAndReturnArgs} args - Arguments to create many ChapterPages.
+   * @example
+   * // Create many ChapterPages
+   * const chapterPage = await prisma.chapterPage.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ChapterPages and only return the `id`
+   * const chapterPageWithIdOnly = await prisma.chapterPage.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ChapterPageCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ChapterPageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChapterPagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ChapterPage.
    * @param {ChapterPageDeleteArgs} args - Arguments to delete one ChapterPage.
    * @example
@@ -672,6 +717,36 @@ export interface ChapterPageDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends ChapterPageUpdateManyArgs>(args: Prisma.SelectSubset<T, ChapterPageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ChapterPages and returns the data updated in the database.
+   * @param {ChapterPageUpdateManyAndReturnArgs} args - Arguments to update many ChapterPages.
+   * @example
+   * // Update many ChapterPages
+   * const chapterPage = await prisma.chapterPage.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ChapterPages and only return the `id`
+   * const chapterPageWithIdOnly = await prisma.chapterPage.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ChapterPageUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ChapterPageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChapterPagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ChapterPage.
@@ -1100,6 +1175,30 @@ export type ChapterPageCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many ChapterPages.
    */
   data: Prisma.ChapterPageCreateManyInput | Prisma.ChapterPageCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * ChapterPage createManyAndReturn
+ */
+export type ChapterPageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChapterPage
+   */
+  select?: Prisma.ChapterPageSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChapterPage
+   */
+  omit?: Prisma.ChapterPageOmit<ExtArgs> | null
+  /**
+   * The data used to create many ChapterPages.
+   */
+  data: Prisma.ChapterPageCreateManyInput | Prisma.ChapterPageCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterPageIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1144,6 +1243,36 @@ export type ChapterPageUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many ChapterPages to update.
    */
   limit?: number
+}
+
+/**
+ * ChapterPage updateManyAndReturn
+ */
+export type ChapterPageUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChapterPage
+   */
+  select?: Prisma.ChapterPageSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChapterPage
+   */
+  omit?: Prisma.ChapterPageOmit<ExtArgs> | null
+  /**
+   * The data used to update ChapterPages.
+   */
+  data: Prisma.XOR<Prisma.ChapterPageUpdateManyMutationInput, Prisma.ChapterPageUncheckedUpdateManyInput>
+  /**
+   * Filter which ChapterPages to update
+   */
+  where?: Prisma.ChapterPageWhereInput
+  /**
+   * Limit how many ChapterPages to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterPageIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

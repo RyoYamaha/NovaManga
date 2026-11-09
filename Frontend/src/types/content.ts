@@ -42,6 +42,9 @@ export interface ContentListItem {
   ownershipTier: OwnershipTier;
   publicationStatus: PublicationStatus;
   reviewFeedback?: string | null;
+  aiModerationStatus?: 'Clear' | 'Flagged' | 'Unavailable' | null;
+  aiModerationReason?: string | null;
+  aiModeratedAt?: string | null;
   storyStatus: StoryStatus;
   coverImageUrl?: string | null;
   pricingType: ContentPricingType;
@@ -109,7 +112,14 @@ export interface RankedContentPaginationResponse {
 
 export interface RecommendedContentListItem extends RankedContentListItem {
   matchingGenres: number;
+  matchingTags: number;
   averageRating: number;
+}
+
+export interface SimilarContentListItem extends ContentListItem {
+  matchingGenres: number;
+  matchingTags: number;
+  similarityScore: number;
 }
 
 export interface RecommendedContentPaginationResponse {

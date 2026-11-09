@@ -2,18 +2,17 @@
 
 ## Run locally
 
-1. Start SQL Server from the repository root:
+1. Start PostgreSQL from the repository root:
 
    ```powershell
-   docker.exe compose up -d sqlserver
+   docker.exe compose --env-file Backend/.env up -d postgres
    ```
 
-   On some Windows installations, typing `docker` opens an app-selection dialog
-   because `C:\Windows\System32\docker` shadows Docker Desktop's CLI. Use
-   `docker.exe` in PowerShell instead. Confirm the engine and SQL Server are ready
-   with `docker.exe version` and `docker.exe compose ps`.
+   Confirm the engine and PostgreSQL are ready with `docker.exe version` and
+   `docker.exe compose ps`.
 
-2. Copy `.env.example` to `.env`. `DATABASE_URL` and `MSSQL_SA_PASSWORD` must use the same SQL Server password.
+2. Copy `.env.example` to `.env`. For local PostgreSQL, keep the example URLs
+   and ensure `POSTGRES_PASSWORD` matches the password in both connection URLs.
 
 3. Install dependencies and apply the Prisma migration:
 
@@ -25,6 +24,39 @@
    ```
 
 The API runs at `http://localhost:3000`.
+
+## Backend structure
+
+Feature modules are grouped under `modules/` by domain:
+
+- `modules/identity`: authentication.
+- `modules/content`: content catalog, chapters, Manga, Novel, authors, and publishers.
+- `modules/reading`: bookmarks, favorites, ratings, reading progress, and unlocks.
+- `modules/commerce`: wallet, payments, payouts, and revenue.
+- `modules/community`: comments, notifications, reports, and tickets.
+- `modules/admin`, `modules/ai`, and `modules/health`: administration, AI, and health checks.
+- `common/`, `prisma/`, and `generated/` remain at the backend root for shared code,
+  database configuration, and generated Prisma Client.
+- `scripts/` contains standalone database/seed utilities; start them from `Backend`
+  so they continue to load the backend `.env`.
+
+## Supabase PostgreSQL
+
+1. Create a Supabase project and copy its connection strings from **Connect**.
+2. Set `DATABASE_URL` to the **Transaction pooler** URL (port `6543`) for the
+   running API. Set `DIRECT_URL` to the **Direct connection** URL for Prisma
+   migrations. URL-encode special characters in the database password. Keep both
+   values private and set them as backend deployment secrets.
+3. Apply the PostgreSQL baseline and future migrations from `Backend`:
+
+   ```powershell
+   npx prisma migrate deploy
+   ```
+
+The PostgreSQL migration history is stored in `prisma/migrations-postgresql`.
+This creates the schema in an empty PostgreSQL database; it does not copy data
+from the previous SQL Server database. Back up and migrate any needed data
+separately before switching production traffic.
 
 ## First Postman checks
 
@@ -212,7 +244,7 @@ with `PATCH /admin/payout/requests/:id/reject`, update the minimum using
 
 ## Common problems
 
-- `P1001` at `localhost:14331`: SQL Server is not running. Run `docker compose up -d sqlserver` and wait until the container is healthy.
-- `P3005` or migration errors: check that `DATABASE_URL` points to the same database and credentials as the container.
+- `P1001`: confirm PostgreSQL is running and `DATABASE_URL` (or `DIRECT_URL` for migrations) has the correct host and credentials.
+- `P3005` or migration errors: confirm Prisma is using the PostgreSQL migration history in `prisma/migrations-postgresql` and that `DIRECT_URL` points to the intended database.
 - `401 Unauthorized`: login first and use the returned access token in the Bearer header.
 - Cloudinary variables are only needed when testing upload endpoints.
