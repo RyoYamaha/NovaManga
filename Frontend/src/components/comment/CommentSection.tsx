@@ -74,7 +74,7 @@ export function CommentSection({
         className={`flex shrink-0 items-center justify-center rounded-full font-bold shadow-inner ${
           isReply
             ? 'h-7 w-7 bg-primary/15 text-[11px] text-primary'
-            : 'h-9 w-9 bg-gradient-to-tr from-amber-500/20 to-primary/20 text-xs text-primary border border-primary/20'
+            : 'h-9 w-9 bg-linear-to-tr from-amber-500/20 to-primary/20 text-xs text-primary border border-primary/20'
         }`}
       >
         {comment.user.username.slice(0, 2).toUpperCase() || 'U'}
@@ -122,7 +122,7 @@ export function CommentSection({
             </div>
           </div>
 
-          <p className="whitespace-pre-wrap break-words text-slate-200 text-xs sm:text-sm leading-relaxed">
+          <p className="whitespace-pre-wrap wrap-break-word text-slate-200 text-xs sm:text-sm leading-relaxed">
             {comment.body}
           </p>
         </div>
@@ -215,10 +215,10 @@ export function CommentSection({
   if (variant === 'sidebar') {
     return (
       <section
-        className={`sticky top-24 flex h-[calc(100vh-8rem)] w-full shrink-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#161e29]/95 backdrop-blur-xl lg:w-[350px] ${className}`}
+        className={`sticky top-24 flex h-[calc(100vh-8rem)] w-full shrink-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#161e29]/95 backdrop-blur-xl lg:w-87.5 ${className}`}
         aria-label="Bình luận tác phẩm"
       >
-        <header className="flex items-center justify-between border-b border-white/10 bg-white/[0.02] p-4 font-bold">
+        <header className="flex items-center justify-between border-b border-white/10 bg-white/2 p-4 font-bold">
           <div className="flex items-center gap-2 text-foreground text-sm">
             <MessageSquare className="h-4 w-4 text-primary" />
             <span>Bình luận</span>
@@ -363,7 +363,7 @@ export function CommentSection({
             <Button
               type="submit"
               disabled={!commentText.trim() || createComment.isPending}
-              className="rounded-xl bg-gradient-to-r from-sky-400 to-cyan-500 px-5 font-bold text-slate-950 shadow-md shadow-sky-500/25 hover:brightness-110 active:scale-95"
+              className="rounded-xl bg-linear-to-r from-sky-400 to-cyan-500 px-5 font-bold text-slate-950 shadow-md shadow-sky-500/25 hover:brightness-110 active:scale-95"
             >
               {createComment.isPending ? (
                 <>

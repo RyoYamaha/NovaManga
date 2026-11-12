@@ -173,7 +173,14 @@ export function EarningsActivitySection({
                   {historyItems.map((item) => (
                     <tr key={item.id} className="transition-colors hover:bg-white/[0.03]">
                       <td className="whitespace-nowrap p-4 text-muted-foreground">{formatDate(item.createdAt)}</td>
-                      <td className="p-4 font-bold text-white">{item.content.title}</td>
+                      <td className="p-4 font-bold text-white">
+                        {item.content.title}
+                        <span className="mt-1 block text-[11px] font-normal text-muted-foreground">
+                          {item.chapterPackPurchase
+                            ? `Gói chương ${item.chapterPackPurchase.packNumber}`
+                            : 'Mua cả bộ'}
+                        </span>
+                      </td>
                       <td className="p-4 text-right font-medium text-slate-300">{formatCoins(item.grossCoins)} coin</td>
                       <td className="p-4 text-center">
                         <span className="rounded-md border border-primary/20 bg-primary/10 px-2 py-0.5 font-bold text-primary">

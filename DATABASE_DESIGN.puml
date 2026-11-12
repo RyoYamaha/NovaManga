@@ -1,0 +1,238 @@
+@startuml
+title Database Design - Nova Manga (core ERD)
+
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+hide methods
+
+entity "User" as User {
+  * id : String <<PK>>
+  --
+  username : String <<UK>>
+  email : String <<UK>>
+  passwordHash : String
+  role : String
+}
+
+entity "Publisher" as Publisher {
+  * id : String <<PK>>
+  --
+  userId : String <<FK, UK>>
+  organizationName : String
+  verificationStatus : String
+}
+
+entity "Content" as Content {
+  * id : String <<PK>>
+  --
+  uploaderId : String <<FK>>
+  publisherId : String? <<FK>>
+  parentContentId : String? <<FK>>
+  title : String
+  type : String
+  ownershipTier : String
+  publicationStatus : String
+  publisherHidden : Boolean
+  pricingType : String
+  priceCoins : Int
+}
+
+entity "Chapter" as Chapter {
+  * id : String <<PK>>
+  --
+  contentId : String <<FK>>
+  number : Int
+  title : String?
+  moderationStatus : String
+}
+
+entity "ChapterPage" as ChapterPage {
+  * id : String <<PK>>
+  --
+  chapterId : String <<FK>>
+  pageNumber : Int
+  imageUrl : String
+}
+
+entity "ChapterContent" as ChapterContent {
+  * id : String <<PK>>
+  --
+  chapterId : String <<FK, UK>>
+  textBody : Text
+}
+
+entity "Genre" as Genre {
+  * id : String <<PK>>
+  --
+  name : String <<UK>>
+}
+
+entity "Tag" as Tag {
+  * id : String <<PK>>
+  --
+  name : String <<UK>>
+}
+
+entity "Bookmark" as Bookmark {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  contentId : String <<FK>>
+  createdAt : DateTime
+}
+
+entity "Rating" as Rating {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  contentId : String <<FK>>
+  score : Int
+}
+
+entity "Comment" as Comment {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  contentId : String <<FK>>
+  parentCommentId : String? <<FK>>
+  body : Text
+  moderationStatus : String
+}
+
+entity "ReadingProgress" as ReadingProgress {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  contentId : String <<FK>>
+  lastChapterId : String <<FK>>
+  lastPageNumber : Int?
+  lastReadAt : DateTime
+}
+
+entity "Wallet" as Wallet {
+  * id : String <<PK>>
+  --
+  userId : String <<FK, UK>>
+  balance : Int
+}
+
+entity "PaymentOrder" as PaymentOrder {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  expectedAmount : Int
+  paidAmount : Int?
+  paidCoins : Int?
+  transferCode : String <<UK>>
+  status : String
+}
+
+entity "BankTransaction" as BankTransaction {
+  * id : String <<PK>>
+  --
+  paymentOrderId : String? <<FK>>
+  processedById : String? <<FK>>
+  externalId : String <<UK>>
+  transferAmount : Int
+  processingStatus : String
+}
+
+entity "WalletLedger" as WalletLedger {
+  * id : String <<PK>>
+  --
+  walletId : String <<FK>>
+  userId : String <<FK>>
+  amountCoins : Int
+  balanceAfter : Int
+  transactionType : String
+}
+
+entity "ContentPurchase" as ContentPurchase {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  contentId : String <<FK>>
+  priceCoins : Int
+  purchasedAt : DateTime
+}
+
+entity "CreatorRevenue" as CreatorRevenue {
+  * id : String <<PK>>
+  --
+  creatorId : String <<FK>>
+  purchaseId : String <<FK, UK>>
+  contentId : String <<FK>>
+  grossCoins : Int
+  creatorCoins : Int
+  platformCoins : Int
+}
+
+entity "PayoutProfile" as PayoutProfile {
+  * id : String <<PK>>
+  --
+  userId : String <<FK, UK>>
+  bankName : String
+  bankAccountNumber : String
+  bankAccountName : String
+}
+
+entity "PayoutRequest" as PayoutRequest {
+  * id : String <<PK>>
+  --
+  userId : String <<FK>>
+  processedById : String? <<FK>>
+  amountCoins : Int
+  status : String
+}
+
+User ||--o| Publisher : has profile
+User ||--o{ Content : uploads
+Publisher o|--o{ Content : publishes
+Content o|--o{ Content : parent / translations
+Content ||--o{ Chapter : contains
+Chapter ||--o{ ChapterPage : contains
+Chapter ||--o| ChapterContent : contains text
+Content }o--o{ Genre : classified by
+Content }o--o{ Tag : tagged with
+
+User ||--o{ Bookmark : creates
+Content ||--o{ Bookmark : is bookmarked
+User ||--o{ Rating : writes
+Content ||--o{ Rating : receives
+User ||--o{ Comment : writes
+Content ||--o{ Comment : has comments
+Comment o|--o{ Comment : parent / replies
+User ||--o{ ReadingProgress : tracks
+Content ||--o{ ReadingProgress : is read
+Chapter ||--o{ ReadingProgress : last chapter
+
+User ||--o| Wallet : owns
+Wallet ||--o{ WalletLedger : records
+User ||--o{ WalletLedger : owns entries
+User ||--o{ PaymentOrder : creates
+PaymentOrder o|--o{ BankTransaction : matched with
+User o|--o{ BankTransaction : processes
+User ||--o{ ContentPurchase : buys
+Content ||--o{ ContentPurchase : is purchased
+ContentPurchase ||--o| CreatorRevenue : generates
+User ||--o{ CreatorRevenue : earns
+Content ||--o{ CreatorRevenue : earns from
+User ||--o| PayoutProfile : sets
+User ||--o{ PayoutRequest : requests
+User o|--o{ PayoutRequest : processes
+
+note bottom of Content
+  The full Prisma schema has 41 models.
+  This diagram shows the core database entities.
+  ContentGenre, ContentTag, and UserGenrePreference
+  join tables are omitted here.
+  Compound unique keys include Chapter(contentId, number),
+  ChapterPage(chapterId, pageNumber), and user-content
+  pairs for Bookmark, Favorite, Rating, and ContentPurchase.
+  See Backend/prisma/schema.prisma for the full schema.
+end note
+
+@enduml

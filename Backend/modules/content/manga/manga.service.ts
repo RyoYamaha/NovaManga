@@ -92,7 +92,10 @@ export class MangaService {
           select: {
             id: true,
             ownershipTier: true,
+            publisherHidden: true,
             pricingType: true,
+            purchaseMode: true,
+            priceCoins: true,
             freeChapters: true,
             parentContent: {
               select: { pricingType: true, pricingChangedAt: true },

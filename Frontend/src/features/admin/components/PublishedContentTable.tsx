@@ -16,7 +16,7 @@ export function PublishedContentTable({
 }: PublishedContentTableProps) {
   return (
     <table className="w-full text-left text-xs sm:text-sm">
-      <thead className="border-b border-white/10 bg-white/[0.03] text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+      <thead className="border-b border-white/10 bg-white/3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
         <tr>
           <th className="p-4">Tác phẩm</th>
           <th className="p-4">Người đăng</th>
@@ -30,10 +30,10 @@ export function PublishedContentTable({
         {contents.map((content) => {
           const isNovel = content.type === 'Novel'
           return (
-            <tr key={content.id} className="group transition-colors hover:bg-white/[0.03]">
+            <tr key={content.id} className="group transition-colors hover:bg-white/3">
               <td className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="relative aspect-[2/3] w-11 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#0b0f17] shadow-sm">
+                  <div className="relative aspect-2/3 w-11 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#0b0f17] shadow-sm">
                     {content.coverImageUrl ? (
                       <img
                         src={content.coverImageUrl}
@@ -89,6 +89,7 @@ export function PublishedContentTable({
                   {content.priceCoins > 0 ? (
                     <span className="inline-flex items-center gap-1 rounded-md border border-amber-400/40 bg-black/60 px-2 py-0.5 text-xs font-bold text-amber-400">
                       <Coins className="h-3 w-3" /> {content.priceCoins} coin
+                      {content.purchaseMode === 'chapter_pack' ? ' / gói 10 chương' : ''}
                     </span>
                   ) : (
                     <span className="inline-flex items-center rounded-md border border-teal-400/30 bg-teal-950/60 px-2 py-0.5 text-[11px] font-semibold text-teal-300">

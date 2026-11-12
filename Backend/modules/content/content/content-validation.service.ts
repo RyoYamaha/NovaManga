@@ -2,7 +2,7 @@ import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/com
 import { Prisma } from '../../../generated/prisma/client';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
-import { ContentPricingType, OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
+import { ContentPricingType, ContentPurchaseMode, OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
 import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
@@ -25,9 +25,20 @@ export class ContentValidationService {
       ((contentData.pricingType !== undefined &&
         contentData.pricingType !== ContentPricingType.Free) ||
         (contentData.priceCoins !== undefined && contentData.priceCoins !== 0) ||
+        (contentData.purchaseMode !== undefined &&
+          contentData.purchaseMode !== ContentPurchaseMode.Whole) ||
         contentData.allowCommunityTranslation === true)
     ) {
       throw new BadRequestException('Fan Translation phải miễn phí và không thể bật dịch cộng đồng');
+    }
+
+    if (
+      contentData.pricingType === ContentPricingType.Free &&
+      contentData.purchaseMode === ContentPurchaseMode.ChapterPack
+    ) {
+      throw new BadRequestException(
+        'Content miễn phí không hỗ trợ mua theo gói chương',
+      );
     }
 
     //BƯỚC 2: KIỂM TRA TRUYỆN ORIGINAL 
@@ -65,6 +76,15 @@ export class ContentValidationService {
       }
     }
 
+    let purchaseMode = ContentPurchaseMode.Whole;
+    if (
+      ownershipTier !== OwnershipTier.FanTranslation &&
+      pricingType === ContentPricingType.Paid &&
+      contentData.purchaseMode !== undefined
+    ) {
+      purchaseMode = contentData.purchaseMode;
+    }
+
     let freeChapters = 3;
 
     if (ownershipTier === OwnershipTier.FanTranslation) {
@@ -86,11 +106,13 @@ export class ContentValidationService {
       pricingType,
       priceCoins,
       freeChapters,
+      purchaseMode,
       allowCommunityTranslation,
     );
 
     return {
       pricingType,
+      purchaseMode,
       priceCoins,
       freeChapters,
       allowCommunityTranslation,
@@ -102,9 +124,10 @@ export class ContentValidationService {
     pricingType: ContentPricingType,
     priceCoins: number,
     freeChapters: number,
+    purchaseMode: ContentPurchaseMode,
     allowCommunityTranslation: boolean,
   ) {
-    this.validateContentPricing(pricingType, priceCoins, freeChapters);
+    this.validateContentPricing(pricingType, priceCoins, freeChapters, purchaseMode);
     if (
       allowCommunityTranslation &&
       pricingType !== ContentPricingType.Free
@@ -176,12 +199,27 @@ export class ContentValidationService {
     pricingType: string,
     priceCoins: number,
     freeChapters: number,
+    purchaseMode: string = ContentPurchaseMode.Whole,
   ) {
     if (
       pricingType !== ContentPricingType.Free &&
       pricingType !== ContentPricingType.Paid
     ) {
       throw new BadRequestException('pricingType không hợp lệ');
+    }
+
+    if (
+      purchaseMode !== ContentPurchaseMode.Whole &&
+      purchaseMode !== ContentPurchaseMode.ChapterPack
+    ) {
+      throw new BadRequestException('purchaseMode không hợp lệ');
+    }
+
+    if (
+      pricingType === ContentPricingType.Free &&
+      purchaseMode !== ContentPurchaseMode.Whole
+    ) {
+      throw new BadRequestException('Content miễn phí không hỗ trợ mua theo gói chương');
     }
 
     if (
@@ -234,7 +272,7 @@ export class ContentValidationService {
   async validateUpdateContent( content: {
       uploaderId: string;
       ownershipTier: string;
-    }, uploaderId: string, updateData: UpdateContentDto, nextPricingType: string, nextPriceCoins: number, nextFreeChapters: number,) {
+    },     uploaderId: string, updateData: UpdateContentDto, nextPricingType: string, nextPriceCoins: number, nextFreeChapters: number, nextPurchaseMode: string,) {
 
     if (content.uploaderId !== uploaderId) {
       throw new ForbiddenException('Không có quyền chỉnh sửa Content này');
@@ -247,7 +285,10 @@ export class ContentValidationService {
     if (content.ownershipTier === OwnershipTier.FanTranslation) {
 
       if ((updateData.pricingType !== undefined && updateData.pricingType !== ContentPricingType.Free) ||
-        (updateData.priceCoins !== undefined && updateData.priceCoins !== 0) ||updateData.allowCommunityTranslation === true) {
+        (updateData.priceCoins !== undefined && updateData.priceCoins !== 0) ||
+        (updateData.purchaseMode !== undefined &&
+          updateData.purchaseMode !== ContentPurchaseMode.Whole) ||
+        updateData.allowCommunityTranslation === true) {
 
         throw new BadRequestException(
           'Fan Translation phải miễn phí và không thể bật dịch cộng đồng',
@@ -255,7 +296,16 @@ export class ContentValidationService {
       }
     }
 
-    this.validateContentPricing( nextPricingType, nextPriceCoins,nextFreeChapters,);
+    if (
+      nextPricingType === ContentPricingType.Free &&
+      updateData.purchaseMode === ContentPurchaseMode.ChapterPack
+    ) {
+      throw new BadRequestException(
+        'Content miễn phí không hỗ trợ mua theo gói chương',
+      );
+    }
+
+    this.validateContentPricing(nextPricingType, nextPriceCoins, nextFreeChapters, nextPurchaseMode);
 
     if ( updateData.priceCoins !== undefined && nextPricingType === ContentPricingType.Free &&updateData.priceCoins !== 0) {
 

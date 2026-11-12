@@ -3,11 +3,12 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { ContentService } from '../content/content.service';
 import { RegisterPublisherDto } from './dto/register-publisher.dto';
 import { CreatePublisherContentDto } from './dto/create-publisher-content.dto';
-import { OwnershipTier } from '../../../common/constants/content.enum';
+import { OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
 import { NotificationService } from '../../community/notification/notification.service'
 import { NotificationType } from '../../../common/constants/notification.enum';
 import { CloudinaryService } from '../../../common/cloudinary/cloudinary.service';
 import { UpdateContentDto } from '../content/dto/update-content.dto';
+import { SetTranslationVisibilityDto } from './dto/set-translation-visibility.dto';
 
 @Injectable()
 export class PublisherService {
@@ -123,6 +124,134 @@ export class PublisherService {
     }
 
     return content;
+  }
+
+  async getTranslationsForContent(userId: string, contentId: string) {
+    const publisher = await this.getVerifiedPublisher(userId);
+    const parentContent = await this.prisma.content.findUnique({
+      where: { id: contentId },
+      select: { id: true, publisherId: true, ownershipTier: true },
+    });
+
+    if (!parentContent) throw new NotFoundException('Không tìm thấy Content');
+    if (
+      parentContent.publisherId !== publisher.id ||
+      parentContent.ownershipTier !== OwnershipTier.Licensed
+    ) {
+      throw new ForbiddenException('Không có quyền quản lý bản dịch của Content này');
+    }
+
+    return this.prisma.content.findMany({
+      where: {
+        parentContentId: parentContent.id,
+        ownershipTier: OwnershipTier.FanTranslation,
+      },
+      select: {
+        id: true,
+        title: true,
+        type: true,
+        publicationStatus: true,
+        publisherHidden: true,
+        publisherHiddenReason: true,
+        publisherHiddenAt: true,
+        uploader: { select: { id: true, username: true } },
+        _count: { select: { chapters: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async setTranslationVisibility(
+    userId: string,
+    contentId: string,
+    translationId: string,
+    dto: SetTranslationVisibilityDto,
+  ) {
+    const publisher = await this.getVerifiedPublisher(userId);
+    const reason = dto.hidden ? dto.reason?.trim() || null : null;
+
+    return this.prisma.$transaction(async (transactionClient) => {
+      const parentContent = await transactionClient.content.findUnique({
+        where: { id: contentId },
+        select: { id: true, publisherId: true, ownershipTier: true },
+      });
+
+      if (!parentContent) throw new NotFoundException('Không tìm thấy Content');
+      if (
+        parentContent.publisherId !== publisher.id ||
+        parentContent.ownershipTier !== OwnershipTier.Licensed
+      ) {
+        throw new ForbiddenException('Không có quyền quản lý bản dịch của Content này');
+      }
+
+      const translation = await transactionClient.content.findUnique({
+        where: { id: translationId },
+        select: {
+          id: true,
+          title: true,
+          uploaderId: true,
+          parentContentId: true,
+          ownershipTier: true,
+          publicationStatus: true,
+          publisherHidden: true,
+        },
+      });
+
+      if (!translation || translation.parentContentId !== parentContent.id ||
+          translation.ownershipTier !== OwnershipTier.FanTranslation) {
+        throw new NotFoundException('Không tìm thấy bản dịch thuộc bộ truyện này');
+      }
+      if (translation.publicationStatus !== PublicationStatus.Published) {
+        throw new ConflictException('Chỉ có thể ẩn hoặc hiện lại bản dịch đang được xuất bản');
+      }
+      if (translation.publisherHidden === dto.hidden) {
+        return transactionClient.content.findUniqueOrThrow({
+          where: { id: translation.id },
+          select: {
+            id: true,
+            title: true,
+            publicationStatus: true,
+            publisherHidden: true,
+            publisherHiddenReason: true,
+            publisherHiddenAt: true,
+          },
+        });
+      }
+
+      const updatedTranslation = await transactionClient.content.update({
+        where: { id: translation.id },
+        data: {
+          publisherHidden: dto.hidden,
+          publisherHiddenReason: reason,
+          publisherHiddenAt: dto.hidden ? new Date() : null,
+        },
+        select: {
+          id: true,
+          title: true,
+          publicationStatus: true,
+          publisherHidden: true,
+          publisherHiddenReason: true,
+          publisherHiddenAt: true,
+        },
+      });
+
+      const notificationType = dto.hidden
+        ? NotificationType.PublisherTranslationHidden
+        : NotificationType.PublisherTranslationRestored;
+      const notificationMessage = dto.hidden
+        ? `Bản dịch "${translation.title}" đã được Publisher ẩn khỏi độc giả.${reason ? ` Lý do: ${reason}` : ''}`
+        : `Bản dịch "${translation.title}" đã được Publisher cho phép hiển thị lại.`;
+
+      await transactionClient.notification.create({
+        data: {
+          userId: translation.uploaderId,
+          type: notificationType,
+          message: notificationMessage,
+        },
+      });
+
+      return updatedTranslation;
+    });
   }
 
   // Chỉnh sửa truyện của Publisher

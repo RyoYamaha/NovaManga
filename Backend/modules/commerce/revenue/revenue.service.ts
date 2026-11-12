@@ -59,7 +59,7 @@ export class RevenueService {
     const page = query.page;
     const limit = query.limit;
 
-    const [items, total] = await this.prisma.$transaction([
+    const [items, total] = await Promise.all([
       this.prisma.creatorRevenue.findMany({
         where: { creatorId: userId },
         select: {
@@ -72,6 +72,13 @@ export class RevenueService {
           purchase: {
             select: {
               id: true,
+              purchasedAt: true,
+            },
+          },
+          chapterPackPurchase: {
+            select: {
+              id: true,
+              packNumber: true,
               purchasedAt: true,
             },
           },

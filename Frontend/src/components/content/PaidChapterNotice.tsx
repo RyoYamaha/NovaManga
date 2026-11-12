@@ -13,14 +13,17 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { financeService } from '@/services/finance.service'
-import { unlockService } from '@/services/unlock.service'
+import { CHAPTERS_PER_PACK, unlockService } from '@/services/unlock.service'
 import { useAuthStore } from '@/stores/auth-store'
 import { useAppDialog } from '@/components/common/AppDialogProvider'
+import type { ContentPurchaseMode } from '@/types/content'
 
 interface Props {
   contentId: string
   contentTitle?: string
   priceCoins: number
+  purchaseMode?: ContentPurchaseMode
+  chapterNumber?: number
   onPurchaseSuccess: () => Promise<void>
 }
 
@@ -38,13 +41,15 @@ function getErrorMessage(error: unknown) {
       return message
     }
   }
-  return 'Chưa thể mua bộ truyện. Vui lòng thử lại.'
+  return 'Chưa thể mua quyền đọc. Vui lòng thử lại.'
 }
 
 export function PaidChapterNotice({
   contentId,
   contentTitle,
   priceCoins,
+  purchaseMode = 'whole',
+  chapterNumber,
   onPurchaseSuccess,
 }: Props) {
   const location = useLocation()
@@ -52,6 +57,15 @@ export function PaidChapterNotice({
   const { confirm } = useAppDialog()
   const user = useAuthStore((state) => state.user)
   const isReader = user?.role === 'Reader'
+  const isChapterPack = purchaseMode === 'chapter_pack'
+  const packNumber =
+    chapterNumber === undefined
+      ? undefined
+      : Math.floor((chapterNumber - 1) / CHAPTERS_PER_PACK) + 1
+  const firstChapterNumber =
+    packNumber === undefined ? undefined : (packNumber - 1) * CHAPTERS_PER_PACK + 1
+  const lastChapterNumber =
+    packNumber === undefined ? undefined : packNumber * CHAPTERS_PER_PACK
 
   const balanceQuery = useQuery({
     queryKey: ['wallet', 'balance', user?.id],
@@ -63,8 +77,17 @@ export function PaidChapterNotice({
   })
 
   const purchaseMutation = useMutation({
-    mutationFn: async () =>
-      (await unlockService.purchaseContent(contentId)).data,
+    mutationFn: async () => {
+      if (isChapterPack) {
+        if (chapterNumber === undefined) {
+          throw new Error('Không xác định được chương cần mua gói.')
+        }
+        return (
+          await unlockService.purchaseChapterPack(contentId, chapterNumber)
+        ).data
+      }
+      return (await unlockService.purchaseContent(contentId)).data
+    },
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['wallet', 'balance'] }),
@@ -87,7 +110,9 @@ export function PaidChapterNotice({
   const confirmPurchase = async () => {
     const confirmed = await confirm({
       title: 'Xác nhận mua quyền đọc',
-      description: `Mua quyền đọc toàn bộ truyện${contentTitle ? ` "${contentTitle}"` : ''} với giá ${formatCoins(priceCoins)} coin? Coin sẽ được trừ một lần sau khi giao dịch thành công.`,
+      description: isChapterPack
+        ? `Mua gói chương ${firstChapterNumber}-${lastChapterNumber}${contentTitle ? ` của truyện "${contentTitle}"` : ''} với giá ${formatCoins(priceCoins)} coin? Coin sẽ được trừ một lần sau khi giao dịch thành công.`
+        : `Mua quyền đọc toàn bộ truyện${contentTitle ? ` "${contentTitle}"` : ''} với giá ${formatCoins(priceCoins)} coin? Coin sẽ được trừ một lần sau khi giao dịch thành công.`,
       confirmLabel: `Mua với ${formatCoins(priceCoins)} coin`,
     })
     if (confirmed) purchaseMutation.mutate()
@@ -104,15 +129,19 @@ export function PaidChapterNotice({
             <LockKeyhole className="h-7 w-7" aria-hidden="true" />
           </div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-400">
-            Mở khóa truyện
+            {isChapterPack ? 'Mở khóa gói chương' : 'Mở khóa truyện'}
           </p>
           <h1 className="text-2xl font-bold sm:text-3xl">
-            Chương này dành cho độc giả sở hữu bộ truyện
+            {isChapterPack
+              ? `Chương này thuộc gói ${firstChapterNumber}-${lastChapterNumber}`
+              : 'Chương này dành cho độc giả sở hữu bộ truyện'}
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            {contentTitle
-              ? `Mua một lần để đọc chương này và toàn bộ chương hiện có, kể cả các chương mới đăng sau của “${contentTitle}”.`
-              : 'Mua một lần để đọc chương này và toàn bộ chương hiện có, kể cả các chương mới đăng sau.'}
+            {isChapterPack
+              ? `Mua gói này để đọc các chương ${firstChapterNumber}-${lastChapterNumber}${contentTitle ? ` của “${contentTitle}”` : ''}. Các gói chương khác được mua riêng.`
+              : contentTitle
+                ? `Mua một lần để đọc chương này và toàn bộ chương hiện có, kể cả các chương mới đăng sau của “${contentTitle}”.`
+                : 'Mua một lần để đọc chương này và toàn bộ chương hiện có, kể cả các chương mới đăng sau.'}
           </p>
         </div>
 
@@ -121,7 +150,7 @@ export function PaidChapterNotice({
             <div className="rounded-xl border border-border bg-background p-4">
               <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
                 <CreditCard className="h-4 w-4" />
-                Giá mở khóa trọn bộ
+                {isChapterPack ? 'Giá gói chương' : 'Giá mở khóa trọn bộ'}
               </div>
               <p className="flex items-center gap-2 text-2xl font-bold">
                 <Coins className="h-5 w-5 text-amber-500" />
@@ -203,7 +232,8 @@ export function PaidChapterNotice({
                   purchaseMutation.isPending ||
                   balanceQuery.isLoading ||
                   balanceQuery.isError ||
-                  !hasEnoughCoins
+                  !hasEnoughCoins ||
+                  (isChapterPack && chapterNumber === undefined)
                 }
                 onClick={() => void confirmPurchase()}
               >
@@ -220,7 +250,7 @@ export function PaidChapterNotice({
                 ) : (
                   <>
                     <LockKeyhole className="h-4 w-4" />
-                    Mua và đọc ngay
+                    {isChapterPack ? 'Mua gói và đọc ngay' : 'Mua và đọc ngay'}
                   </>
                 )}
               </Button>
@@ -236,7 +266,7 @@ export function PaidChapterNotice({
               <span className="font-semibold text-foreground">
                 {formatCoins(Math.max(priceCoins - (balance ?? 0), 0))} coin
               </span>{' '}
-              để mở khóa bộ truyện.
+              {isChapterPack ? ' để mua gói chương.' : ' để mở khóa bộ truyện.'}
             </p>
           )}
         </div>

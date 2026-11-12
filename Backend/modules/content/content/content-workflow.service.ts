@@ -3,7 +3,7 @@ import { Prisma } from '../../../generated/prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
-import { ContentPricingType, OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
+import { ContentPricingType, ContentPurchaseMode, OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
 import { NotificationService } from '../../community/notification/notification.service';
 import { NotificationType } from '../../../common/constants/notification.enum';
 import { ContentValidationService } from './content-validation.service';
@@ -53,7 +53,7 @@ export class ContentWorkflowService {
 
 
     //BƯỚC 4: TẠO TRUYỆN TỪ NHỮNG THÔNG TIN NG ƯỜI DÙNG GỬI LÊN
-    return this.prisma.$transaction( async (transactionClient) => {
+    const createdContent = await this.prisma.$transaction( async (transactionClient) => {
 
 
         // BƯỚC 4.1 Kiểm tra lại truyện gốc (Licensed, Published, miễn phí, cho phép dịch),
@@ -76,6 +76,7 @@ export class ContentWorkflowService {
             publicationStatus: PublicationStatus.PendingApproval,
             coverImageUrl: contentData.coverImageUrl,
             pricingType: contentSettings.pricingType,
+            purchaseMode: contentSettings.purchaseMode,
             priceCoins: contentSettings.priceCoins,
             freeChapters: contentSettings.freeChapters,
             allowCommunityTranslation: contentSettings.allowCommunityTranslation,
@@ -85,14 +86,18 @@ export class ContentWorkflowService {
             genres: genresData,
             tags: tagsData,
           },
-          include: {
-            genres: { include: { genre: true } },
-            tags: { include: { tag: true } },
-          },
         });
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
+
+    return this.prisma.content.findUniqueOrThrow({
+      where: { id: createdContent.id },
+      include: {
+        genres: { include: { genre: true } },
+        tags: { include: { tag: true } },
+      },
+    });
   }
 
 
@@ -172,8 +177,26 @@ export class ContentWorkflowService {
       nextFreeChapters = updateData.freeChapters;
     }
 
+    let nextPurchaseMode = content.purchaseMode;
+    if (
+      content.ownershipTier === OwnershipTier.FanTranslation ||
+      nextPricingType === ContentPricingType.Free
+    ) {
+      nextPurchaseMode = ContentPurchaseMode.Whole;
+    } else if (updateData.purchaseMode !== undefined) {
+      nextPurchaseMode = updateData.purchaseMode;
+    }
+
     // BƯỚC 3 Kiểm tra quyền và các quy tắc giá, dịch cộng đồng trước khi cập nhật Content.
-    await this.contentValidationService.validateUpdateContent( content, uploaderId, updateData, nextPricingType, nextPriceCoins, nextFreeChapters,);
+    await this.contentValidationService.validateUpdateContent(
+      content,
+      uploaderId,
+      updateData,
+      nextPricingType,
+      nextPriceCoins,
+      nextFreeChapters,
+      nextPurchaseMode,
+    );
     const metadataChanged = updateData.title !== undefined || updateData.synopsis !== undefined;
     const aiModeration = metadataChanged
       ? await this.aiContentModerationService.reviewContentMetadata(
@@ -184,7 +207,7 @@ export class ContentWorkflowService {
       : null;
 
     // BƯỚC 4 Cập nhật Content cùng các quan hệ Genre/Tag trong một transaction để tránh lưu dở dang.
-    return this.prisma.$transaction(async (transactionClient) => {
+    await this.prisma.$transaction(async (transactionClient) => {
 
       //4.1 KIỂM TRA HỒ SƠ NHẬN TIỀN TRƯỚC KHI CHUYỂN SANG PAID
       if ( content.pricingType !== ContentPricingType.Paid && nextPricingType === ContentPricingType.Paid) {
@@ -249,6 +272,7 @@ export class ContentWorkflowService {
       }
 
       contentUpdateData.pricingType = nextPricingType;
+      contentUpdateData.purchaseMode = nextPurchaseMode;
       contentUpdateData.priceCoins = nextPriceCoins;
       contentUpdateData.freeChapters = nextFreeChapters;
 
@@ -269,15 +293,19 @@ export class ContentWorkflowService {
         }
       }
 
-      return transactionClient.content.update({
+      await transactionClient.content.update({
         where: { id: contentId },
         data: contentUpdateData,
-        include: {
-          genres: { include: { genre: true } },
-          tags: { include: { tag: true } },
-          uploader: { select: { id: true, username: true } },
-        },
       });
+    });
+
+    return this.prisma.content.findUniqueOrThrow({
+      where: { id: contentId },
+      include: {
+        genres: { include: { genre: true } },
+        tags: { include: { tag: true } },
+        uploader: { select: { id: true, username: true } },
+      },
     });
   }
 
@@ -289,15 +317,23 @@ export class ContentWorkflowService {
         throw new ForbiddenException('Bạn không có quyền xóa truyện này');
       }
 
-      const [fanTranslationCount, purchaseCount, revenueCount] = await Promise.all([
-        transactionClient.content.count({ where: { parentContentId: contentId } }),
-        transactionClient.contentPurchase.count({ where: { contentId } }),
-        transactionClient.creatorRevenue.count({ where: { contentId } }),
-      ]);
+      const fanTranslationCount = await transactionClient.content.count({
+        where: { parentContentId: contentId },
+      });
+      const purchaseCount = await transactionClient.contentPurchase.count({
+        where: { contentId },
+      });
+      const chapterPackPurchaseCount =
+        await transactionClient.chapterPackPurchase.count({
+          where: { contentId },
+        });
+      const revenueCount = await transactionClient.creatorRevenue.count({
+        where: { contentId },
+      });
       if (fanTranslationCount > 0) {
         throw new ConflictException('Không thể xóa truyện đang có bản dịch cộng đồng liên kết');
       }
-      if (purchaseCount > 0 || revenueCount > 0) {
+      if (purchaseCount > 0 || chapterPackPurchaseCount > 0 || revenueCount > 0) {
         throw new ConflictException('Không thể xóa truyện đã có giao dịch mua để bảo toàn lịch sử thanh toán');
       }
 

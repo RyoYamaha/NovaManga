@@ -119,7 +119,7 @@ export function ContentManagement() {
 
       {/* 2. STATS CARDS */}
       <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
-        <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-[#161e29] to-transparent p-4.5 backdrop-blur-xl shadow-lg">
+        <div className="rounded-2xl border border-emerald-500/20 bg-linear-to-br from-emerald-500/10 via-[#161e29] to-transparent p-4.5 backdrop-blur-xl shadow-lg">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-emerald-400">Đang phát hành công khai</span>
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400">
@@ -144,7 +144,7 @@ export function ContentManagement() {
           <p className="mt-0.5 text-[11px] text-slate-400">Tỷ lệ cân đối giữa truyện tranh và chữ</p>
         </div>
 
-        <div className="rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 via-[#161e29] to-transparent p-4.5 backdrop-blur-xl shadow-lg">
+        <div className="rounded-2xl border border-amber-500/20 bg-linear-to-br from-amber-500/10 via-[#161e29] to-transparent p-4.5 backdrop-blur-xl shadow-lg">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-amber-400">Bản quyền chính thức</span>
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/15 text-amber-400">
@@ -221,7 +221,7 @@ export function ContentManagement() {
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#161e29]/90 shadow-xl backdrop-blur-xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="border-b border-white/10 bg-white/[0.03] text-slate-400 font-semibold text-[11px] uppercase tracking-wider">
+              <thead className="border-b border-white/10 bg-white/3 text-slate-400 font-semibold text-[11px] uppercase tracking-wider">
                 <tr>
                   <th className="p-4">Tác phẩm</th>
                   <th className="p-4">Người đăng</th>
@@ -236,11 +236,11 @@ export function ContentManagement() {
                   const isNovel = c.type === 'Novel'
 
                   return (
-                    <tr key={c.id} className="group transition-colors hover:bg-white/[0.03]">
+                    <tr key={c.id} className="group transition-colors hover:bg-white/3">
                       {/* 1. Cover & Title */}
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="relative aspect-[2/3] w-11 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#0b0f17] shadow-sm">
+                          <div className="relative aspect-2/3 w-11 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#0b0f17] shadow-sm">
                             {c.coverImageUrl ? (
                               <img
                                 src={c.coverImageUrl}
@@ -299,6 +299,7 @@ export function ContentManagement() {
                           {typeof c.priceCoins === 'number' && c.priceCoins > 0 ? (
                             <span className="inline-flex items-center gap-1 rounded-md border border-amber-400/40 bg-black/60 px-2 py-0.5 text-xs font-bold text-amber-400">
                               <Coins className="h-3 w-3" /> {c.priceCoins} coin
+                              {c.purchaseMode === 'chapter_pack' ? ' / gói 10 chương' : ''}
                             </span>
                           ) : (
                             <span className="inline-flex items-center rounded-md border border-teal-400/30 bg-teal-950/60 px-2 py-0.5 text-[11px] font-semibold text-teal-300">
@@ -357,7 +358,7 @@ export function ContentManagement() {
             </table>
           </div>
 
-          <div className="flex items-center justify-between border-t border-white/10 bg-white/[0.02] px-4 py-3 text-xs text-slate-400">
+          <div className="flex items-center justify-between border-t border-white/10 bg-white/2 px-4 py-3 text-xs text-slate-400">
             <span>
               Hiển thị {(currentPage - 1) * PAGE_SIZE + 1}-{Math.min(currentPage * PAGE_SIZE, filteredContents.length)} / {filteredContents.length}
             </span>

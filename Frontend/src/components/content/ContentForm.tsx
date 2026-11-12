@@ -22,6 +22,7 @@ const schema = z.object({
   title: z.string().trim().min(1, 'Nhập tên truyện').max(255, 'Tối đa 255 ký tự'),
   synopsis: z.string().trim().optional(),
   pricingType: z.enum(['free', 'paid']),
+  purchaseMode: z.enum(['whole', 'chapter_pack']),
   priceCoins: z.number().int().min(0, 'Giá không được âm'),
   freeChapters: z.number().int().min(0, 'Số chương đọc thử không được âm'),
   allowCommunityTranslation: z.boolean(),
@@ -67,6 +68,7 @@ export function ContentForm({ type, parentContentId, targetRole }: Props) {
     resolver: zodResolver(schema),
     defaultValues: {
       pricingType: 'free',
+      purchaseMode: 'whole',
       priceCoins: 50,
       freeChapters: 3,
       allowCommunityTranslation: false,
@@ -121,6 +123,8 @@ export function ContentForm({ type, parentContentId, targetRole }: Props) {
       type,
       synopsis: v.synopsis || undefined,
       pricingType: parentContentId ? 'free' : v.pricingType,
+      purchaseMode:
+        parentContentId || v.pricingType === 'free' ? 'whole' : v.purchaseMode,
       priceCoins: parentContentId || v.pricingType === 'free' ? 0 : v.priceCoins,
       freeChapters: parentContentId ? 0 : v.freeChapters,
       allowCommunityTranslation: isPublisher 
@@ -177,6 +181,7 @@ export function ContentForm({ type, parentContentId, targetRole }: Props) {
 
       <ContentPricingFields
         pricingType={pricingType}
+        purchaseMode={watch('purchaseMode')}
         priceCoins={watch('priceCoins')}
         freeChapters={watch('freeChapters')}
         allowCommunityTranslation={watch('allowCommunityTranslation')}
@@ -184,6 +189,9 @@ export function ContentForm({ type, parentContentId, targetRole }: Props) {
         freeChaptersError={errors.freeChapters?.message}
         onPricingTypeChange={(value) =>
           setValue('pricingType', value, { shouldValidate: true })
+        }
+        onPurchaseModeChange={(value) =>
+          setValue('purchaseMode', value, { shouldValidate: true })
         }
         onPriceCoinsChange={(value) =>
           setValue('priceCoins', value, { shouldValidate: true })

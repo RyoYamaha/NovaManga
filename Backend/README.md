@@ -155,16 +155,23 @@ webhook for that same transfer from crediting the wallet again.
 
 ## Content pricing and community translations
 
-Authors and verified Publishers can set `pricingType`, `priceCoins`, and
-`freeChapters` when creating or updating their content. Pricing values are
-`free` and `paid`; paid content must have a positive integer coin price, while
-free content is always stored at zero coins. `freeChapters` defaults to 3.
+Authors and verified Publishers can set `pricingType`, `purchaseMode`,
+`priceCoins`, and `freeChapters` when creating or updating their content.
+Pricing values are `free` and `paid`; paid content must have a positive integer
+coin price, while free content is always stored at zero coins. `purchaseMode`
+is `whole` (the default) or `chapter_pack`. Chapter-pack sales use fixed ranges
+of 10 chapters (1–10, 11–20, and so on); `priceCoins` is the price per pack.
+Whole-content purchases already made continue to grant access to the full story.
+`freeChapters` defaults to 3.
+Apply the `20261112150000_chapter_pack_purchases` migration before deploying
+the updated backend.
 
 Example fields in an Author/Publisher content request:
 
 ```json
 {
   "pricingType": "paid",
+  "purchaseMode": "chapter_pack",
   "priceCoins": 50,
   "freeChapters": 3,
   "allowCommunityTranslation": false
@@ -173,7 +180,10 @@ Example fields in an Author/Publisher content request:
 
 When `pricingType` is `free`, the backend stores `priceCoins` as zero. The
 Author/Publisher chooses the catalogue price in coins; purchase requests always
-use this server-stored price.
+use this server-stored price. For `purchaseMode: "chapter_pack"`, that is the
+price for each 10-chapter pack. A purchase stores the price charged at the time
+of sale and grants access only to that pack, while a prior whole-content purchase
+continues to grant access to all chapters.
 
 Fan Translations are always stored as free with a zero price. They can only be
 created from a published Licensed title when its Publisher has enabled
@@ -185,17 +195,33 @@ endpoints. Authors can update these fields through their existing
 `PATCH /author/content/:id` endpoint, and Publishers through
 `PATCH /publisher/content/:id`.
 
+Verified Publishers can review community translations for a Licensed title
+they own with `GET /publisher/content/:id/translations`. They can hide or
+restore a published translation with
+`PATCH /publisher/content/:id/translations/:translationId/visibility` and a
+JSON body such as `{"hidden":true,"reason":"Nội dung chưa phù hợp"}`.
+The reason is optional. This Publisher visibility is separate from Admin
+moderation: hidden translations are omitted from Reader-facing catalog,
+recommendation, detail, and chapter-reading endpoints, while the Author can
+still access their work and receives a notification. Apply the
+`20261110160000_publisher_translation_visibility` migration before using these
+endpoints.
+
 ## Buying and reading paid content
 
 An authenticated reader can check ownership with `GET /unlock/content/:contentId`
-and buy a published paid title with `POST /unlock/content/:contentId/purchase`.
-The server charges the current `priceCoins` once and records the purchase and
-wallet ledger entry in the same database transaction. Repeating a purchase
-request for a title already owned does not charge again.
+and buy a published paid whole title with `POST /unlock/content/:contentId/purchase`.
+For a chapter-pack title, the reader buys the pack containing a published chapter
+with `POST /unlock/content/:contentId/chapters/:chapterNumber/purchase-pack`.
+The server charges the current `priceCoins` and records the purchase, wallet
+ledger entry, and creator revenue in the same database transaction. Repeating a
+purchase for an already-owned title or pack does not charge again.
 
 The first `freeChapters` chapters of a paid title are readable without purchase.
-Reading a later chapter requires login and ownership. One purchase unlocks all
-current and future chapters of that title, even if its price changes later.
+Reading a later chapter requires login and ownership. A whole-title purchase
+unlocks all current and future chapters; a chapter-pack purchase unlocks only
+its fixed range of 10 chapters. Existing purchases retain their access if the
+author later changes the title's purchase mode or price.
 Free titles and Fan Translations remain readable without purchase. Public
 chapter-reading endpoints accept an optional Bearer token so anonymous readers
 can still access free chapters.

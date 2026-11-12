@@ -190,7 +190,10 @@ export function ContentDetail() {
 
               {typeof data.priceCoins === 'number' && data.priceCoins > 0 ? (
                 <span className="inline-flex items-center gap-1.5 rounded-lg border border-amber-400/40 bg-black/60 px-2.5 py-1 text-xs font-bold text-amber-400 shadow-sm shadow-amber-500/10">
-                  <Coins className="h-3.5 w-3.5" /> {data.priceCoins} coin cho toàn bộ truyện
+                  <Coins className="h-3.5 w-3.5" /> {data.priceCoins} coin{' '}
+                  {data.purchaseMode === 'chapter_pack'
+                    ? 'mỗi gói 10 chương'
+                    : 'cho toàn bộ truyện'}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 rounded-lg border border-teal-400/30 bg-teal-950/60 px-2.5 py-1 text-xs font-semibold text-teal-300">

@@ -27,8 +27,10 @@
 
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import { Prisma } from '../../../generated/prisma/client';
-import { ContentPricingType, OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
+import { ContentPricingType, ContentPurchaseMode, OwnershipTier, PublicationStatus } from '../../../common/constants/content.enum';
 import { PrismaService } from '../../../prisma/prisma.service';
+
+const CHAPTERS_PER_PACK = 10;
 
 type ReadableChapter = {
   number: number;
@@ -36,6 +38,8 @@ type ReadableChapter = {
     id: string;
     ownershipTier: string;
     pricingType: string;
+    purchaseMode: string;
+    priceCoins: number;
     freeChapters: number;
   };
 };
@@ -56,6 +60,37 @@ function isUniqueConstraintError(error: unknown): boolean {
 export class UnlockService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private async resolveRevenueShare(
+    tx: Prisma.TransactionClient,
+    content: { ownershipTier: string; uploaderId: string; publisherId: string | null },
+  ) {
+    if (content.ownershipTier === OwnershipTier.Licensed) {
+      if (!content.publisherId) {
+        throw new BadRequestException(
+          'Licensed Content chưa được liên kết với Publisher',
+        );
+      }
+
+      const publisher = await tx.publisher.findUnique({
+        where: { id: content.publisherId },
+        select: { userId: true, verificationStatus: true },
+      });
+
+      if (!publisher || publisher.verificationStatus !== 'Approved') {
+        throw new BadRequestException(
+          'Publisher của Content chưa được xác minh',
+        );
+      }
+
+      return { creatorId: publisher.userId, sharePercent: 80 };
+    }
+
+    if (content.ownershipTier === OwnershipTier.Original) {
+      return { creatorId: content.uploaderId, sharePercent: 60 };
+    }
+
+    throw new BadRequestException('Loại Content này không được bán bằng coin');
+  }
 
 ////////////////////MUA CONTENT////////////////////////////
 
@@ -75,6 +110,7 @@ export class UnlockService {
             ownershipTier: true,
             publicationStatus: true,
             pricingType: true,
+            purchaseMode: true,
             priceCoins: true,
           },
         });
@@ -112,6 +148,12 @@ export class UnlockService {
           throw new BadRequestException('Truyện này không bán bằng coin');
         }
 
+        if (content.purchaseMode !== ContentPurchaseMode.Whole) {
+          throw new BadRequestException(
+            'Truyện này bán theo gói chương, hãy mua gói chứa chương cần đọc',
+          );
+        }
+
         if (
           !Number.isSafeInteger(content.priceCoins) ||
           content.priceCoins <= 0
@@ -119,35 +161,10 @@ export class UnlockService {
           throw new BadRequestException('Giá truyện không hợp lệ');
         }
 
-        let creatorId = '';
-        let sharePercent = 0;
-
-        if (content.ownershipTier === OwnershipTier.Licensed) {
-          if (!content.publisherId) {
-            throw new BadRequestException(
-              'Licensed Content chưa được liên kết với Publisher',
-            );
-          }
-
-          const publisher = await tx.publisher.findUnique({
-            where: { id: content.publisherId },
-            select: { userId: true, verificationStatus: true },
-          });
-
-          if (!publisher || publisher.verificationStatus !== 'Approved') {
-            throw new BadRequestException(
-              'Publisher của Content chưa được xác minh',
-            );
-          }
-
-          creatorId = publisher.userId;
-          sharePercent = 80;
-        } else if (content.ownershipTier === OwnershipTier.Original) {
-          creatorId = content.uploaderId;
-          sharePercent = 60;
-        } else {
-          throw new BadRequestException( 'Loại Content này không được bán bằng coin',);
-        }
+        const { creatorId, sharePercent } = await this.resolveRevenueShare(
+          tx,
+          content,
+        );
 
         //BƯỚC 4: TRỪ COIN NẾU SỐ DƯ TRONG VÍ ĐỦ
         //gte có nghĩa là số dư phải lớn hơn hoặc bằng giá truyện.
@@ -269,6 +286,198 @@ export class UnlockService {
   }
 
 
+  async purchaseChapterPack(
+    userId: string,
+    contentId: string,
+    chapterNumber: number,
+  ) {
+    if (!Number.isSafeInteger(chapterNumber) || chapterNumber < 1) {
+      throw new BadRequestException('Số chương không hợp lệ');
+    }
+
+    const packNumber = Math.floor((chapterNumber - 1) / CHAPTERS_PER_PACK) + 1;
+    const firstChapterNumber = (packNumber - 1) * CHAPTERS_PER_PACK + 1;
+    const lastChapterNumber = packNumber * CHAPTERS_PER_PACK;
+    const purchaseWhere = {
+      userId_contentId_packNumber: { userId, contentId, packNumber },
+    };
+
+    try {
+      return await this.prisma.$transaction(async (tx) => {
+        const content = await tx.content.findUnique({
+          where: { id: contentId },
+          select: {
+            id: true,
+            uploaderId: true,
+            publisherId: true,
+            ownershipTier: true,
+            publicationStatus: true,
+            pricingType: true,
+            purchaseMode: true,
+            priceCoins: true,
+            freeChapters: true,
+          },
+        });
+        if (
+          !content ||
+          content.publicationStatus !== PublicationStatus.Published
+        ) {
+          throw new NotFoundException('Không tìm thấy truyện đang được phát hành');
+        }
+
+        const chapter = await tx.chapter.findUnique({
+          where: { contentId_number: { contentId, number: chapterNumber } },
+          select: { moderationStatus: true },
+        });
+        if (!chapter || chapter.moderationStatus !== 'Published') {
+          throw new NotFoundException('Không tìm thấy chương đang được phát hành');
+        }
+        if (chapterNumber <= content.freeChapters) {
+          throw new BadRequestException('Chương này được đọc miễn phí');
+        }
+
+        const wholePurchase = await tx.contentPurchase.findUnique({
+          where: { userId_contentId: { userId, contentId } },
+        });
+        const existingPurchase = await tx.chapterPackPurchase.findUnique({
+          where: purchaseWhere,
+        });
+        if (wholePurchase || existingPurchase) {
+          const wallet = await tx.wallet.findUnique({
+            where: { userId },
+            select: { balance: true },
+          });
+          return {
+            purchase: wholePurchase ?? existingPurchase,
+            alreadyOwned: true,
+            balance: wallet?.balance ?? 0,
+            packNumber,
+            firstChapterNumber,
+            lastChapterNumber,
+          };
+        }
+
+        if (content.ownershipTier === OwnershipTier.FanTranslation) {
+          throw new BadRequestException('Fan Translation được đọc miễn phí');
+        }
+        if (content.pricingType !== ContentPricingType.Paid) {
+          throw new BadRequestException('Truyện này miễn phí');
+        }
+        if (content.purchaseMode !== ContentPurchaseMode.ChapterPack) {
+          throw new BadRequestException('Truyện này không bán theo gói chương');
+        }
+        if (
+          !Number.isSafeInteger(content.priceCoins) ||
+          content.priceCoins <= 0
+        ) {
+          throw new BadRequestException('Giá gói chương không hợp lệ');
+        }
+
+        const { creatorId, sharePercent } = await this.resolveRevenueShare(
+          tx,
+          content,
+        );
+        const debit = await tx.wallet.updateMany({
+          where: { userId, balance: { gte: content.priceCoins } },
+          data: { balance: { decrement: content.priceCoins } },
+        });
+        if (debit.count !== 1) {
+          const concurrentPurchase = await tx.chapterPackPurchase.findUnique({
+            where: purchaseWhere,
+          });
+          if (concurrentPurchase) {
+            const wallet = await tx.wallet.findUnique({
+              where: { userId },
+              select: { balance: true },
+            });
+            return {
+              purchase: concurrentPurchase,
+              alreadyOwned: true,
+              balance: wallet?.balance ?? 0,
+              packNumber,
+              firstChapterNumber,
+              lastChapterNumber,
+            };
+          }
+          throw new BadRequestException('Số dư coin không đủ để mua gói chương');
+        }
+
+        const wallet = await tx.wallet.findUniqueOrThrow({
+          where: { userId },
+          select: { id: true, balance: true },
+        });
+        const purchase = await tx.chapterPackPurchase.create({
+          data: {
+            userId,
+            contentId,
+            packNumber,
+            priceCoins: content.priceCoins,
+          },
+        });
+        const creatorCoins = Math.floor(
+          (content.priceCoins * sharePercent) / 100,
+        );
+
+        await tx.creatorRevenue.create({
+          data: {
+            creatorId,
+            chapterPackPurchaseId: purchase.id,
+            contentId,
+            grossCoins: content.priceCoins,
+            sharePercent,
+            creatorCoins,
+            platformCoins: content.priceCoins - creatorCoins,
+          },
+        });
+        await tx.walletLedger.create({
+          data: {
+            walletId: wallet.id,
+            userId,
+            amountCoins: -content.priceCoins,
+            balanceAfter: wallet.balance,
+            transactionType: 'Purchase',
+            sourceType: 'ChapterPackPurchase',
+            sourceReference: purchase.id,
+            description: `Purchased chapters ${firstChapterNumber}-${lastChapterNumber} of content ${contentId}`,
+          },
+        });
+
+        return {
+          purchase,
+          alreadyOwned: false,
+          balance: wallet.balance,
+          packNumber,
+          firstChapterNumber,
+          lastChapterNumber,
+        };
+      });
+    } catch (error) {
+      if (!isUniqueConstraintError(error)) {
+        throw error;
+      }
+
+      const purchase = await this.prisma.chapterPackPurchase.findUnique({
+        where: purchaseWhere,
+      });
+      if (!purchase) {
+        throw error;
+      }
+
+      const wallet = await this.prisma.wallet.findUnique({
+        where: { userId },
+        select: { balance: true },
+      });
+      return {
+        purchase,
+        alreadyOwned: true,
+        balance: wallet?.balance ?? 0,
+        packNumber,
+        firstChapterNumber,
+        lastChapterNumber,
+      };
+    }
+  }
+
   ///////////////////////////HÀM KIỂM TRA QUYỀN TRUY CẬP NGƯỜI DÙNG VỚI MỘT BỘ TRUYỆN///////////////////////////
 
   async getContentAccess(userId: string, contentId: string) {
@@ -281,6 +490,7 @@ export class UnlockService {
         ownershipTier: true,
         publicationStatus: true,
         pricingType: true,
+        purchaseMode: true,
         priceCoins: true,
         freeChapters: true,
       },
@@ -293,6 +503,7 @@ export class UnlockService {
     //BƯỚC 2: KIỂM TRA GIAO DỊCH MUA
     //đảm bảo đã mua
     let purchase = null;
+    let purchasedPackNumbers: number[] = [];
     if (
       content.ownershipTier !== OwnershipTier.FanTranslation &&
       content.pricingType === ContentPricingType.Paid
@@ -301,6 +512,14 @@ export class UnlockService {
       where: { userId_contentId: { userId, contentId } },
       select: { purchasedAt: true, priceCoins: true },
       });
+      if (content.purchaseMode === ContentPurchaseMode.ChapterPack) {
+      const packPurchases = await this.prisma.chapterPackPurchase.findMany({
+        where: { userId, contentId },
+        select: { packNumber: true },
+        orderBy: { packNumber: 'asc' },
+      });
+      purchasedPackNumbers = packPurchases.map(({ packNumber }) => packNumber);
+      }
     }
 
     let isFree = false;
@@ -314,9 +533,11 @@ export class UnlockService {
       contentId: content.id,
       isFree,
       priceCoins: content.priceCoins,
+      purchaseMode: content.purchaseMode,
       freeChapters: content.freeChapters,
       isOwned: purchase !== null,
       purchase,
+      purchasedPackNumbers,
     };
   }
 
@@ -353,8 +574,34 @@ export class UnlockService {
       where: { userId_contentId: { userId, contentId: chapter.content.id } },
       select: { id: true },
     });
-    if (!purchase) {
-      throw new ForbiddenException('Bạn cần mua toàn bộ truyện để đọc chapter này');
+    if (purchase) {
+      return;
     }
+
+    const packNumber =
+      Math.floor((chapter.number - 1) / CHAPTERS_PER_PACK) + 1;
+    const packPurchase = await this.prisma.chapterPackPurchase.findUnique({
+      where: {
+        userId_contentId_packNumber: {
+          userId,
+          contentId: chapter.content.id,
+          packNumber,
+        },
+      },
+      select: { id: true },
+    });
+    if (packPurchase) {
+      return;
+    }
+
+    if (chapter.content.purchaseMode === ContentPurchaseMode.ChapterPack) {
+      const firstChapterNumber = (packNumber - 1) * CHAPTERS_PER_PACK + 1;
+      const lastChapterNumber = packNumber * CHAPTERS_PER_PACK;
+      throw new ForbiddenException(
+        `Bạn cần mua gói chương ${firstChapterNumber}-${lastChapterNumber} để đọc chương này`,
+      );
+    }
+
+    throw new ForbiddenException('Bạn cần mua toàn bộ truyện để đọc chapter này');
   }
 }

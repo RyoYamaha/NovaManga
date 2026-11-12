@@ -108,6 +108,11 @@ export type WalletLedger = Prisma.WalletLedgerModel
  */
 export type ContentPurchase = Prisma.ContentPurchaseModel
 /**
+ * Model ChapterPackPurchase
+ * 
+ */
+export type ChapterPackPurchase = Prisma.ChapterPackPurchaseModel
+/**
  * Model CreatorRevenue
  * 
  */

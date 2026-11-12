@@ -376,9 +376,9 @@ export type ContentPurchaseSumOrderByAggregateInput = {
   priceCoins?: Prisma.SortOrder
 }
 
-export type ContentPurchaseScalarRelationFilter = {
-  is?: Prisma.ContentPurchaseWhereInput
-  isNot?: Prisma.ContentPurchaseWhereInput
+export type ContentPurchaseNullableScalarRelationFilter = {
+  is?: Prisma.ContentPurchaseWhereInput | null
+  isNot?: Prisma.ContentPurchaseWhereInput | null
 }
 
 export type ContentPurchaseCreateNestedManyWithoutContentInput = {
@@ -471,10 +471,12 @@ export type ContentPurchaseCreateNestedOneWithoutRevenueInput = {
   connect?: Prisma.ContentPurchaseWhereUniqueInput
 }
 
-export type ContentPurchaseUpdateOneRequiredWithoutRevenueNestedInput = {
+export type ContentPurchaseUpdateOneWithoutRevenueNestedInput = {
   create?: Prisma.XOR<Prisma.ContentPurchaseCreateWithoutRevenueInput, Prisma.ContentPurchaseUncheckedCreateWithoutRevenueInput>
   connectOrCreate?: Prisma.ContentPurchaseCreateOrConnectWithoutRevenueInput
   upsert?: Prisma.ContentPurchaseUpsertWithoutRevenueInput
+  disconnect?: Prisma.ContentPurchaseWhereInput | boolean
+  delete?: Prisma.ContentPurchaseWhereInput | boolean
   connect?: Prisma.ContentPurchaseWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ContentPurchaseUpdateToOneWithWhereWithoutRevenueInput, Prisma.ContentPurchaseUpdateWithoutRevenueInput>, Prisma.ContentPurchaseUncheckedUpdateWithoutRevenueInput>
 }

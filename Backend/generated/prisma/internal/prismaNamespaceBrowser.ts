@@ -69,6 +69,7 @@ export const ModelName = {
   BankTransaction: 'BankTransaction',
   WalletLedger: 'WalletLedger',
   ContentPurchase: 'ContentPurchase',
+  ChapterPackPurchase: 'ChapterPackPurchase',
   CreatorRevenue: 'CreatorRevenue',
   PayoutProfile: 'PayoutProfile',
   PayoutRequest: 'PayoutRequest',
@@ -117,6 +118,9 @@ export const ContentScalarFieldEnum = {
   type: 'type',
   ownershipTier: 'ownershipTier',
   publicationStatus: 'publicationStatus',
+  publisherHidden: 'publisherHidden',
+  publisherHiddenReason: 'publisherHiddenReason',
+  publisherHiddenAt: 'publisherHiddenAt',
   reviewFeedback: 'reviewFeedback',
   aiModerationStatus: 'aiModerationStatus',
   aiModerationReason: 'aiModerationReason',
@@ -124,6 +128,7 @@ export const ContentScalarFieldEnum = {
   storyStatus: 'storyStatus',
   coverImageUrl: 'coverImageUrl',
   pricingType: 'pricingType',
+  purchaseMode: 'purchaseMode',
   priceCoins: 'priceCoins',
   freeChapters: 'freeChapters',
   allowCommunityTranslation: 'allowCommunityTranslation',
@@ -248,7 +253,6 @@ export const UserScalarFieldEnum = {
   bio: 'bio',
   isLocked: 'isLocked',
   aiBlocked: 'aiBlocked',
-  payoutBlocked: 'payoutBlocked',
   createdAt: 'createdAt',
   onboardingCompletedAt: 'onboardingCompletedAt'
 } as const
@@ -332,10 +336,23 @@ export const ContentPurchaseScalarFieldEnum = {
 export type ContentPurchaseScalarFieldEnum = (typeof ContentPurchaseScalarFieldEnum)[keyof typeof ContentPurchaseScalarFieldEnum]
 
 
+export const ChapterPackPurchaseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contentId: 'contentId',
+  packNumber: 'packNumber',
+  priceCoins: 'priceCoins',
+  purchasedAt: 'purchasedAt'
+} as const
+
+export type ChapterPackPurchaseScalarFieldEnum = (typeof ChapterPackPurchaseScalarFieldEnum)[keyof typeof ChapterPackPurchaseScalarFieldEnum]
+
+
 export const CreatorRevenueScalarFieldEnum = {
   id: 'id',
   creatorId: 'creatorId',
   purchaseId: 'purchaseId',
+  chapterPackPurchaseId: 'chapterPackPurchaseId',
   contentId: 'contentId',
   grossCoins: 'grossCoins',
   sharePercent: 'sharePercent',

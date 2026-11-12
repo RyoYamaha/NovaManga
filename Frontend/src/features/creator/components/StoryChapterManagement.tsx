@@ -6,14 +6,16 @@ interface StoryChapterManagementProps {
   contentId: string
   basePath: string
   chapters: ContentDetailData['chapters']
-  onDeleteUnavailable: () => void
+  deletingChapterId?: string
+  onDelete: (chapterId: string) => void
 }
 
 export function StoryChapterManagement({
   contentId,
   basePath,
   chapters,
-  onDeleteUnavailable,
+  deletingChapterId,
+  onDelete,
 }: StoryChapterManagementProps) {
   return (
     <section className="mt-8 space-y-4 border-t border-border pt-8">
@@ -51,9 +53,19 @@ export function StoryChapterManagement({
                   variant="outline"
                   size="sm"
                   className="rounded-xl text-destructive hover:bg-destructive hover:text-white"
-                  onClick={onDeleteUnavailable}
+                  type="button"
+                  disabled={
+                    chapter.moderationStatus !== 'PendingReview' ||
+                    deletingChapterId !== undefined
+                  }
+                  title={
+                    chapter.moderationStatus !== 'PendingReview'
+                      ? 'Chỉ có thể xóa chương đang chờ duyệt.'
+                      : undefined
+                  }
+                  onClick={() => onDelete(chapter.id)}
                 >
-                  Xóa
+                  {deletingChapterId === chapter.id ? 'Đang xóa...' : 'Xóa'}
                 </Button>
               </div>
             </li>

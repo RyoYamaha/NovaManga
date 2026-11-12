@@ -21,8 +21,6 @@ export function Payouts() {
   const queryClient = useQueryClient()
   const { confirm } = useAppDialog()
   const [minimumInput, setMinimumInput] = useState('')
-  const [blockUserId, setBlockUserId] = useState('')
-  const [shouldBlockUser, setShouldBlockUser] = useState(true)
   const [selectedRejectId, setSelectedRejectId] = useState('')
   const [selectedTransferId, setSelectedTransferId] = useState('')
   const [copiedTransferCode, setCopiedTransferCode] = useState('')
@@ -107,19 +105,6 @@ export function Payouts() {
     },
   })
 
-  const blockMutation = useMutation({
-    mutationFn: (values: { userId: string; payoutBlocked: boolean }) =>
-      financeService.setPayoutBlocked(values.userId, values.payoutBlocked),
-    onSuccess: async (_data, values) => {
-      setBlockUserId('')
-      if (values.payoutBlocked) {
-        setSuccessMessage('Đã chặn yêu cầu payout cho tài khoản này.')
-      } else {
-        setSuccessMessage('Đã gỡ chặn payout cho tài khoản này.')
-      }
-    },
-  })
-
   const submitMinimum = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const minimumCoins = Number(minimumInput)
@@ -136,25 +121,6 @@ export function Payouts() {
     }
     setSuccessMessage('')
     updateMinimumMutation.mutate(minimumCoins)
-  }
-
-  const submitBlock = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (blockUserId.trim()) {
-      const blocking = shouldBlockUser
-      const confirmed = await confirm({
-        title: blocking ? 'Xác nhận chặn payout' : 'Xác nhận gỡ chặn payout',
-        description: `${blocking ? 'Chặn' : 'Gỡ chặn'} payout cho user ID "${blockUserId.trim()}"?`,
-        confirmLabel: blocking ? 'Chặn payout' : 'Gỡ chặn',
-        tone: blocking ? 'destructive' : 'default',
-      })
-      if (!confirmed) return
-      setSuccessMessage('')
-      blockMutation.mutate({
-        userId: blockUserId.trim(),
-        payoutBlocked: blocking,
-      })
-    }
   }
 
   const submitReject = async (event: FormEvent<HTMLFormElement>) => {
@@ -430,15 +396,13 @@ export function Payouts() {
           <div>
             <h2 className="text-lg font-semibold">Cài đặt payout</h2>
             <p className="text-sm text-muted-foreground">
-              Cấu hình mức rút tối thiểu và quyền rút tiền của tài khoản.
+              Cấu hình mức rút tối thiểu.
             </p>
           </div>
         </div>
         <PayoutSettingsPanel
           minimumInput={minimumInput}
           minimumValue={minimumQuery.data}
-          blockUserId={blockUserId}
-          shouldBlockUser={shouldBlockUser}
           isMinimumPending={updateMinimumMutation.isPending}
           isMinimumLoadError={minimumQuery.isError}
           minimumSaveErrorMessage={
@@ -446,17 +410,8 @@ export function Payouts() {
               ? getPayoutErrorMessage(updateMinimumMutation.error, 'Không lưu được mức tối thiểu.')
               : undefined
           }
-          isBlockPending={blockMutation.isPending}
-          blockErrorMessage={
-            blockMutation.isError
-              ? getPayoutErrorMessage(blockMutation.error, 'Không chặn được payout.')
-              : undefined
-          }
           onMinimumInputChange={setMinimumInput}
-          onBlockUserIdChange={setBlockUserId}
-          onBlockActionChange={setShouldBlockUser}
           onSubmitMinimum={submitMinimum}
-          onSubmitBlock={submitBlock}
         />
       </section>
     </div>

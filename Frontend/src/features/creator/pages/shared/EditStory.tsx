@@ -9,7 +9,9 @@ import { isAxiosError } from 'axios'
 import { authorService } from '@/features/creator/api/author.service'
 import { publisherService } from '@/features/creator/api/publisher.service'
 import { contentService } from '@/services/content.service'
+import { chapterService } from '@/services/chapter.service'
 import { financeService } from '@/services/finance.service'
+import type { ContentType } from '@/types/content'
 import { Button } from '@/components/ui/button'
 import { useAppDialog } from '@/components/common/AppDialogProvider'
 import { Input } from '@/components/ui/input'
@@ -24,6 +26,7 @@ const schema = z.object({
   title: z.string().trim().min(1, 'Nhập tên truyện').max(255, 'Tối đa 255 ký tự'),
   synopsis: z.string().trim().optional(),
   pricingType: z.enum(['free', 'paid']),
+  purchaseMode: z.enum(['whole', 'chapter_pack']),
   priceCoins: z.number().int().min(0, 'Giá không được âm'),
   freeChapters: z.number().int().min(0, 'Số chương đọc thử không được âm'),
   allowCommunityTranslation: z.boolean(),
@@ -88,6 +91,7 @@ export function SharedEditStory({ role }: Props) {
       title: '',
       synopsis: '',
       pricingType: 'free',
+      purchaseMode: 'whole',
       priceCoins: 50,
       freeChapters: 3,
       allowCommunityTranslation: false,
@@ -122,6 +126,7 @@ export function SharedEditStory({ role }: Props) {
         title: contentData.title,
         synopsis: contentData.synopsis || '',
         pricingType: contentData.pricingType,
+        purchaseMode: contentData.purchaseMode ?? 'whole',
         priceCoins: contentData.priceCoins || 50,
         freeChapters: contentData.freeChapters,
         allowCommunityTranslation: contentData.allowCommunityTranslation || false,
@@ -149,6 +154,11 @@ export function SharedEditStory({ role }: Props) {
           contentData?.ownershipTier === 'FanTranslation'
             ? 'free'
             : v.pricingType,
+        purchaseMode:
+          contentData?.ownershipTier === 'FanTranslation' ||
+          v.pricingType === 'free'
+            ? 'whole'
+            : v.purchaseMode,
         priceCoins:
           contentData?.ownershipTier === 'FanTranslation' ||
           v.pricingType === 'free'
@@ -186,6 +196,19 @@ export function SharedEditStory({ role }: Props) {
     },
   })
 
+  const deleteChapterMutation = useMutation({
+    mutationFn: ({
+      chapterId,
+      contentType,
+    }: {
+      chapterId: string
+      contentType: ContentType
+    }) => chapterService.deletePending(contentType, chapterId),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['content', id] })
+    },
+  })
+
   const handleFormSubmit = async (values: FormValues) => {
     if (
       requiresPayoutProfile &&
@@ -200,20 +223,57 @@ export function SharedEditStory({ role }: Props) {
     const nextPricingType =
       contentData?.ownershipTier === 'FanTranslation' ? 'free' : values.pricingType
     const nextPriceCoins = nextPricingType === 'free' ? 0 : values.priceCoins
+    const nextPurchaseMode =
+      nextPricingType === 'free' ? 'whole' : values.purchaseMode
     if (
       contentData &&
       (contentData.pricingType !== nextPricingType ||
-        contentData.priceCoins !== nextPriceCoins)
+        contentData.priceCoins !== nextPriceCoins ||
+        (contentData.purchaseMode ?? 'whole') !== nextPurchaseMode)
     ) {
       const confirmed = await confirm({
         title: 'Xác nhận thay đổi giá truyện',
-        description: `Thay đổi giá "${contentData.title}" từ ${contentData.pricingType === 'paid' ? `${contentData.priceCoins} coin` : 'miễn phí'} sang ${nextPricingType === 'paid' ? `${nextPriceCoins} coin` : 'miễn phí'}?`,
+        description: `Thay đổi hình thức bán hoặc giá của "${contentData.title}"? Giá mới: ${nextPricingType === 'paid' ? `${nextPriceCoins} coin ${nextPurchaseMode === 'chapter_pack' ? 'mỗi gói 10 chương' : 'cho cả bộ'}` : 'miễn phí'}. Các giao dịch đã mua vẫn được giữ nguyên.`,
         confirmLabel: 'Thay đổi giá',
       })
       if (!confirmed) return
     }
 
     mutation.mutate(values)
+  }
+
+  const handleDeleteChapter = async (chapterId: string) => {
+    const confirmed = await confirm({
+      title: 'Xóa chương đang chờ duyệt?',
+      description: 'Nội dung chương sẽ bị xóa và không thể khôi phục. Bạn có chắc chắn muốn tiếp tục?',
+      confirmLabel: 'Xóa chương',
+      tone: 'destructive',
+    })
+    if (!confirmed) return
+
+    if (!contentData) {
+      await alert({
+        title: 'Không thể xóa chương',
+        description: 'Không tải được thông tin truyện. Vui lòng thử lại.',
+      })
+      return
+    }
+
+    try {
+      await deleteChapterMutation.mutateAsync({
+        chapterId,
+        contentType: contentData.type,
+      })
+    } catch (error) {
+      const responseMessage =
+        isAxiosError(error) && typeof error.response?.data?.message === 'string'
+          ? error.response.data.message
+          : undefined
+      await alert({
+        title: 'Không thể xóa chương',
+        description: responseMessage || 'Đã xảy ra lỗi khi xóa chương. Vui lòng thử lại.',
+      })
+    }
   }
 
   if (isLoading) return <p className="text-sm text-muted-foreground p-4">Đang tải...</p>
@@ -269,6 +329,7 @@ export function SharedEditStory({ role }: Props) {
 
         <ContentPricingFields
           pricingType={pricingType}
+          purchaseMode={watch('purchaseMode')}
           priceCoins={watch('priceCoins')}
           freeChapters={watch('freeChapters')}
           allowCommunityTranslation={watch('allowCommunityTranslation')}
@@ -276,6 +337,9 @@ export function SharedEditStory({ role }: Props) {
           freeChaptersError={errors.freeChapters?.message}
           onPricingTypeChange={(value) =>
             setValue('pricingType', value, { shouldValidate: true })
+          }
+          onPurchaseModeChange={(value) =>
+            setValue('purchaseMode', value, { shouldValidate: true })
           }
           onPriceCoinsChange={(value) =>
             setValue('priceCoins', value, { shouldValidate: true })
@@ -380,17 +444,19 @@ export function SharedEditStory({ role }: Props) {
         </div>
       </form>
 
-      <StoryChapterManagement
-        contentId={id!}
-        basePath={basePath}
-        chapters={contentData?.chapters ?? []}
-        onDeleteUnavailable={() =>
-          void alert({
-            title: 'Tính năng chưa sẵn sàng',
-            description: 'Tính năng xóa chương đang được hoàn thiện.',
-          })
-        }
-      />
+      {contentData && (
+        <StoryChapterManagement
+          contentId={id!}
+          basePath={basePath}
+          chapters={contentData.chapters}
+          deletingChapterId={
+            deleteChapterMutation.isPending
+              ? deleteChapterMutation.variables?.chapterId
+              : undefined
+          }
+          onDelete={handleDeleteChapter}
+        />
+      )}
     </div>
   )
 }

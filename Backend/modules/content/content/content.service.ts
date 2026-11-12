@@ -2,6 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { ContentCatalogService } from './content-catalog.service';
 import { ContentDiscoveryService } from './content-discovery.service';
 import { ContentWorkflowService } from './content-workflow.service';
+import { OwnershipTier } from '../../../common/constants/content.enum';
+import { CreateContentDto } from './dto/create-content.dto';
+import { QueryCatalogSortDto } from './dto/query-catalog-sort.dto';
+import { QueryContentDto } from './dto/query-content.dto';
+import { QueryRecommendationsDto } from './dto/query-recommendations.dto';
+import { QueryRankingContentDto } from './dto/query-ranking-content.dto';
+import { UpdateContentDto } from './dto/update-content.dto';
 
 @Injectable()
 export class ContentService {
@@ -11,67 +18,68 @@ export class ContentService {
     private readonly contentWorkflowService: ContentWorkflowService,
   ) {}
 
-  findAll(...args: Parameters<ContentCatalogService['findAll']>) {
-    return this.contentCatalogService.findAll(...args);
+  findAll(contentQuery: QueryContentDto) {
+    return this.contentCatalogService.findAll(contentQuery);
   }
 
-  findOne(...args: Parameters<ContentCatalogService['findOne']>) {
-    return this.contentCatalogService.findOne(...args);
+  findOne(contentId: string) {
+    return this.contentCatalogService.findOne(contentId);
   }
 
-  getGenres(...args: Parameters<ContentCatalogService['getGenres']>) {
-    return this.contentCatalogService.getGenres(...args);
+  getGenres() {
+    return this.contentCatalogService.getGenres();
   }
 
-  getTags(...args: Parameters<ContentCatalogService['getTags']>) {
-    return this.contentCatalogService.getTags(...args);
+  getTags(sortOrder?: QueryCatalogSortDto['sort']) {
+    return this.contentCatalogService.getTags(sortOrder);
   }
 
-  getPublishers(...args: Parameters<ContentCatalogService['getPublishers']>) {
-    return this.contentCatalogService.getPublishers(...args);
+  getPublishers(sortOrder?: QueryCatalogSortDto['sort']) {
+    return this.contentCatalogService.getPublishers(sortOrder);
   }
 
-  getRankedContents(...args: Parameters<ContentDiscoveryService['getRankedContents']>) {
-    return this.contentDiscoveryService.getRankedContents(...args);
+  getRankedContents(rankingQuery: QueryRankingContentDto) {
+    return this.contentDiscoveryService.getRankedContents(rankingQuery);
   }
 
-  getRecommendations(...args: Parameters<ContentDiscoveryService['getRecommendations']>) {
-    return this.contentDiscoveryService.getRecommendations(...args);
+  getRecommendations(userId: string, query: QueryRecommendationsDto) {
+    return this.contentDiscoveryService.getRecommendations(userId, query);
   }
 
-  getSimilarContents(...args: Parameters<ContentDiscoveryService['getSimilarContents']>) {
-    return this.contentDiscoveryService.getSimilarContents(...args);
+  getSimilarContents(contentId: string) {
+    return this.contentDiscoveryService.getSimilarContents(contentId);
   }
 
-  createContent(...args: Parameters<ContentWorkflowService['createContent']>) {
-    return this.contentWorkflowService.createContent(...args);
+  createContent( contentData: CreateContentDto, uploaderId: string, ownershipTier: OwnershipTier, publisherId?: string, parentContentId?: string,) {
+    return this.contentWorkflowService.createContent( contentData, uploaderId, ownershipTier, publisherId, parentContentId,
+    );
   }
 
-  updateContent(...args: Parameters<ContentWorkflowService['updateContent']>) {
-    return this.contentWorkflowService.updateContent(...args);
+  updateContent(contentId: string, uploaderId: string, updateData: UpdateContentDto) {
+    return this.contentWorkflowService.updateContent(contentId, uploaderId, updateData);
   }
 
-  deleteOwnedContent(...args: Parameters<ContentWorkflowService['deleteOwnedContent']>) {
-    return this.contentWorkflowService.deleteOwnedContent(...args);
+  deleteOwnedContent(contentId: string, uploaderId: string) {
+    return this.contentWorkflowService.deleteOwnedContent(contentId, uploaderId);
   }
 
-  approve(...args: Parameters<ContentWorkflowService['approve']>) {
-    return this.contentWorkflowService.approve(...args);
+  approve(contentId: string) {
+    return this.contentWorkflowService.approve(contentId);
   }
 
-  reject(...args: Parameters<ContentWorkflowService['reject']>) {
-    return this.contentWorkflowService.reject(...args);
+  reject(contentId: string, rejectionReason?: string) {
+    return this.contentWorkflowService.reject(contentId, rejectionReason);
   }
 
-  hide(...args: Parameters<ContentWorkflowService['hide']>) {
-    return this.contentWorkflowService.hide(...args);
+  hide(contentId: string) {
+    return this.contentWorkflowService.hide(contentId);
   }
 
-  restore(...args: Parameters<ContentWorkflowService['restore']>) {
-    return this.contentWorkflowService.restore(...args);
+  restore(contentId: string) {
+    return this.contentWorkflowService.restore(contentId);
   }
 
-  resubmit(...args: Parameters<ContentWorkflowService['resubmit']>) {
-    return this.contentWorkflowService.resubmit(...args);
+  resubmit(contentId: string, uploaderId: string) {
+    return this.contentWorkflowService.resubmit(contentId, uploaderId);
   }
 }

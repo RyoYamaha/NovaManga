@@ -12,18 +12,28 @@ export function communityTranslationVisibilityWhere(
   now = Date.now(),
 ): Prisma.ContentWhereInput {
   return {
-    OR: [
-      { ownershipTier: { not: OwnershipTier.FanTranslation } },
-      { parentContent: { is: { pricingType: ContentPricingType.Free } } },
+    AND: [
       {
-        parentContent: {
-          is: {
-            pricingType: ContentPricingType.Paid,
-            pricingChangedAt: {
-              gte: new Date(now - COMMUNITY_TRANSLATION_GRACE_PERIOD_MS),
+        OR: [
+          { ownershipTier: { not: OwnershipTier.FanTranslation } },
+          { parentContent: { is: { pricingType: ContentPricingType.Free } } },
+          {
+            parentContent: {
+              is: {
+                pricingType: ContentPricingType.Paid,
+                pricingChangedAt: {
+                  gte: new Date(now - COMMUNITY_TRANSLATION_GRACE_PERIOD_MS),
+                },
+              },
             },
           },
-        },
+        ],
+      },
+      {
+        OR: [
+          { ownershipTier: { not: OwnershipTier.FanTranslation } },
+          { publisherHidden: false },
+        ],
       },
     ],
   };
@@ -37,6 +47,7 @@ export function isCommunityTranslationVisible(content: {
 //hàm nhận vào 2 tham số bao gồm content (thông tin truyện cần kiểm tra)
 //
   ownershipTier: string;
+  publisherHidden?: boolean;
   parentContent?: {
     pricingType: string;
     pricingChangedAt: Date | null;
@@ -46,6 +57,9 @@ export function isCommunityTranslationVisible(content: {
   //kiểm tra phải bản dịch cộng đồng hay không
   if (content.ownershipTier !== OwnershipTier.FanTranslation) {
     return true;
+  }
+  if (content.publisherHidden) {
+    return false;
   }
   //kiểm tra có bản gốc bố mẹ hay không
   if (!content.parentContent){

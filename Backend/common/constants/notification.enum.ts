@@ -3,6 +3,8 @@ export enum NotificationType {
         ContentRejected = 'ContentRejected',
         ContentHidden = 'ContentHidden',
         ContentRestored = 'ContentRestored',
+        PublisherTranslationHidden = 'PublisherTranslationHidden',
+        PublisherTranslationRestored = 'PublisherTranslationRestored',
         ChapterPublished = 'ChapterPublished',
         ChapterRejected = 'ChapterRejected',
         ContentBookmarked = 'ContentBookmarked',

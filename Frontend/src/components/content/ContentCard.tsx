@@ -7,7 +7,7 @@ import type { ContentListItem } from '@/types/content'
 // Pick needed data from ContentListItem + optional extra fields
 type ContentCardData = Pick<
   ContentListItem,
-  'id' | 'title' | 'type' | 'coverImageUrl' | 'uploader' | 'genres'
+  'id' | 'title' | 'type' | 'coverImageUrl' | 'uploader' | 'genres' | 'purchaseMode'
 > & {
   priceCoins?: number | null
   ownershipTier?: string | null
@@ -77,6 +77,9 @@ export function ContentCard({ content, className, priority }: ContentCardProps) 
           <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded-md border border-amber-400/40 bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-amber-400 backdrop-blur-md">
             <Coins className="h-3 w-3" />
             <span>{content.priceCoins}</span>
+            {content.purchaseMode === 'chapter_pack' && (
+              <span className="text-[8px]">/10 ch</span>
+            )}
           </div>
         )}
 

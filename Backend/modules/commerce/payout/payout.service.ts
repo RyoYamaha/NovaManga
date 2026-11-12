@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   ConflictException,
-  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -111,21 +110,6 @@ export class PayoutService {
 
     return this.prisma.$transaction(
       async (tx) => {
-        const user = await tx.user.findUnique({
-          where: { id: userId },
-          select: { payoutBlocked: true },
-        });
-
-        if (!user) {
-          throw new NotFoundException('Không tìm thấy tài khoản');
-        }
-
-        if (user.payoutBlocked) {
-          throw new ForbiddenException(
-            'Tài khoản hiện không được phép gửi yêu cầu payout',
-          );
-        }
-
         const eligibleSince = new Date(
           Date.now() - holdDays * 24 * 60 * 60 * 1000,
         );
@@ -179,7 +163,7 @@ export class PayoutService {
   }
 
   async getMyRequests(userId: string, page: number, limit: number) {
-    const [items, total] = await this.prisma.$transaction([
+    const [items, total] = await Promise.all([
       this.prisma.payoutRequest.findMany({
         where: { userId },
         select: {
@@ -219,7 +203,7 @@ export class PayoutService {
       ? { status: 'Pending' }
       : { status: { in: ['Paid', 'Rejected'] } };
 
-    const [items, total] = await this.prisma.$transaction([
+    const [items, total] = await Promise.all([
       this.prisma.payoutRequest.findMany({
         where,
         select: {
@@ -301,26 +285,6 @@ export class PayoutService {
 
     return this.prisma.payoutRequest.findUniqueOrThrow({
       where: { id: requestId },
-    });
-  }
-
-  async setPayoutBlocked(userId: string, payoutBlocked: boolean) {
-    const result = await this.prisma.user.updateMany({
-      where: { id: userId },
-      data: { payoutBlocked },
-    });
-
-    if (result.count !== 1) {
-      throw new NotFoundException('Không tìm thấy tài khoản');
-    }
-
-    return this.prisma.user.findUniqueOrThrow({
-      where: { id: userId },
-      select: {
-        id: true,
-        username: true,
-        payoutBlocked: true,
-      },
     });
   }
 

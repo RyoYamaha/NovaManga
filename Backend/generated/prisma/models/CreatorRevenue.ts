@@ -44,6 +44,7 @@ export type CreatorRevenueMinAggregateOutputType = {
   id: string | null
   creatorId: string | null
   purchaseId: string | null
+  chapterPackPurchaseId: string | null
   contentId: string | null
   grossCoins: number | null
   sharePercent: number | null
@@ -56,6 +57,7 @@ export type CreatorRevenueMaxAggregateOutputType = {
   id: string | null
   creatorId: string | null
   purchaseId: string | null
+  chapterPackPurchaseId: string | null
   contentId: string | null
   grossCoins: number | null
   sharePercent: number | null
@@ -68,6 +70,7 @@ export type CreatorRevenueCountAggregateOutputType = {
   id: number
   creatorId: number
   purchaseId: number
+  chapterPackPurchaseId: number
   contentId: number
   grossCoins: number
   sharePercent: number
@@ -96,6 +99,7 @@ export type CreatorRevenueMinAggregateInputType = {
   id?: true
   creatorId?: true
   purchaseId?: true
+  chapterPackPurchaseId?: true
   contentId?: true
   grossCoins?: true
   sharePercent?: true
@@ -108,6 +112,7 @@ export type CreatorRevenueMaxAggregateInputType = {
   id?: true
   creatorId?: true
   purchaseId?: true
+  chapterPackPurchaseId?: true
   contentId?: true
   grossCoins?: true
   sharePercent?: true
@@ -120,6 +125,7 @@ export type CreatorRevenueCountAggregateInputType = {
   id?: true
   creatorId?: true
   purchaseId?: true
+  chapterPackPurchaseId?: true
   contentId?: true
   grossCoins?: true
   sharePercent?: true
@@ -218,7 +224,8 @@ export type CreatorRevenueGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type CreatorRevenueGroupByOutputType = {
   id: string
   creatorId: string
-  purchaseId: string
+  purchaseId: string | null
+  chapterPackPurchaseId: string | null
   contentId: string
   grossCoins: number
   sharePercent: number
@@ -253,7 +260,8 @@ export type CreatorRevenueWhereInput = {
   NOT?: Prisma.CreatorRevenueWhereInput | Prisma.CreatorRevenueWhereInput[]
   id?: Prisma.StringFilter<"CreatorRevenue"> | string
   creatorId?: Prisma.StringFilter<"CreatorRevenue"> | string
-  purchaseId?: Prisma.StringFilter<"CreatorRevenue"> | string
+  purchaseId?: Prisma.StringNullableFilter<"CreatorRevenue"> | string | null
+  chapterPackPurchaseId?: Prisma.StringNullableFilter<"CreatorRevenue"> | string | null
   contentId?: Prisma.StringFilter<"CreatorRevenue"> | string
   grossCoins?: Prisma.IntFilter<"CreatorRevenue"> | number
   sharePercent?: Prisma.IntFilter<"CreatorRevenue"> | number
@@ -261,14 +269,16 @@ export type CreatorRevenueWhereInput = {
   platformCoins?: Prisma.IntFilter<"CreatorRevenue"> | number
   createdAt?: Prisma.DateTimeFilter<"CreatorRevenue"> | Date | string
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  purchase?: Prisma.XOR<Prisma.ContentPurchaseScalarRelationFilter, Prisma.ContentPurchaseWhereInput>
+  purchase?: Prisma.XOR<Prisma.ContentPurchaseNullableScalarRelationFilter, Prisma.ContentPurchaseWhereInput> | null
+  chapterPackPurchase?: Prisma.XOR<Prisma.ChapterPackPurchaseNullableScalarRelationFilter, Prisma.ChapterPackPurchaseWhereInput> | null
   content?: Prisma.XOR<Prisma.ContentScalarRelationFilter, Prisma.ContentWhereInput>
 }
 
 export type CreatorRevenueOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
-  purchaseId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
+  chapterPackPurchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   contentId?: Prisma.SortOrder
   grossCoins?: Prisma.SortOrder
   sharePercent?: Prisma.SortOrder
@@ -277,12 +287,14 @@ export type CreatorRevenueOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   creator?: Prisma.UserOrderByWithRelationInput
   purchase?: Prisma.ContentPurchaseOrderByWithRelationInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseOrderByWithRelationInput
   content?: Prisma.ContentOrderByWithRelationInput
 }
 
 export type CreatorRevenueWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   purchaseId?: string
+  chapterPackPurchaseId?: string
   AND?: Prisma.CreatorRevenueWhereInput | Prisma.CreatorRevenueWhereInput[]
   OR?: Prisma.CreatorRevenueWhereInput[]
   NOT?: Prisma.CreatorRevenueWhereInput | Prisma.CreatorRevenueWhereInput[]
@@ -294,14 +306,16 @@ export type CreatorRevenueWhereUniqueInput = Prisma.AtLeast<{
   platformCoins?: Prisma.IntFilter<"CreatorRevenue"> | number
   createdAt?: Prisma.DateTimeFilter<"CreatorRevenue"> | Date | string
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  purchase?: Prisma.XOR<Prisma.ContentPurchaseScalarRelationFilter, Prisma.ContentPurchaseWhereInput>
+  purchase?: Prisma.XOR<Prisma.ContentPurchaseNullableScalarRelationFilter, Prisma.ContentPurchaseWhereInput> | null
+  chapterPackPurchase?: Prisma.XOR<Prisma.ChapterPackPurchaseNullableScalarRelationFilter, Prisma.ChapterPackPurchaseWhereInput> | null
   content?: Prisma.XOR<Prisma.ContentScalarRelationFilter, Prisma.ContentWhereInput>
-}, "id" | "purchaseId">
+}, "id" | "purchaseId" | "chapterPackPurchaseId">
 
 export type CreatorRevenueOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
-  purchaseId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
+  chapterPackPurchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   contentId?: Prisma.SortOrder
   grossCoins?: Prisma.SortOrder
   sharePercent?: Prisma.SortOrder
@@ -321,7 +335,8 @@ export type CreatorRevenueScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CreatorRevenueScalarWhereWithAggregatesInput | Prisma.CreatorRevenueScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CreatorRevenue"> | string
   creatorId?: Prisma.StringWithAggregatesFilter<"CreatorRevenue"> | string
-  purchaseId?: Prisma.StringWithAggregatesFilter<"CreatorRevenue"> | string
+  purchaseId?: Prisma.StringNullableWithAggregatesFilter<"CreatorRevenue"> | string | null
+  chapterPackPurchaseId?: Prisma.StringNullableWithAggregatesFilter<"CreatorRevenue"> | string | null
   contentId?: Prisma.StringWithAggregatesFilter<"CreatorRevenue"> | string
   grossCoins?: Prisma.IntWithAggregatesFilter<"CreatorRevenue"> | number
   sharePercent?: Prisma.IntWithAggregatesFilter<"CreatorRevenue"> | number
@@ -338,14 +353,16 @@ export type CreatorRevenueCreateInput = {
   platformCoins: number
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutCreatorRevenueInput
-  purchase: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  purchase?: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseCreateNestedOneWithoutRevenueInput
   content: Prisma.ContentCreateNestedOneWithoutCreatorRevenuesInput
 }
 
 export type CreatorRevenueUncheckedCreateInput = {
   id?: string
   creatorId: string
-  purchaseId: string
+  purchaseId?: string | null
+  chapterPackPurchaseId?: string | null
   contentId: string
   grossCoins: number
   sharePercent: number
@@ -362,14 +379,16 @@ export type CreatorRevenueUpdateInput = {
   platformCoins?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatorRevenueNestedInput
-  purchase?: Prisma.ContentPurchaseUpdateOneRequiredWithoutRevenueNestedInput
+  purchase?: Prisma.ContentPurchaseUpdateOneWithoutRevenueNestedInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseUpdateOneWithoutRevenueNestedInput
   content?: Prisma.ContentUpdateOneRequiredWithoutCreatorRevenuesNestedInput
 }
 
 export type CreatorRevenueUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentId?: Prisma.StringFieldUpdateOperationsInput | string
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -381,7 +400,8 @@ export type CreatorRevenueUncheckedUpdateInput = {
 export type CreatorRevenueCreateManyInput = {
   id?: string
   creatorId: string
-  purchaseId: string
+  purchaseId?: string | null
+  chapterPackPurchaseId?: string | null
   contentId: string
   grossCoins: number
   sharePercent: number
@@ -402,7 +422,8 @@ export type CreatorRevenueUpdateManyMutationInput = {
 export type CreatorRevenueUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentId?: Prisma.StringFieldUpdateOperationsInput | string
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -430,6 +451,7 @@ export type CreatorRevenueCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
+  chapterPackPurchaseId?: Prisma.SortOrder
   contentId?: Prisma.SortOrder
   grossCoins?: Prisma.SortOrder
   sharePercent?: Prisma.SortOrder
@@ -449,6 +471,7 @@ export type CreatorRevenueMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
+  chapterPackPurchaseId?: Prisma.SortOrder
   contentId?: Prisma.SortOrder
   grossCoins?: Prisma.SortOrder
   sharePercent?: Prisma.SortOrder
@@ -461,6 +484,7 @@ export type CreatorRevenueMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
+  chapterPackPurchaseId?: Prisma.SortOrder
   contentId?: Prisma.SortOrder
   grossCoins?: Prisma.SortOrder
   sharePercent?: Prisma.SortOrder
@@ -592,6 +616,38 @@ export type CreatorRevenueUncheckedUpdateOneWithoutPurchaseNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CreatorRevenueUpdateToOneWithWhereWithoutPurchaseInput, Prisma.CreatorRevenueUpdateWithoutPurchaseInput>, Prisma.CreatorRevenueUncheckedUpdateWithoutPurchaseInput>
 }
 
+export type CreatorRevenueCreateNestedOneWithoutChapterPackPurchaseInput = {
+  create?: Prisma.XOR<Prisma.CreatorRevenueCreateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput>
+  connectOrCreate?: Prisma.CreatorRevenueCreateOrConnectWithoutChapterPackPurchaseInput
+  connect?: Prisma.CreatorRevenueWhereUniqueInput
+}
+
+export type CreatorRevenueUncheckedCreateNestedOneWithoutChapterPackPurchaseInput = {
+  create?: Prisma.XOR<Prisma.CreatorRevenueCreateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput>
+  connectOrCreate?: Prisma.CreatorRevenueCreateOrConnectWithoutChapterPackPurchaseInput
+  connect?: Prisma.CreatorRevenueWhereUniqueInput
+}
+
+export type CreatorRevenueUpdateOneWithoutChapterPackPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.CreatorRevenueCreateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput>
+  connectOrCreate?: Prisma.CreatorRevenueCreateOrConnectWithoutChapterPackPurchaseInput
+  upsert?: Prisma.CreatorRevenueUpsertWithoutChapterPackPurchaseInput
+  disconnect?: Prisma.CreatorRevenueWhereInput | boolean
+  delete?: Prisma.CreatorRevenueWhereInput | boolean
+  connect?: Prisma.CreatorRevenueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CreatorRevenueUpdateToOneWithWhereWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUpdateWithoutChapterPackPurchaseInput>, Prisma.CreatorRevenueUncheckedUpdateWithoutChapterPackPurchaseInput>
+}
+
+export type CreatorRevenueUncheckedUpdateOneWithoutChapterPackPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.CreatorRevenueCreateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput>
+  connectOrCreate?: Prisma.CreatorRevenueCreateOrConnectWithoutChapterPackPurchaseInput
+  upsert?: Prisma.CreatorRevenueUpsertWithoutChapterPackPurchaseInput
+  disconnect?: Prisma.CreatorRevenueWhereInput | boolean
+  delete?: Prisma.CreatorRevenueWhereInput | boolean
+  connect?: Prisma.CreatorRevenueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CreatorRevenueUpdateToOneWithWhereWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUpdateWithoutChapterPackPurchaseInput>, Prisma.CreatorRevenueUncheckedUpdateWithoutChapterPackPurchaseInput>
+}
+
 export type CreatorRevenueCreateWithoutContentInput = {
   id?: string
   grossCoins: number
@@ -600,13 +656,15 @@ export type CreatorRevenueCreateWithoutContentInput = {
   platformCoins: number
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutCreatorRevenueInput
-  purchase: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  purchase?: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseCreateNestedOneWithoutRevenueInput
 }
 
 export type CreatorRevenueUncheckedCreateWithoutContentInput = {
   id?: string
   creatorId: string
-  purchaseId: string
+  purchaseId?: string | null
+  chapterPackPurchaseId?: string | null
   grossCoins: number
   sharePercent: number
   creatorCoins: number
@@ -646,7 +704,8 @@ export type CreatorRevenueScalarWhereInput = {
   NOT?: Prisma.CreatorRevenueScalarWhereInput | Prisma.CreatorRevenueScalarWhereInput[]
   id?: Prisma.StringFilter<"CreatorRevenue"> | string
   creatorId?: Prisma.StringFilter<"CreatorRevenue"> | string
-  purchaseId?: Prisma.StringFilter<"CreatorRevenue"> | string
+  purchaseId?: Prisma.StringNullableFilter<"CreatorRevenue"> | string | null
+  chapterPackPurchaseId?: Prisma.StringNullableFilter<"CreatorRevenue"> | string | null
   contentId?: Prisma.StringFilter<"CreatorRevenue"> | string
   grossCoins?: Prisma.IntFilter<"CreatorRevenue"> | number
   sharePercent?: Prisma.IntFilter<"CreatorRevenue"> | number
@@ -662,13 +721,15 @@ export type CreatorRevenueCreateWithoutCreatorInput = {
   creatorCoins: number
   platformCoins: number
   createdAt?: Date | string
-  purchase: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  purchase?: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseCreateNestedOneWithoutRevenueInput
   content: Prisma.ContentCreateNestedOneWithoutCreatorRevenuesInput
 }
 
 export type CreatorRevenueUncheckedCreateWithoutCreatorInput = {
   id?: string
-  purchaseId: string
+  purchaseId?: string | null
+  chapterPackPurchaseId?: string | null
   contentId: string
   grossCoins: number
   sharePercent: number
@@ -711,12 +772,14 @@ export type CreatorRevenueCreateWithoutPurchaseInput = {
   platformCoins: number
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutCreatorRevenueInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseCreateNestedOneWithoutRevenueInput
   content: Prisma.ContentCreateNestedOneWithoutCreatorRevenuesInput
 }
 
 export type CreatorRevenueUncheckedCreateWithoutPurchaseInput = {
   id?: string
   creatorId: string
+  chapterPackPurchaseId?: string | null
   contentId: string
   grossCoins: number
   sharePercent: number
@@ -749,12 +812,78 @@ export type CreatorRevenueUpdateWithoutPurchaseInput = {
   platformCoins?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatorRevenueNestedInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseUpdateOneWithoutRevenueNestedInput
   content?: Prisma.ContentUpdateOneRequiredWithoutCreatorRevenuesNestedInput
 }
 
 export type CreatorRevenueUncheckedUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentId?: Prisma.StringFieldUpdateOperationsInput | string
+  grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
+  creatorCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  platformCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CreatorRevenueCreateWithoutChapterPackPurchaseInput = {
+  id?: string
+  grossCoins: number
+  sharePercent: number
+  creatorCoins: number
+  platformCoins: number
+  createdAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutCreatorRevenueInput
+  purchase?: Prisma.ContentPurchaseCreateNestedOneWithoutRevenueInput
+  content: Prisma.ContentCreateNestedOneWithoutCreatorRevenuesInput
+}
+
+export type CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput = {
+  id?: string
+  creatorId: string
+  purchaseId?: string | null
+  contentId: string
+  grossCoins: number
+  sharePercent: number
+  creatorCoins: number
+  platformCoins: number
+  createdAt?: Date | string
+}
+
+export type CreatorRevenueCreateOrConnectWithoutChapterPackPurchaseInput = {
+  where: Prisma.CreatorRevenueWhereUniqueInput
+  create: Prisma.XOR<Prisma.CreatorRevenueCreateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput>
+}
+
+export type CreatorRevenueUpsertWithoutChapterPackPurchaseInput = {
+  update: Prisma.XOR<Prisma.CreatorRevenueUpdateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedUpdateWithoutChapterPackPurchaseInput>
+  create: Prisma.XOR<Prisma.CreatorRevenueCreateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedCreateWithoutChapterPackPurchaseInput>
+  where?: Prisma.CreatorRevenueWhereInput
+}
+
+export type CreatorRevenueUpdateToOneWithWhereWithoutChapterPackPurchaseInput = {
+  where?: Prisma.CreatorRevenueWhereInput
+  data: Prisma.XOR<Prisma.CreatorRevenueUpdateWithoutChapterPackPurchaseInput, Prisma.CreatorRevenueUncheckedUpdateWithoutChapterPackPurchaseInput>
+}
+
+export type CreatorRevenueUpdateWithoutChapterPackPurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
+  creatorCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  platformCoins?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatorRevenueNestedInput
+  purchase?: Prisma.ContentPurchaseUpdateOneWithoutRevenueNestedInput
+  content?: Prisma.ContentUpdateOneRequiredWithoutCreatorRevenuesNestedInput
+}
+
+export type CreatorRevenueUncheckedUpdateWithoutChapterPackPurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  creatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentId?: Prisma.StringFieldUpdateOperationsInput | string
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -766,7 +895,8 @@ export type CreatorRevenueUncheckedUpdateWithoutPurchaseInput = {
 export type CreatorRevenueCreateManyContentInput = {
   id?: string
   creatorId: string
-  purchaseId: string
+  purchaseId?: string | null
+  chapterPackPurchaseId?: string | null
   grossCoins: number
   sharePercent: number
   creatorCoins: number
@@ -782,13 +912,15 @@ export type CreatorRevenueUpdateWithoutContentInput = {
   platformCoins?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatorRevenueNestedInput
-  purchase?: Prisma.ContentPurchaseUpdateOneRequiredWithoutRevenueNestedInput
+  purchase?: Prisma.ContentPurchaseUpdateOneWithoutRevenueNestedInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseUpdateOneWithoutRevenueNestedInput
 }
 
 export type CreatorRevenueUncheckedUpdateWithoutContentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
   creatorCoins?: Prisma.IntFieldUpdateOperationsInput | number
@@ -799,7 +931,8 @@ export type CreatorRevenueUncheckedUpdateWithoutContentInput = {
 export type CreatorRevenueUncheckedUpdateManyWithoutContentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
   creatorCoins?: Prisma.IntFieldUpdateOperationsInput | number
@@ -809,7 +942,8 @@ export type CreatorRevenueUncheckedUpdateManyWithoutContentInput = {
 
 export type CreatorRevenueCreateManyCreatorInput = {
   id?: string
-  purchaseId: string
+  purchaseId?: string | null
+  chapterPackPurchaseId?: string | null
   contentId: string
   grossCoins: number
   sharePercent: number
@@ -825,13 +959,15 @@ export type CreatorRevenueUpdateWithoutCreatorInput = {
   creatorCoins?: Prisma.IntFieldUpdateOperationsInput | number
   platformCoins?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purchase?: Prisma.ContentPurchaseUpdateOneRequiredWithoutRevenueNestedInput
+  purchase?: Prisma.ContentPurchaseUpdateOneWithoutRevenueNestedInput
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseUpdateOneWithoutRevenueNestedInput
   content?: Prisma.ContentUpdateOneRequiredWithoutCreatorRevenuesNestedInput
 }
 
 export type CreatorRevenueUncheckedUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentId?: Prisma.StringFieldUpdateOperationsInput | string
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -842,7 +978,8 @@ export type CreatorRevenueUncheckedUpdateWithoutCreatorInput = {
 
 export type CreatorRevenueUncheckedUpdateManyWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterPackPurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentId?: Prisma.StringFieldUpdateOperationsInput | string
   grossCoins?: Prisma.IntFieldUpdateOperationsInput | number
   sharePercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -857,6 +994,7 @@ export type CreatorRevenueSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   creatorId?: boolean
   purchaseId?: boolean
+  chapterPackPurchaseId?: boolean
   contentId?: boolean
   grossCoins?: boolean
   sharePercent?: boolean
@@ -864,7 +1002,8 @@ export type CreatorRevenueSelect<ExtArgs extends runtime.Types.Extensions.Intern
   platformCoins?: boolean
   createdAt?: boolean
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.CreatorRevenue$purchaseArgs<ExtArgs>
+  chapterPackPurchase?: boolean | Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["creatorRevenue"]>
 
@@ -872,6 +1011,7 @@ export type CreatorRevenueSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   creatorId?: boolean
   purchaseId?: boolean
+  chapterPackPurchaseId?: boolean
   contentId?: boolean
   grossCoins?: boolean
   sharePercent?: boolean
@@ -879,7 +1019,8 @@ export type CreatorRevenueSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   platformCoins?: boolean
   createdAt?: boolean
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.CreatorRevenue$purchaseArgs<ExtArgs>
+  chapterPackPurchase?: boolean | Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["creatorRevenue"]>
 
@@ -887,6 +1028,7 @@ export type CreatorRevenueSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   creatorId?: boolean
   purchaseId?: boolean
+  chapterPackPurchaseId?: boolean
   contentId?: boolean
   grossCoins?: boolean
   sharePercent?: boolean
@@ -894,7 +1036,8 @@ export type CreatorRevenueSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   platformCoins?: boolean
   createdAt?: boolean
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.CreatorRevenue$purchaseArgs<ExtArgs>
+  chapterPackPurchase?: boolean | Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["creatorRevenue"]>
 
@@ -902,6 +1045,7 @@ export type CreatorRevenueSelectScalar = {
   id?: boolean
   creatorId?: boolean
   purchaseId?: boolean
+  chapterPackPurchaseId?: boolean
   contentId?: boolean
   grossCoins?: boolean
   sharePercent?: boolean
@@ -910,20 +1054,23 @@ export type CreatorRevenueSelectScalar = {
   createdAt?: boolean
 }
 
-export type CreatorRevenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creatorId" | "purchaseId" | "contentId" | "grossCoins" | "sharePercent" | "creatorCoins" | "platformCoins" | "createdAt", ExtArgs["result"]["creatorRevenue"]>
+export type CreatorRevenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creatorId" | "purchaseId" | "chapterPackPurchaseId" | "contentId" | "grossCoins" | "sharePercent" | "creatorCoins" | "platformCoins" | "createdAt", ExtArgs["result"]["creatorRevenue"]>
 export type CreatorRevenueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.CreatorRevenue$purchaseArgs<ExtArgs>
+  chapterPackPurchase?: boolean | Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 export type CreatorRevenueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.CreatorRevenue$purchaseArgs<ExtArgs>
+  chapterPackPurchase?: boolean | Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 export type CreatorRevenueIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  purchase?: boolean | Prisma.ContentPurchaseDefaultArgs<ExtArgs>
+  purchase?: boolean | Prisma.CreatorRevenue$purchaseArgs<ExtArgs>
+  chapterPackPurchase?: boolean | Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>
   content?: boolean | Prisma.ContentDefaultArgs<ExtArgs>
 }
 
@@ -931,13 +1078,15 @@ export type $CreatorRevenuePayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "CreatorRevenue"
   objects: {
     creator: Prisma.$UserPayload<ExtArgs>
-    purchase: Prisma.$ContentPurchasePayload<ExtArgs>
+    purchase: Prisma.$ContentPurchasePayload<ExtArgs> | null
+    chapterPackPurchase: Prisma.$ChapterPackPurchasePayload<ExtArgs> | null
     content: Prisma.$ContentPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     creatorId: string
-    purchaseId: string
+    purchaseId: string | null
+    chapterPackPurchaseId: string | null
     contentId: string
     grossCoins: number
     sharePercent: number
@@ -1339,7 +1488,8 @@ readonly fields: CreatorRevenueFieldRefs;
 export interface Prisma__CreatorRevenueClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   creator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  purchase<T extends Prisma.ContentPurchaseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContentPurchaseDefaultArgs<ExtArgs>>): Prisma.Prisma__ContentPurchaseClient<runtime.Types.Result.GetResult<Prisma.$ContentPurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  purchase<T extends Prisma.CreatorRevenue$purchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CreatorRevenue$purchaseArgs<ExtArgs>>): Prisma.Prisma__ContentPurchaseClient<runtime.Types.Result.GetResult<Prisma.$ContentPurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  chapterPackPurchase<T extends Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CreatorRevenue$chapterPackPurchaseArgs<ExtArgs>>): Prisma.Prisma__ChapterPackPurchaseClient<runtime.Types.Result.GetResult<Prisma.$ChapterPackPurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   content<T extends Prisma.ContentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContentDefaultArgs<ExtArgs>>): Prisma.Prisma__ContentClient<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1373,6 +1523,7 @@ export interface CreatorRevenueFieldRefs {
   readonly id: Prisma.FieldRef<"CreatorRevenue", 'String'>
   readonly creatorId: Prisma.FieldRef<"CreatorRevenue", 'String'>
   readonly purchaseId: Prisma.FieldRef<"CreatorRevenue", 'String'>
+  readonly chapterPackPurchaseId: Prisma.FieldRef<"CreatorRevenue", 'String'>
   readonly contentId: Prisma.FieldRef<"CreatorRevenue", 'String'>
   readonly grossCoins: Prisma.FieldRef<"CreatorRevenue", 'Int'>
   readonly sharePercent: Prisma.FieldRef<"CreatorRevenue", 'Int'>
@@ -1777,6 +1928,44 @@ export type CreatorRevenueDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many CreatorRevenues to delete.
    */
   limit?: number
+}
+
+/**
+ * CreatorRevenue.purchase
+ */
+export type CreatorRevenue$purchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentPurchase
+   */
+  select?: Prisma.ContentPurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContentPurchase
+   */
+  omit?: Prisma.ContentPurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContentPurchaseInclude<ExtArgs> | null
+  where?: Prisma.ContentPurchaseWhereInput
+}
+
+/**
+ * CreatorRevenue.chapterPackPurchase
+ */
+export type CreatorRevenue$chapterPackPurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChapterPackPurchase
+   */
+  select?: Prisma.ChapterPackPurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChapterPackPurchase
+   */
+  omit?: Prisma.ChapterPackPurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChapterPackPurchaseInclude<ExtArgs> | null
+  where?: Prisma.ChapterPackPurchaseWhereInput
 }
 
 /**

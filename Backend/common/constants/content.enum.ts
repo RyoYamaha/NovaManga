@@ -14,6 +14,11 @@ export enum ContentPricingType {
   Paid = 'paid',
 }
 
+export enum ContentPurchaseMode {
+  Whole = 'whole',
+  ChapterPack = 'chapter_pack',
+}
+
 export enum PublicationStatus {
   Draft = 'Draft',
   PendingApproval = 'PendingApproval',

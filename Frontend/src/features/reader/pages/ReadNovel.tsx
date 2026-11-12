@@ -346,6 +346,8 @@ export function ReadNovel() {
         contentId={id}
         contentTitle={nav.content?.title}
         priceCoins={nav.content?.priceCoins ?? 0}
+        purchaseMode={nav.content?.purchaseMode}
+        chapterNumber={nav.chapter?.number}
         onPurchaseSuccess={refreshLockedChapter}
       />
     )

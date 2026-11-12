@@ -100,6 +100,21 @@ export class ChapterService {
     await this.verifyOwnership(chapter.contentId, uploaderId);
 
     if (dto.number !== undefined && dto.number !== chapter.number) {
+      const content = await this.prisma.content.findUnique({
+        where: { id: chapter.contentId },
+        select: { purchaseMode: true },
+      });
+      if (content?.purchaseMode === 'chapter_pack') {
+        const packPurchaseCount = await this.prisma.chapterPackPurchase.count({
+          where: { contentId: chapter.contentId },
+        });
+        if (packPurchaseCount > 0) {
+          throw new ConflictException(
+            'Không thể đổi số chương sau khi đã bán gói chương để bảo toàn quyền đọc',
+          );
+        }
+      }
+
       const existing = await this.prisma.chapter.findUnique({
         where: { contentId_number: { contentId: chapter.contentId, number: dto.number } },
       });

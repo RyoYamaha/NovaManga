@@ -14,7 +14,6 @@ import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { QueryPayoutRequestsDto } from './dto/query-payout-requests.dto';
 import { RejectPayoutDto } from './dto/reject-payout.dto';
-import { UpdatePayoutBlockDto } from './dto/update-payout-block.dto';
 import { UpdatePayoutSettingsDto } from './dto/update-payout-settings.dto';
 import { PayoutService } from './payout.service';
 
@@ -58,13 +57,5 @@ export class AdminPayoutController {
   @Patch('settings')
   updateSettings(@Body() dto: UpdatePayoutSettingsDto) {
     return this.payoutService.updateMinimumPayout(dto);
-  }
-
-  @Patch('users/:userId/block')
-  setPayoutBlocked(
-    @Param('userId') userId: string,
-    @Body() dto: UpdatePayoutBlockDto,
-  ) {
-    return this.payoutService.setPayoutBlocked(userId, dto.payoutBlocked);
   }
 }

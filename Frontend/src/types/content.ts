@@ -10,6 +10,8 @@ export type OwnershipTier = "Licensed" | "FanTranslation" | "Original";
 
 export type ContentPricingType = "free" | "paid";
 
+export type ContentPurchaseMode = "whole" | "chapter_pack";
+
 export type PublicationStatus =
   "Draft" | "PendingApproval" | "Published" | "Rejected" | "Hidden";
 
@@ -48,6 +50,7 @@ export interface ContentListItem {
   storyStatus: StoryStatus;
   coverImageUrl?: string | null;
   pricingType: ContentPricingType;
+  purchaseMode: ContentPurchaseMode;
   priceCoins: number;
   freeChapters: number;
   allowCommunityTranslation: boolean;

@@ -25,6 +25,9 @@ model Content {
   type                      String
   ownershipTier             String
   publicationStatus         String    @default("Draft")
+  publisherHidden           Boolean   @default(false)
+  publisherHiddenReason     String?   @db.Text
+  publisherHiddenAt         DateTime?
   reviewFeedback            String?   @db.Text
   aiModerationStatus        String?   @db.VarChar(20)
   aiModerationReason        String?   @db.VarChar(1000)
@@ -32,6 +35,7 @@ model Content {
   storyStatus               String    @default("Ongoing")
   coverImageUrl             String?
   pricingType               String    @default("free") @db.VarChar(10)
+  purchaseMode              String    @default("whole") @db.VarChar(20)
   priceCoins                Int       @default(0)
   freeChapters              Int       @default(3)
   allowCommunityTranslation Boolean   @default(false)
@@ -62,6 +66,7 @@ model Content {
   comments        Comment[]
   readingProgress ReadingProgress[]
   purchases       ContentPurchase[]
+  chapterPackPurchases ChapterPackPurchase[]
   creatorRevenues CreatorRevenue[]
 
   knowledgeBase   ContentKnowledgeBase?
@@ -189,7 +194,6 @@ model User {
   bio          String?
   isLocked     Boolean  @default(false)
   aiBlocked    Boolean  @default(false)
-  payoutBlocked Boolean @default(false)
   createdAt    DateTime @default(now())
   onboardingCompletedAt DateTime?
 
@@ -220,6 +224,7 @@ model User {
   processedBankTransactions BankTransaction[] @relation("BankTransactionProcessor")
   walletLedger   WalletLedger[]
   contentPurchases ContentPurchase[]
+  chapterPackPurchases ChapterPackPurchase[]
   payoutProfile  PayoutProfile?
   creatorRevenue CreatorRevenue[] @relation("CreatorEarnings")
   payoutRequests PayoutRequest[] @relation("PayoutOwner")
@@ -312,12 +317,29 @@ model ContentPurchase {
   @@index([contentId, purchasedAt])
 }
 
+model ChapterPackPurchase {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  contentId   String
+  content     Content  @relation(fields: [contentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  packNumber  Int
+  priceCoins  Int
+  purchasedAt DateTime @default(now())
+  revenue     CreatorRevenue?
+
+  @@unique([userId, contentId, packNumber])
+  @@index([contentId, packNumber, purchasedAt])
+}
+
 model CreatorRevenue {
   id             String         @id @default(uuid())
   creatorId      String
   creator        User           @relation("CreatorEarnings", fields: [creatorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  purchaseId     String         @unique
-  purchase       ContentPurchase @relation(fields: [purchaseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  purchaseId     String?        @unique
+  purchase       ContentPurchase? @relation(fields: [purchaseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  chapterPackPurchaseId String?  @unique
+  chapterPackPurchase ChapterPackPurchase? @relation(fields: [chapterPackPurchaseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contentId      String
   content        Content        @relation(fields: [contentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   grossCoins     Int

@@ -1,11 +1,15 @@
 import { api } from '@/lib/api'
 
+export const CHAPTERS_PER_PACK = 10
+
 export interface ContentAccess {
   contentId: string
   isFree: boolean
+  purchaseMode: 'whole' | 'chapter_pack'
   priceCoins: number
   freeChapters: number
   isOwned: boolean
+  purchasedPackNumbers: number[]
   purchase: {
     purchasedAt: string
     priceCoins: number
@@ -29,5 +33,9 @@ export const unlockService = {
   purchaseContent: (contentId: string) =>
     api.post<ContentPurchaseResult>(
       `/unlock/content/${encodeURIComponent(contentId)}/purchase`,
+    ),
+  purchaseChapterPack: (contentId: string, chapterNumber: number) =>
+    api.post<ContentPurchaseResult>(
+      `/unlock/content/${encodeURIComponent(contentId)}/chapters/${chapterNumber}/purchase-pack`,
     ),
 }

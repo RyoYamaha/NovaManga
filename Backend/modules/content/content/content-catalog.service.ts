@@ -56,7 +56,7 @@ export class ContentCatalogService {
 
     //BƯỚC 3 TÌM DATA THEO BỘ LỌC + ĐẾM SỐ CONTENT
 
-    const [contentItems, totalContentCount] = await this.prisma.$transaction([
+    const [contentItems, totalContentCount] = await Promise.all([
       //countentItemt nhận kết quả từ truy vấn findmany
       //totalcontentcount nhận kết quả sau khi đếm toàn bộ lượng content
       this.prisma.content.findMany({ where: contentFilter,
@@ -113,7 +113,7 @@ export class ContentCatalogService {
 
     if (!content) throw new NotFoundException('Không tìm thấy Content');
     if (!isCommunityTranslationVisible(content)) {
-      throw new NotFoundException('Fan Translation này đã hết thời hạn');
+      throw new NotFoundException('Content không tồn tại hoặc không được hiển thị');
     }
     return content;
   }

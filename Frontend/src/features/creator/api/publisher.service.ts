@@ -33,4 +33,38 @@ export const publisherService = {
 
   deleteContent: async (id: string) =>
     (await api.delete(`/publisher/content/${id}`)).data,
+  getTranslations: async (contentId: string) =>
+    (await api.get<PublisherTranslation[]>(`/publisher/content/${contentId}/translations`)).data,
+  setTranslationVisibility: async (
+    contentId: string,
+    translationId: string,
+    hidden: boolean,
+    reason?: string,
+  ) =>
+    (await api.patch<PublisherTranslationVisibilityResponse>(
+      `/publisher/content/${contentId}/translations/${translationId}/visibility`,
+      { hidden, reason },
+    )).data,
 }
+
+export interface PublisherTranslation {
+  id: string
+  title: string
+  type: string
+  publicationStatus: string
+  publisherHidden: boolean
+  publisherHiddenReason: string | null
+  publisherHiddenAt: string | null
+  uploader: { id: string; username: string }
+  _count: { chapters: number }
+}
+
+export type PublisherTranslationVisibilityResponse = Pick<
+  PublisherTranslation,
+  | 'id'
+  | 'title'
+  | 'publicationStatus'
+  | 'publisherHidden'
+  | 'publisherHiddenReason'
+  | 'publisherHiddenAt'
+>

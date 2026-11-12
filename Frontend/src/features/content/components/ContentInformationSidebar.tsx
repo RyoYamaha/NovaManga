@@ -94,7 +94,11 @@ export function ContentInformationSidebar({
             <dt className="text-slate-400">Hình thức đọc:</dt>
             <dd className="font-semibold text-white">
               {typeof content.priceCoins === 'number' && content.priceCoins > 0
-                ? `${content.priceCoins} Coin cho toàn bộ truyện`
+                ? `${content.priceCoins} Coin ${
+                    content.purchaseMode === 'chapter_pack'
+                      ? 'mỗi gói 10 chương'
+                      : 'cho toàn bộ truyện'
+                  }`
                 : 'Miễn phí'}
             </dd>
           </div>

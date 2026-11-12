@@ -20,8 +20,10 @@ import { Button } from '@/components/ui/button'
 import { PageJumpInput } from '@/components/common/PageJumpInput'
 import { useAuthStore } from '@/stores/auth-store'
 
+// Số tác phẩm tối đa hiển thị trong lưới ở mỗi trang.
 const PAGE_SIZE = 18
 
+// Các danh mục cho bảng "Đang thịnh hành"; value được gửi lên API xếp hạng.
 const rankingOptions: { value: RankingCategory; label: string }[] = [
   { value: 'ongoing', label: '🔥 Đang theo dõi' },
   { value: 'popular-manga', label: '📖 Manga nổi bật' },
@@ -32,7 +34,9 @@ const selectClassName =
   'h-10 w-full min-w-0 rounded-xl border border-white/10 bg-[#131b26] px-3 text-sm text-foreground transition-colors hover:border-primary/40 focus:border-primary focus:outline-none sm:w-auto sm:flex-none'
 
 export function Home() {
+  // Bộ lọc và số trang được lưu trên URL để có thể tải lại/chia sẻ liên kết.
   const [searchParams, setSearchParams] = useSearchParams()
+  // Khởi tạo danh mục xếp hạng từ URL; nếu không hợp lệ thì mặc định là "Đang ra".
   const [rankingCategory, setRankingCategory] = useState<RankingCategory>(() => {
     const initial = searchParams.get('ranking')
     return rankingOptions.find((option) => option.value === initial)?.value ?? 'ongoing'
@@ -43,14 +47,17 @@ export function Home() {
   const pageValue = Number(searchParams.get('page') ?? 1)
   const page = Number.isInteger(pageValue) && pageValue > 0 ? pageValue : 1
   const location = useLocation()
+  // Thông tin tài khoản dùng để chỉ tải lịch sử và gợi ý cho độc giả đã đăng nhập.
   const user = useAuthStore((state) => state.user)
 
+  // Xác định trang hiện tại là danh mục chung, Manga hay Novel dựa trên đường dẫn.
   const typeFilter: ContentType | undefined = location.pathname.includes('/novel')
     ? 'Novel'
     : location.pathname.includes('/manga')
       ? 'Manga'
       : undefined
 
+  // Tải danh sách tác phẩm chính theo từ khóa, loại, thể loại, tag và trang hiện tại.
   const contentsQuery = useQuery({
     queryKey: ['contents', { search, type: typeFilter, genreId, tagId, page }],
     queryFn: async () => {
@@ -67,24 +74,28 @@ export function Home() {
     },
   })
 
+  // Tải bảng xếp hạng riêng; đổi nút danh mục sẽ đổi queryKey và tải kết quả tương ứng.
   const rankingQuery = useQuery({
     queryKey: ['content-rankings', rankingCategory],
     queryFn: async () =>
       (await contentService.getRankings({ category: rankingCategory, limit: 10 })).data,
   })
 
+  // Gợi ý cá nhân hóa chỉ được gọi khi tài khoản hiện tại là độc giả.
   const recommendationsQuery = useQuery({
     queryKey: ['content-recommendations', user?.id],
     enabled: user?.role === 'Reader',
     queryFn: async () => (await contentService.getRecommendations({ page: 1, limit: 6 })).data,
   })
 
+  // Tải danh sách truyện người đọc có thể tiếp tục từ lần đọc trước.
   const continueReadingQuery = useQuery({
     queryKey: ['reading-history', user?.id],
     enabled: !!user && user.role === 'Reader',
     queryFn: async () => (await readingProgressService.getMyHistory()).data,
   })
 
+  // Tải dữ liệu dùng để điền các bộ chọn và khu vực giới thiệu ở trang chủ.
   const genresQuery = useQuery({
     queryKey: ['genres'],
     queryFn: async () => (await contentService.getGenres()).data,
@@ -106,6 +117,7 @@ export function Home() {
   })
 
   const updateFilters = (updates: Record<string, string>) => {
+    // Cập nhật các tham số lọc trên URL; khi đổi bộ lọc thì quay về trang đầu.
     setSearchParams((current) => {
       const next = new URLSearchParams(current)
       for (const [key, value] of Object.entries(updates)) {
@@ -117,6 +129,7 @@ export function Home() {
     })
   }
 
+  // Chuẩn bị dữ liệu với giá trị dự phòng để phần giao diện không phải xử lý undefined.
   const items = contentsQuery.data?.items ?? []
   const meta = contentsQuery.data?.meta
   const rankingItems = rankingQuery.data?.items ?? []
@@ -124,14 +137,16 @@ export function Home() {
   const historyList = continueReadingQuery.data ?? []
 
   return (
+    // Bố cục chính: danh sách nội dung ở cột lớn, bảng xếp hạng ở cột phụ trên màn hình rộng.
     <div className={`mx-auto grid w-full max-w-[1700px] gap-6 px-3 py-4 sm:px-5 lg:px-6 ${!search ? 'xl:grid-cols-[minmax(0,1fr)_280px]' : ''}`}>
       <div className="order-2 min-w-0 space-y-8 xl:order-1">
 
+      {/* Khu vực đọc tiếp chỉ hiện cho độc giả đã đăng nhập và khi không tìm kiếm. */}
       {user?.role === 'Reader' && !search && (
         <ContinueReadingRail history={historyList} />
       )}
 
-      {/* 3. PERSONALIZED RECOMMENDATIONS RAIL */}
+      {/* Gợi ý cá nhân hóa cũng chỉ hiện cho độc giả ở trang khám phá bình thường. */}
       {user?.role === 'Reader' && !search && (
         <RecommendationsRail
           recommendations={recommendationsQuery.data}
@@ -140,7 +155,7 @@ export function Home() {
         />
       )}
 
-      {/* 4. SEARCH & FILTER CONTROLS */}
+      {/* Tiêu đề trang/kết quả tìm kiếm cùng nút quay về trang chủ khi đang tìm. */}
       <section className="space-y-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -164,7 +179,7 @@ export function Home() {
           )}
         </div>
 
-        {/* Filter Toolbar */}
+        {/* Thanh lọc theo thể loại hoặc tag; các lựa chọn được đồng bộ lên URL. */}
         <div className="flex flex-wrap items-center gap-2.5 rounded-2xl border border-white/10 bg-[#131b26]/80 p-3 backdrop-blur-md">
           <div className="mr-1 flex items-center gap-2 px-1 text-sm font-semibold text-foreground">
             <SlidersHorizontal className="h-4 w-4 text-primary" aria-hidden="true" />
@@ -211,7 +226,7 @@ export function Home() {
           )}
         </div>
 
-        {/* 5. CONTENT GRID */}
+        {/* Trạng thái tải, lỗi và không có kết quả của danh sách tác phẩm. */}
         {contentsQuery.isLoading && (
           <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
             <Loader2 className="h-9 w-9 animate-spin text-primary" />
@@ -241,13 +256,14 @@ export function Home() {
 
         {!contentsQuery.isLoading && !contentsQuery.isError && items.length > 0 && (
           <>
+            {/* Lưới tác phẩm; mỗi thẻ được hiển thị bởi component ContentCard dùng chung. */}
             <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
               {items.map((item) => (
                 <ContentCard key={item.id} content={item} />
               ))}
             </div>
 
-            {/* Pagination Controls */}
+            {/* Điều hướng phân trang; cập nhật page trên URL để tải đúng nhóm kết quả. */}
             {meta && meta.totalPages > 1 && (
               <div className="flex items-center justify-center gap-3 pt-4">
                 <Button
@@ -279,7 +295,7 @@ export function Home() {
         )}
       </section>
 
-      {/* 6. POPULAR TAGS & PUBLISHERS FOOTER RAILS */}
+      {/* Các tag nổi bật và nhà xuất bản giúp khám phá thêm nội dung. */}
       <section className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-2">
         <div className="space-y-3">
           <h3 className="text-base font-bold text-foreground">Thẻ thịnh hành</h3>
@@ -318,8 +334,11 @@ export function Home() {
       </div>
 
       {!search && (
+        // Ẩn bảng xếp hạng khi người dùng đang ở chế độ tìm kiếm.
         <aside className="order-1 min-w-0 overflow-hidden xl:sticky xl:top-16 xl:order-2 xl:self-start">
           <section className="min-w-0 space-y-3.5 rounded-xl border border-white/10 bg-[#131b26] p-4">
+          
+            {/* Tiêu đề và mô tả ngắn về bảng xếp hạng truyện thịnh hành. */}
             <div className="flex items-center justify-between gap-3">
               <div>
                 <h2 className="text-base font-bold">Đang thịnh hành</h2>
@@ -329,6 +348,7 @@ export function Home() {
                 <Flame className="h-4 w-4" />
               </span>
             </div>
+            {/* Nút chọn loại xếp hạng: đang ra, Manga hoặc Novel. */}
             <div className="flex w-fit gap-1 rounded-lg bg-[#0b0f17]/60 p-1">
               {rankingOptions.map((option) => (
                 <button
@@ -345,6 +365,7 @@ export function Home() {
                 </button>
               ))}
             </div>
+            {/* Hiển thị trạng thái tải/lỗi hoặc danh sách xếp hạng trả về từ API. */}
             {rankingQuery.isLoading ? (
               <div className="flex items-center gap-2 py-6 text-sm text-muted-foreground">
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -353,6 +374,7 @@ export function Home() {
             ) : rankingQuery.isError ? (
               <p className="py-4 text-sm text-destructive">Không tải được bảng xếp hạng.</p>
             ) : (
+              // Mỗi mục mở trang chi tiết truyện; thứ tự trong danh sách là thứ hạng.
               <ol className="-mx-1 flex snap-x gap-2 overflow-x-auto px-1 pb-2 md:mx-0 md:grid md:grid-cols-3 md:gap-2 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-1 xl:divide-y xl:divide-white/10 xl:gap-0">
                 {rankingItems.map((item, index) => (
                   <li key={item.id} className="w-[210px] min-w-0 shrink-0 snap-start md:w-auto">

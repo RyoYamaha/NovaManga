@@ -1,4 +1,4 @@
-import type { ContentPricingType, ContentType } from '@/types/content'
+import type { ContentPricingType, ContentPurchaseMode, ContentType } from '@/types/content'
 
 export interface CreateContentDto {
   title: string
@@ -6,6 +6,7 @@ export interface CreateContentDto {
   synopsis?: string
   coverImageUrl?: string
   pricingType?: ContentPricingType
+  purchaseMode?: ContentPurchaseMode
   priceCoins?: number
   freeChapters?: number
   allowCommunityTranslation?: boolean
@@ -19,6 +20,7 @@ export interface UpdateContentDto {
   coverImageUrl?: string
   storyStatus?: string
   pricingType?: ContentPricingType
+  purchaseMode?: ContentPurchaseMode
   priceCoins?: number
   freeChapters?: number
   allowCommunityTranslation?: boolean

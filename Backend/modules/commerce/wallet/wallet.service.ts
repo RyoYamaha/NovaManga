@@ -22,7 +22,7 @@ export class WalletService {
     const page = query.page ?? 1; //nếu giá trị bên trái bằng null hoặc undefine thì bằng giá trị bên phải 
     const limit = query.limit ?? 20;
 
-    const [transactions, total] = await this.prisma.$transaction([
+    const [transactions, total] = await Promise.all([
       this.prisma.walletLedger.findMany({
         where: {userId},
         select: {

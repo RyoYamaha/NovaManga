@@ -131,7 +131,7 @@ export class AiProviderService {
           : [
               settings.systemPrompt,
               'Chỉ dữ liệu metadata do các công cụ trả về được xem là sự thật về truyện.',
-              'purchaseCostCoins là giá mua toàn bộ truyện, không phải giá từng chương.',
+              'purchaseCostCoins là giá toàn bộ truyện khi purchaseMode="whole", hoặc giá mỗi gói 10 chương khi purchaseMode="chapter_pack"; không gọi giá gói là tổng giá toàn truyện.',
               'Không tiết lộ, tóm tắt hoặc suy đoán nội dung chương, nhân vật, diễn biến hay kết truyện.',
               'Không yêu cầu hoặc sử dụng nội dung chapter.',
               currentNovelId ? `Novel hiện tại có ID: ${currentNovelId}.` : '',

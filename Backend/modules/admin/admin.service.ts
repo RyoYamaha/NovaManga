@@ -158,7 +158,7 @@ export class AdminService{
     
     //reviewquueu tổng hợp 
     async getReviewQueue(){
-        const [pendingContent, pendingPublisher] = await this.prisma.$transaction([
+        const [pendingContent, pendingPublisher] = await Promise.all([
             //tìm content đã được approval
             this.prisma.content.findMany({ where: {publicationStatus: 'PendingApproval'}, include: {uploader: {select: { id: true, username: true}}},orderBy: {createdAt: 'asc'},}),
             //tìm content đã được pending

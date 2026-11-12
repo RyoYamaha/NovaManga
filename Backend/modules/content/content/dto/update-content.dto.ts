@@ -1,6 +1,7 @@
 import { IsString, IsEnum, IsOptional, IsArray, MaxLength, IsInt, Min, Max,IsBoolean} from 'class-validator';
 import {
   ContentPricingType,
+  ContentPurchaseMode,
   StoryStatus,
 } from '../../../../common/constants/content.enum';
 
@@ -25,6 +26,10 @@ export class UpdateContentDto {
   @IsOptional()
   @IsEnum(ContentPricingType)
   pricingType?: ContentPricingType;
+
+  @IsOptional()
+  @IsEnum(ContentPurchaseMode)
+  purchaseMode?: ContentPurchaseMode;
 
   @IsOptional()
   @IsInt()

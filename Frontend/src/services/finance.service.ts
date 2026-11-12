@@ -115,10 +115,15 @@ export interface RevenueHistoryItem {
   creatorCoins: number
   platformCoins: number
   createdAt: string
-  purchase: {
+  purchase?: {
     id: string
     purchasedAt: string
-  }
+  } | null
+  chapterPackPurchase?: {
+    id: string
+    packNumber: number
+    purchasedAt: string
+  } | null
   content: {
     id: string
     title: string
@@ -227,8 +232,4 @@ export const financeService = {
   getAdminPayoutMinimum: () => api.get<number>('/admin/payout/settings'),
   updateAdminPayoutMinimum: (minimumCoins: number) =>
     api.patch('/admin/payout/settings', { minimumCoins }),
-  setPayoutBlocked: (userId: string, payoutBlocked: boolean) =>
-    api.patch(`/admin/payout/users/${encodeURIComponent(userId)}/block`, {
-      payoutBlocked,
-    }),
 }

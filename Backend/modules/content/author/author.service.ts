@@ -122,7 +122,7 @@ export class AuthorService {
 
     const contentIds = allContents.map((t) => t.id);
 
-    const [bookmarkCount, ratingAgg, commentCount] = await this.prisma.$transaction([
+    const [bookmarkCount, ratingAgg, commentCount] = await Promise.all([
       this.prisma.bookmark.count({ where: { contentId: { in: contentIds } } }),
       this.prisma.rating.aggregate({
         where: { contentId: { in: contentIds } },

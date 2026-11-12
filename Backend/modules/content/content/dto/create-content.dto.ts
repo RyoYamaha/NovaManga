@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import {
   ContentPricingType,
+  ContentPurchaseMode,
   ContentType,
 } from '../../../../common/constants/content.enum';
 
@@ -33,6 +34,10 @@ export class CreateContentDto {
   @IsOptional()
   @IsEnum(ContentPricingType)
   pricingType?: ContentPricingType;
+
+  @IsOptional()
+  @IsEnum(ContentPurchaseMode)
+  purchaseMode?: ContentPurchaseMode;
 
   @IsOptional()
   @IsInt()

@@ -1,0 +1,481 @@
+@startuml
+title Class Diagram - Nova Manga (theo Prisma schema)
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+hide methods
+
+package "Identity & Publishing" {
+  class User {
+    +id: String <<PK>>
+    username: String <<unique>>
+    email: String <<unique>>
+    passwordHash: String
+    role: String
+    bio: String?
+    isLocked: Boolean
+    aiBlocked: Boolean
+    payoutBlocked: Boolean
+    createdAt: DateTime
+    onboardingCompletedAt: DateTime?
+  }
+
+  class Publisher {
+    +id: String <<PK>>
+    userId: String <<FK, unique>>
+    organizationName: String
+    verificationStatus: String
+    verificationDocumentUrl: String?
+  }
+
+  class RefreshToken {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    tokenHash: String
+    isRevoked: Boolean
+    expiresAt: DateTime
+  }
+}
+
+package "Content & Catalog" {
+  class Content {
+    +id: String <<PK>>
+    title: String
+    synopsis: Text?
+    type: String
+    ownershipTier: String
+    publicationStatus: String
+    publisherHidden: Boolean
+    publisherHiddenReason: String?
+    publisherHiddenAt: DateTime?
+    reviewFeedback: Text?
+    aiModerationStatus: String?
+    aiModerationReason: String?
+    aiModeratedAt: DateTime?
+    storyStatus: String
+    coverImageUrl: String?
+    pricingType: String
+    priceCoins: Int
+    freeChapters: Int
+    allowCommunityTranslation: Boolean
+    pricingChangedAt: DateTime?
+    uploaderId: String <<FK>>
+    publisherId: String? <<FK>>
+    parentContentId: String? <<FK>>
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  class MangaDetail {
+    +id: String <<PK>>
+    contentId: String <<FK, unique>>
+  }
+
+  class NovelDetail {
+    +id: String <<PK>>
+    contentId: String <<FK, unique>>
+  }
+
+  class Chapter {
+    +id: String <<PK>>
+    contentId: String <<FK>>
+    number: Int
+    title: String?
+    moderationStatus: String
+    aiModerationStatus: String?
+    aiModerationReason: String?
+    aiModeratedAt: DateTime?
+    publishedAt: DateTime?
+  }
+
+  class ChapterPage {
+    +id: String <<PK>>
+    chapterId: String <<FK>>
+    pageNumber: Int
+    imageUrl: String
+  }
+
+  class ChapterContent {
+    +id: String <<PK>>
+    chapterId: String <<FK, unique>>
+    textBody: Text
+  }
+
+  class Genre {
+    +id: String <<PK>>
+    name: String <<unique>>
+  }
+
+  class UserGenrePreference {
+    userId: String <<PK, FK>>
+    genreId: String <<PK, FK>>
+  }
+
+  class ContentGenre {
+    contentId: String <<PK, FK>>
+    genreId: String <<PK, FK>>
+  }
+
+  class Tag {
+    +id: String <<PK>>
+    name: String <<unique>>
+  }
+
+  class ContentTag {
+    contentId: String <<PK, FK>>
+    tagId: String <<PK, FK>>
+  }
+
+  class ContentKnowledgeBase {
+    +id: String <<PK>>
+    contentId: String <<FK, unique>>
+    summaryText: Text
+    updatedAt: DateTime
+  }
+}
+
+package "Reading & Community" {
+  class Bookmark {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    createdAt: DateTime
+  }
+
+  class Favorite {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    createdAt: DateTime
+  }
+
+  class Rating {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    score: Int
+    createdAt: DateTime
+  }
+
+  class Comment {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    parentCommentId: String? <<FK>>
+    body: Text
+    moderationStatus: String
+    createdAt: DateTime
+  }
+
+  class ReadingProgress {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    lastChapterId: String <<FK>>
+    lastPageNumber: Int?
+    lastReadAt: DateTime
+  }
+
+  class ChapterRead {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    chapterId: String <<FK>>
+    completedAt: DateTime
+  }
+
+  class Notification {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    type: String
+    message: String
+    isRead: Boolean
+    createdAt: DateTime
+  }
+
+  class Report {
+    +id: String <<PK>>
+    reporterId: String <<FK>>
+    targetType: String
+    targetId: String
+    reason: String
+    evidence: String?
+    status: String
+    createdAt: DateTime
+  }
+
+  class SupportTicket {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    subject: String
+    status: String
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  class TicketMessage {
+    +id: String <<PK>>
+    ticketId: String <<FK>>
+    senderId: String <<FK>>
+    body: Text
+    createdAt: DateTime
+  }
+}
+
+package "Wallet, Payments & Creator Earnings" {
+  class Wallet {
+    +id: String <<PK>>
+    userId: String <<FK, unique>>
+    balance: Int
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  class PaymentOrder {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    expectedAmount: Int
+    paidAmount: Int?
+    paidCoins: Int?
+    status: String
+    transferCode: String
+    bankBin: String
+    bankName: String
+    bankAccountNumber: String
+    bankAccountName: String
+    expiresAt: DateTime
+    paidAt: DateTime?
+    createdAt: DateTime
+  }
+
+  class BankTransaction {
+    +id: String <<PK>>
+    externalId: String
+    paymentOrderId: String? <<FK>>
+    processedById: String? <<FK>>
+    transferType: String
+    transferAmount: Int
+    destinationAccountNumber: String?
+    description: Text
+    rawPayload: Text
+    processingStatus: String
+    adminNote: String?
+    receivedAt: DateTime
+  }
+
+  class WalletLedger {
+    +id: String <<PK>>
+    walletId: String <<FK>>
+    userId: String <<FK>>
+    amountCoins: Int
+    balanceAfter: Int
+    transactionType: String
+    sourceType: String
+    sourceReference: String
+    description: String
+    createdAt: DateTime
+  }
+
+  class ContentPurchase {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    priceCoins: Int
+    purchasedAt: DateTime
+  }
+
+  class CreatorRevenue {
+    +id: String <<PK>>
+    creatorId: String <<FK>>
+    purchaseId: String <<FK, unique>>
+    contentId: String <<FK>>
+    grossCoins: Int
+    sharePercent: Int
+    creatorCoins: Int
+    platformCoins: Int
+    createdAt: DateTime
+  }
+
+  class PayoutProfile {
+    +id: String <<PK>>
+    userId: String <<FK, unique>>
+    bankName: String
+    bankBin: String
+    bankAccountNumber: String
+    bankAccountName: String
+    updatedAt: DateTime
+  }
+
+  class PayoutRequest {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    processedById: String? <<FK>>
+    amountCoins: Int
+    status: String
+    bankName: String
+    bankBin: String
+    bankAccountNumber: String
+    bankAccountName: String
+    requestedAt: DateTime
+    processedAt: DateTime?
+    rejectionReason: String?
+  }
+
+  class SystemSetting {
+    +key: String <<PK>>
+    value: String
+    updatedAt: DateTime
+  }
+}
+
+package "AI & Recommendations" {
+  class AIConversation {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    messages: Text
+    createdAt: DateTime
+  }
+
+  class AiChatSession {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    novelId: String? <<FK>>
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  class AiChatMessage {
+    +id: String <<PK>>
+    sessionId: String <<FK>>
+    role: String
+    content: Text
+    createdAt: DateTime
+  }
+
+  class AiUsageDaily {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    date: Date
+    count: Int
+    updatedAt: DateTime
+  }
+
+  class AiUsageEvent {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    sessionId: String?
+    status: String
+    promptTokens: Int?
+    completionTokens: Int?
+    estimatedCostUsd: Float?
+    errorCode: String?
+    createdAt: DateTime
+  }
+
+  class AiAdminAuditLog {
+    +id: String <<PK>>
+    actorId: String <<FK>>
+    action: String
+    details: Text?
+    createdAt: DateTime
+  }
+
+  class RecommendationCache {
+    +id: String <<PK>>
+    userId: String <<FK>>
+    contentId: String <<FK>>
+    score: Float
+    generatedAt: DateTime
+  }
+}
+
+User "1" -- "0..1" Publisher : publisher profile
+User "1" -- "0..*" RefreshToken : owns
+User "1" -- "0..*" Content : uploads
+Publisher "1" -- "0..*" Content : publishes
+Content "0..1" -- "0..*" Content : parent / fan translations
+Content "1" -- "0..1" ContentKnowledgeBase
+Content "1" -- "0..1" MangaDetail
+Content "1" -- "0..1" NovelDetail
+Content "1" *-- "0..*" Chapter
+Chapter "1" *-- "0..*" ChapterPage
+Chapter "1" *-- "0..1" ChapterContent
+
+Content "1" -- "0..*" ContentGenre
+Genre "1" -- "0..*" ContentGenre
+User "1" -- "0..*" UserGenrePreference
+Genre "1" -- "0..*" UserGenrePreference
+Content "1" -- "0..*" ContentTag
+Tag "1" -- "0..*" ContentTag
+
+User "1" -- "0..*" Bookmark
+Content "1" -- "0..*" Bookmark
+User "1" -- "0..*" Favorite
+Content "1" -- "0..*" Favorite
+User "1" -- "0..*" Rating
+Content "1" -- "0..*" Rating
+User "1" -- "0..*" Comment
+Content "1" -- "0..*" Comment
+Comment "0..1" -- "0..*" Comment : reply thread
+User "1" -- "0..*" ReadingProgress
+Content "1" -- "0..*" ReadingProgress
+Chapter "1" -- "0..*" ReadingProgress : last chapter
+User "1" -- "0..*" ChapterRead
+Chapter "1" -- "0..*" ChapterRead
+User "1" -- "0..*" Notification
+User "1" -- "0..*" Report : reporter
+User "1" -- "0..*" SupportTicket : opens
+SupportTicket "1" *-- "0..*" TicketMessage
+User "1" -- "0..*" TicketMessage : sends
+
+User "1" -- "0..1" Wallet
+User "1" -- "0..*" PaymentOrder
+PaymentOrder "0..1" -- "0..*" BankTransaction
+User "0..1" -- "0..*" BankTransaction : processes transaction
+Wallet "1" -- "0..*" WalletLedger
+User "1" -- "0..*" WalletLedger
+User "1" -- "0..*" ContentPurchase : buys
+Content "1" -- "0..*" ContentPurchase
+ContentPurchase "1" -- "0..1" CreatorRevenue
+User "1" -- "0..*" CreatorRevenue : creator earns
+Content "1" -- "0..*" CreatorRevenue
+User "1" -- "0..1" PayoutProfile
+User "1" -- "0..*" PayoutRequest : payout owner
+User "0..1" -- "0..*" PayoutRequest : processes payout
+
+User "1" -- "0..*" AIConversation
+Content "1" -- "0..*" AIConversation
+User "1" -- "0..*" AiChatSession
+Content "0..1" -- "0..*" AiChatSession : novel context
+AiChatSession "1" *-- "0..*" AiChatMessage
+User "1" -- "0..*" AiUsageDaily
+User "1" -- "0..*" AiUsageEvent
+User "1" -- "0..*" AiAdminAuditLog : actor
+User "1" -- "0..*" RecommendationCache
+Content "1" -- "0..*" RecommendationCache
+
+note top of User
+  role is stored as String:
+  Reader, Author, Publisher, Admin.
+  Author is a User role, not a separate table.
+end note
+
+note right of Content
+  type, ownershipTier, publicationStatus,
+  storyStatus and pricingType are stored
+  as String values and validated in code.
+  publisherHidden is separate from
+  Admin publication moderation status.
+end note
+
+note bottom of Report
+  targetType + targetId are polymorphic;
+  they do not have a direct FK to each
+  reported entity in this schema.
+end note
+
+@enduml

@@ -6,6 +6,7 @@ import { CreatePublisherContentDto } from './dto/create-publisher-content.dto';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../../common/decorators/current-user.decorator';
 import { UpdateContentDto } from '../content/dto/update-content.dto';
+import { SetTranslationVisibilityDto } from './dto/set-translation-visibility.dto';
 
 @Controller('publisher')
 @UseGuards(JwtAuthGuard)
@@ -46,6 +47,26 @@ export class PublisherController {
   @Get('content/:id')
   getContentDetail(@CurrentUser('id') userId: string, @Param('id') contentId: string) {
     return this.publisherService.getPublisherContentDetail(userId, contentId);
+  }
+
+  @Get('content/:id/translations')
+  getTranslations(@CurrentUser('id') userId: string, @Param('id') contentId: string) {
+    return this.publisherService.getTranslationsForContent(userId, contentId);
+  }
+
+  @Patch('content/:id/translations/:translationId/visibility')
+  setTranslationVisibility(
+    @CurrentUser('id') userId: string,
+    @Param('id') contentId: string,
+    @Param('translationId') translationId: string,
+    @Body() dto: SetTranslationVisibilityDto,
+  ) {
+    return this.publisherService.setTranslationVisibility(
+      userId,
+      contentId,
+      translationId,
+      dto,
+    );
   }
 
   // Chỉnh sửa truyện (title, synopsis, coverImageUrl, storyStatus, genres, tags)

@@ -1,8 +1,9 @@
 import { Link } from 'react-router'
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { publisherService } from '@/features/creator/api/publisher.service'
 import { DeleteStoryButton } from '@/features/creator/components/DeleteStoryButton'
+import { PublisherTranslationsPanel } from '@/features/creator/components/PublisherTranslationsPanel'
 import { Button } from '@/components/ui/button'
 import { PageJumpInput } from '@/components/common/PageJumpInput'
 import {
@@ -13,6 +14,7 @@ import {
   Eye,
   FilePlus,
   ImageOff,
+  Languages,
   Library,
   Plus,
   RefreshCw,
@@ -60,6 +62,7 @@ export function SeriesCatalog() {
     queryFn: () => publisherService.getMyContents().then((res) => res.data),
   })
   const [page, setPage] = useState(1)
+  const [expandedTranslationSeries, setExpandedTranslationSeries] = useState<string | null>(null)
   const PAGE_SIZE = 20
 
   const list = contents ?? []
@@ -189,7 +192,8 @@ export function SeriesCatalog() {
                   }
 
                   return (
-                    <tr key={item.id} className="group transition-colors hover:bg-white/[0.03]">
+                    <Fragment key={item.id}>
+                    <tr className="group transition-colors hover:bg-white/[0.03]">
                       {/* Cover & Title */}
                       <td className="p-4">
                         <div className="flex items-center gap-3">
@@ -244,6 +248,21 @@ export function SeriesCatalog() {
                       {/* Actions */}
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-1.5">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="rounded-xl border-white/10"
+                            aria-expanded={expandedTranslationSeries === item.id}
+                            onClick={() =>
+                              setExpandedTranslationSeries((current) =>
+                                current === item.id ? null : item.id,
+                              )
+                            }
+                          >
+                            <Languages className="mr-1.5 h-3.5 w-3.5" />
+                            Bản dịch
+                          </Button>
                           {item.publicationStatus === 'Rejected' ? (
                             <Button
                               variant="outline"
@@ -292,6 +311,14 @@ export function SeriesCatalog() {
                         </div>
                       </td>
                     </tr>
+                    {expandedTranslationSeries === item.id && (
+                      <tr>
+                        <td colSpan={4} className="px-4 pb-4">
+                          <PublisherTranslationsPanel contentId={item.id} />
+                        </td>
+                      </tr>
+                    )}
+                    </Fragment>
                   )
                 })}
               </tbody>

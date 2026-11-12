@@ -415,6 +415,7 @@ export const ModelName = {
   BankTransaction: 'BankTransaction',
   WalletLedger: 'WalletLedger',
   ContentPurchase: 'ContentPurchase',
+  ChapterPackPurchase: 'ChapterPackPurchase',
   CreatorRevenue: 'CreatorRevenue',
   PayoutProfile: 'PayoutProfile',
   PayoutRequest: 'PayoutRequest',
@@ -453,7 +454,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "content" | "mangaDetail" | "novelDetail" | "chapter" | "chapterPage" | "chapterContent" | "genre" | "userGenrePreference" | "tag" | "contentGenre" | "contentTag" | "publisher" | "user" | "wallet" | "paymentOrder" | "bankTransaction" | "walletLedger" | "contentPurchase" | "creatorRevenue" | "payoutProfile" | "payoutRequest" | "systemSetting" | "bookmark" | "favorite" | "rating" | "comment" | "readingProgress" | "chapterRead" | "notification" | "report" | "refreshToken" | "contentKnowledgeBase" | "aIConversation" | "aiChatSession" | "aiChatMessage" | "aiUsageDaily" | "aiUsageEvent" | "aiAdminAuditLog" | "recommendationCache" | "supportTicket" | "ticketMessage"
+    modelProps: "content" | "mangaDetail" | "novelDetail" | "chapter" | "chapterPage" | "chapterContent" | "genre" | "userGenrePreference" | "tag" | "contentGenre" | "contentTag" | "publisher" | "user" | "wallet" | "paymentOrder" | "bankTransaction" | "walletLedger" | "contentPurchase" | "chapterPackPurchase" | "creatorRevenue" | "payoutProfile" | "payoutRequest" | "systemSetting" | "bookmark" | "favorite" | "rating" | "comment" | "readingProgress" | "chapterRead" | "notification" | "report" | "refreshToken" | "contentKnowledgeBase" | "aIConversation" | "aiChatSession" | "aiChatMessage" | "aiUsageDaily" | "aiUsageEvent" | "aiAdminAuditLog" | "recommendationCache" | "supportTicket" | "ticketMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1786,6 +1787,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ContentPurchaseCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ContentPurchaseCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChapterPackPurchase: {
+      payload: Prisma.$ChapterPackPurchasePayload<ExtArgs>
+      fields: Prisma.ChapterPackPurchaseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChapterPackPurchaseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChapterPackPurchaseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>
+        }
+        findFirst: {
+          args: Prisma.ChapterPackPurchaseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChapterPackPurchaseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>
+        }
+        findMany: {
+          args: Prisma.ChapterPackPurchaseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>[]
+        }
+        create: {
+          args: Prisma.ChapterPackPurchaseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>
+        }
+        createMany: {
+          args: Prisma.ChapterPackPurchaseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChapterPackPurchaseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>[]
+        }
+        delete: {
+          args: Prisma.ChapterPackPurchaseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>
+        }
+        update: {
+          args: Prisma.ChapterPackPurchaseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>
+        }
+        deleteMany: {
+          args: Prisma.ChapterPackPurchaseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChapterPackPurchaseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChapterPackPurchaseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>[]
+        }
+        upsert: {
+          args: Prisma.ChapterPackPurchaseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChapterPackPurchasePayload>
+        }
+        aggregate: {
+          args: Prisma.ChapterPackPurchaseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChapterPackPurchase>
+        }
+        groupBy: {
+          args: Prisma.ChapterPackPurchaseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChapterPackPurchaseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChapterPackPurchaseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChapterPackPurchaseCountAggregateOutputType> | number
         }
       }
     }
@@ -3537,6 +3612,9 @@ export const ContentScalarFieldEnum = {
   type: 'type',
   ownershipTier: 'ownershipTier',
   publicationStatus: 'publicationStatus',
+  publisherHidden: 'publisherHidden',
+  publisherHiddenReason: 'publisherHiddenReason',
+  publisherHiddenAt: 'publisherHiddenAt',
   reviewFeedback: 'reviewFeedback',
   aiModerationStatus: 'aiModerationStatus',
   aiModerationReason: 'aiModerationReason',
@@ -3544,6 +3622,7 @@ export const ContentScalarFieldEnum = {
   storyStatus: 'storyStatus',
   coverImageUrl: 'coverImageUrl',
   pricingType: 'pricingType',
+  purchaseMode: 'purchaseMode',
   priceCoins: 'priceCoins',
   freeChapters: 'freeChapters',
   allowCommunityTranslation: 'allowCommunityTranslation',
@@ -3668,7 +3747,6 @@ export const UserScalarFieldEnum = {
   bio: 'bio',
   isLocked: 'isLocked',
   aiBlocked: 'aiBlocked',
-  payoutBlocked: 'payoutBlocked',
   createdAt: 'createdAt',
   onboardingCompletedAt: 'onboardingCompletedAt'
 } as const
@@ -3752,10 +3830,23 @@ export const ContentPurchaseScalarFieldEnum = {
 export type ContentPurchaseScalarFieldEnum = (typeof ContentPurchaseScalarFieldEnum)[keyof typeof ContentPurchaseScalarFieldEnum]
 
 
+export const ChapterPackPurchaseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contentId: 'contentId',
+  packNumber: 'packNumber',
+  priceCoins: 'priceCoins',
+  purchasedAt: 'purchasedAt'
+} as const
+
+export type ChapterPackPurchaseScalarFieldEnum = (typeof ChapterPackPurchaseScalarFieldEnum)[keyof typeof ChapterPackPurchaseScalarFieldEnum]
+
+
 export const CreatorRevenueScalarFieldEnum = {
   id: 'id',
   creatorId: 'creatorId',
   purchaseId: 'purchaseId',
+  chapterPackPurchaseId: 'chapterPackPurchaseId',
   contentId: 'contentId',
   grossCoins: 'grossCoins',
   sharePercent: 'sharePercent',
@@ -4069,6 +4160,13 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4093,13 +4191,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -4285,6 +4376,7 @@ export type GlobalOmitConfig = {
   bankTransaction?: Prisma.BankTransactionOmit
   walletLedger?: Prisma.WalletLedgerOmit
   contentPurchase?: Prisma.ContentPurchaseOmit
+  chapterPackPurchase?: Prisma.ChapterPackPurchaseOmit
   creatorRevenue?: Prisma.CreatorRevenueOmit
   payoutProfile?: Prisma.PayoutProfileOmit
   payoutRequest?: Prisma.PayoutRequestOmit

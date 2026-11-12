@@ -14,7 +14,7 @@ export class PaymentAdminQueryService {
 
     //BƯỚC 1: TRUY VẤN DANH SÁCH VÀ TỔNG SỐ ĐƠN 
 
-    const [items, total] = await this.prisma.$transaction([
+    const [items, total] = await Promise.all([
       this.prisma.paymentOrder.findMany({
         where: { status: 'Pending' },
         select: {
@@ -69,7 +69,7 @@ async getAdminBankTransactions(query: QueryAdminBankTransactionsDto) {
 
 
     // BƯỚC 3: LẤY DỮ LIỆU VÀ CÁC THÔNG TIN LIÊN QUAN 
-    const [items, total] = await this.prisma.$transaction([
+    const [items, total] = await Promise.all([
       this.prisma.bankTransaction.findMany({
         where: { processingStatus: { in: statuses }, transferType: 'in', },
          //trạng thái xử lý phải trong cái mảng statues và phải là loại chuyển tiền vào 

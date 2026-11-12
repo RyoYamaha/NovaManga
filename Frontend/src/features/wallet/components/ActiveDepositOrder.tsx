@@ -122,42 +122,26 @@ export function ActiveDepositOrder({
           </div>
         </dl>
 
-        {order.bankName && (
-          <div className="space-y-2 rounded-lg bg-muted/40 p-4 text-sm">
-            <p><span className="text-muted-foreground">Ngân hàng:</span> {order.bankName}</p>
-            <div className="flex items-center justify-between gap-3">
-              <p>
-                <span className="text-muted-foreground">Số tài khoản:</span>{' '}
-                <span className="font-mono font-semibold">{order.bankAccountNumber}</span>
-              </p>
-              {order.bankAccountNumber && (
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  onClick={() => onCopy('account', order.bankAccountNumber!)}
-                >
-                  <Copy className="h-3.5 w-3.5" />
-                  {copiedField === 'account' ? 'Đã chép' : 'Sao chép'}
-                </Button>
-              )}
-            </div>
-            <p><span className="text-muted-foreground">Chủ tài khoản:</span> {order.bankAccountName}</p>
-            <div className="flex items-center justify-between gap-3">
-              <p>
-                <span className="text-muted-foreground">Nội dung:</span>{' '}
-                <span className="font-mono font-semibold">{order.transferCode}</span>
-              </p>
-              <Button type="button" size="sm" variant="outline" onClick={() => onCopy('code', order.transferCode)}>
-                <Copy className="h-3.5 w-3.5" />
-                {copiedField === 'code' ? 'Đã chép' : 'Sao chép'}
-              </Button>
-            </div>
-            {copyError && <p className="text-xs text-destructive">{copyError}</p>}
+        <div className="space-y-2 rounded-lg bg-muted/40 p-4 text-sm">
+          <div className="flex items-center justify-between gap-3">
+            <p>
+              <span className="text-muted-foreground">Mã chuyển khoản:</span>{' '}
+              <span className="font-mono font-semibold">{order.transferCode}</span>
+            </p>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => onCopy('code', order.transferCode)}
+            >
+              <Copy className="h-3.5 w-3.5" />
+              {copiedField === 'code' ? 'Đã chép' : 'Sao chép'}
+            </Button>
           </div>
-        )}
+          {copyError && <p className="text-xs text-destructive">{copyError}</p>}
+        </div>
         <p className="text-xs text-muted-foreground">
-          Vui lòng chuyển đúng nội dung. Không bấm xác nhận trước khi ngân hàng
+          Vui lòng quét mã QR và giữ nguyên mã chuyển khoản. Không bấm xác nhận trước khi ngân hàng
           xử lý; trạng thái được cập nhật từ thông báo của ngân hàng.
         </p>
       </div>

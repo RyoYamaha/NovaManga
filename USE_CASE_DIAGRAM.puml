@@ -1,0 +1,152 @@
+@startuml
+title Use Case Diagram - Nền tảng đọc và xuất bản Manga / Novel
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+}
+
+actor "Khách / Người xem" as Guest
+actor "Tài khoản đã đăng nhập" as Account
+actor "Reader" as Reader
+actor "Author" as Author
+actor "Publisher" as Publisher
+actor "Admin" as Admin
+
+actor "SePay" as SePay
+actor "DeepSeek" as DeepSeek
+actor "Cloudinary" as Cloudinary
+
+Account <|-- Reader
+Account <|-- Author
+Account <|-- Publisher
+Account <|-- Admin
+
+rectangle "Nền tảng đọc và xuất bản Manga / Novel" {
+  package "Tài khoản và nội dung công khai" {
+    usecase "Đăng ký tài khoản" as UC_Register
+    usecase "Đăng nhập" as UC_Login
+    usecase "Tìm kiếm / lọc nội dung" as UC_Search
+    usecase "Xem chi tiết truyện" as UC_Detail
+    usecase "Đọc Manga / Novel" as UC_Read
+  }
+
+  package "Reader" {
+    usecase "Quản lý thư viện / bookmark" as UC_Library
+    usecase "Theo dõi tiến độ đọc" as UC_Progress
+    usecase "Đánh giá và bình luận" as UC_Review
+    usecase "Nhận thông báo" as UC_Notifications
+    usecase "Gửi báo cáo / yêu cầu hỗ trợ" as UC_Support
+    usecase "Nạp coin và xem ví" as UC_Wallet
+    usecase "Sử dụng AI Assistant" as UC_AI
+  }
+
+  package "Author" {
+    usecase "Tạo truyện sáng tác /\nbản dịch cộng đồng" as UC_AuthorCreate
+    usecase "Quản lý truyện và chương" as UC_AuthorManage
+    usecase "Gửi truyện / chương\nđể duyệt" as UC_AuthorSubmit
+    usecase "Xem thống kê tác giả" as UC_AuthorStats
+    usecase "Xem doanh thu và\nyêu cầu rút tiền" as UC_AuthorPayout
+  }
+
+  package "Publisher" {
+    usecase "Đăng ký / quản lý\nhồ sơ Publisher" as UC_PublisherProfile
+    usecase "Quản lý nội dung\nđược cấp phép" as UC_PublisherManage
+    usecase "Quản lý nội dung và chương" as UC_PublisherChapters
+    usecase "Gửi nội dung / chương\nđể duyệt" as UC_PublisherSubmit
+    usecase "Xem thống kê Publisher" as UC_PublisherStats
+    usecase "Xem doanh thu và\nyêu cầu rút tiền" as UC_PublisherPayout
+    usecase "Quản lý bản dịch cộng đồng\n(ẩn / hiện lại)" as UC_PublisherTranslations
+  }
+
+  package "Admin" {
+    usecase "Quản lý người dùng / vai trò" as UC_Users
+    usecase "Duyệt / kiểm duyệt\ntruyện và chương" as UC_Moderate
+    usecase "Xác minh Publisher" as UC_VerifyPublisher
+    usecase "Quản lý báo cáo /\nyêu cầu hỗ trợ" as UC_AdminSupport
+    usecase "Đối soát giao dịch nạp coin" as UC_Transactions
+    usecase "Xử lý yêu cầu rút tiền" as UC_AdminPayout
+    usecase "Quản lý cấu hình AI" as UC_AISettings
+  }
+
+  package "Tích hợp dịch vụ ngoài" {
+    usecase "Nhận webhook giao dịch nạp coin" as UC_Webhook
+    usecase "Tải ảnh bìa / tài liệu" as UC_Upload
+  }
+}
+
+Guest --> UC_Register
+Guest --> UC_Login
+Account --> UC_Login
+Account --> UC_Search
+Account --> UC_Detail
+Account --> UC_Read
+Guest --> UC_Search
+Guest --> UC_Detail
+Guest --> UC_Read
+
+Reader --> UC_Library
+Reader --> UC_Progress
+Reader --> UC_Review
+Reader --> UC_Notifications
+Reader --> UC_Support
+Reader --> UC_Wallet
+Reader --> UC_AI
+
+Author --> UC_AuthorCreate
+Author --> UC_AuthorManage
+Author --> UC_AuthorSubmit
+Author --> UC_AuthorStats
+Author --> UC_AuthorPayout
+
+Publisher --> UC_PublisherProfile
+Publisher --> UC_PublisherManage
+Publisher --> UC_PublisherChapters
+Publisher --> UC_PublisherSubmit
+Publisher --> UC_PublisherStats
+Publisher --> UC_PublisherPayout
+Publisher --> UC_PublisherTranslations
+
+Admin --> UC_Users
+Admin --> UC_Moderate
+Admin --> UC_VerifyPublisher
+Admin --> UC_AdminSupport
+Admin --> UC_Transactions
+Admin --> UC_AdminPayout
+Admin --> UC_AISettings
+
+SePay --> UC_Webhook
+DeepSeek --> UC_AI
+Cloudinary --> UC_Upload
+Author --> UC_Upload
+Publisher --> UC_Upload
+
+note right of UC_Login
+  Đăng nhập là điều kiện để dùng
+  các chức năng yêu cầu tài khoản.
+  Không dùng <<include>> cho mọi
+  chức năng được bảo vệ.
+end note
+
+note bottom of UC_PublisherManage
+  Tạo nội dung Publisher yêu cầu
+  hồ sơ đã được Admin xác minh.
+end note
+
+note bottom of UC_PublisherTranslations
+  Chỉ quản lý bản dịch của bộ truyện
+  thuộc Publisher đang đăng nhập.
+  Ẩn khỏi Reader; Author vẫn xem được.
+end note
+
+note bottom of UC_AuthorPayout
+  Rút tiền yêu cầu hồ sơ ngân hàng,
+  đạt mức tối thiểu và đủ doanh thu khả dụng.
+  Publisher dùng cùng quy trình này.
+end note
+
+@enduml
